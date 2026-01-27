@@ -1,24 +1,26 @@
-import {getDatabase, ref, set} from 'firebase/database'
-import {app} from './Firebase'
 import './App.css'
+import LoginPage from './pages/LoginPage'
+import SignupPage from './pages/SignupPage'
+import { useFirebase } from './context/Firebase';
 
-const db = getDatabase(app);
+export default function App() {
+const firebase = useFirebase();
 
-function App() {
-  const put = () =>{
-    set(ref(db,'users/01'),{
-      id: 1,
-      name: "Subham",
-      age: 28
-    });
-  }
+if(firebase.user === null){
+  return (
+<div>
+  <SignupPage />
+  <LoginPage />
+</div>
+)}
   return (
     <>
       <div>
-        <button onClick={put}>Put Data </button>
+        <h1>Hello {firebase.user?.email}</h1>
+        <button onClick={() => firebase.logout()}>Logout</button>
       </div>
     </>
   )
 }
 
-export default App
+
