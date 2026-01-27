@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { createContext, useContext, useEffect, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut} from "firebase/auth";
-import { log } from "firebase/firestore/pipelines";
+import { getFirestore, collection, setDoc, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 
 const provider = new GoogleAuthProvider();
 const FirebaseContext = createContext(null);
@@ -18,17 +18,38 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig);
 const firebaseAuth = getAuth(firebaseApp);
+const firestore = getFirestore(firebaseApp);
 
 export const useFirebase = () => useContext(FirebaseContext);
 
 export const FirebaseProvider = (props)=>{
   const [user, setUser] = useState(null);
-    const signUp = (email, password) => {
-        return createUserWithEmailAndPassword(firebaseAuth, email, password)
-      };
+    const signUp = async (email, password, name) => {
+      let user;
+        
+          const create = await createUserWithEmailAndPassword(firebaseAuth, email, password);
+          user = create.user;
+          // await updateDoc(user,{displayName: name});
+          return (await setDoc(doc(firestore,"users", user.uid), {
+            uid: user.uid,
+            email,
+            name: name || "",
+            role: "user",
+            createdAt: serverTimestamp(),
+          }));
+        };
 
-      const signUpWithGoogle = () => {
-        signInWithPopup(firebaseAuth, provider);
+      const signUpWithGoogle = async () => {
+        let user;
+        const result = await signInWithPopup(firebaseAuth, provider);
+        user = result.user;
+        return (await setDoc(doc(firestore,"users", user.uid), {
+            uid: user.uid,
+            name: user.displayName,
+            email: user.email,
+            role: "user",
+            createdAt: serverTimestamp(),
+          }));
       };
 
     const login = (email, password) => {
