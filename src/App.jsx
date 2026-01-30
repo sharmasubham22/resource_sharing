@@ -1,26 +1,26 @@
 import './App.css'
-import LoginPage from './pages/LoginPage'
-import SignupPage from './pages/SignupPage'
-import { useFirebase } from './context/Firebase';
+import {Route, Routes} from 'react-router-dom';
+import LoginPage from './pages/LoginPage.jsx';
+import SignupPage from './pages/SignupPage.jsx';
+import LandingPage from './pages/LandingPage.jsx';
+import AddResource from './pages/AddResource.jsx';
+import Navbar from './components/Navbar.jsx';
+import Footer from './components/Footer.jsx';
+// import "flowbite";
 
 export default function App() {
-const firebase = useFirebase();
-
-if(firebase.user === null){
-  return (
-<div>
-  <SignupPage />
-  <LoginPage />
-</div>
-)}
   return (
     <>
-      <div>
-        <h1>Hello {firebase.user?.email}</h1>
-        <button onClick={() => firebase.logout()}>Logout</button>
-      </div>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/add-resource" element={<AddResource />} />
+      </Routes>
+      <Footer />
     </>
-  )
+  );
 }
 
 
