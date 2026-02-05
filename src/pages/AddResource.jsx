@@ -36,15 +36,16 @@ export default function AddResource() {
 
     
   return (
-    <div className="pt-7 mb-5 text-left">
+    <div className="text-left">
       {/* <a href="/">
-        <span class="inline-flex items-center px-2 py-1 ring-1 ring-inset ring-default-medium text-heading text-sm font-medium rounded bg-neutral-secondary-medium mb-5">
+        <span className="inline-flex items-center px-2 py-1 ring-1 ring-inset ring-default-medium text-heading text-sm font-medium rounded bg-neutral-secondary-medium mb-5">
           Back
         </span>
       </a> */}
       <form className="max-w-3xl">
         <div className="add-resource">
-          <h1 className="text-4xl mb-5">Add your own Resource</h1>
+          <h2 className="text-4xl font-bold text-heading mb-5">Add a Resource</h2>
+
           <div className="mb-5">
             <label
               htmlFor="title"
@@ -56,7 +57,7 @@ export default function AddResource() {
               onChange={(e) => setTitle(e.target.value)}
               value={title}
               id="title"
-              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="border border-default-medium text-heading text-sm rounded-base bg-neutral-secondary-medium focus:bg-brand-softer focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               type="text"
               required
               placeholder="Enter title"
@@ -73,7 +74,7 @@ export default function AddResource() {
               onChange={(e) => setDesc(e.target.value)}
               value={desc}
               id="description"
-              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               required
               rows={10}
               placeholder="Enter description"
@@ -91,7 +92,7 @@ export default function AddResource() {
                 setCoverPhoto(e.target.files ? e.target.files[0] : null)
               }
               id="coverPhoto"
-              className="cursor-pointer bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body"
+              className="cursor-pointer bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand block w-full shadow-xs placeholder:text-body"
               type="file"
               accept="image/*"
             />
@@ -107,7 +108,7 @@ export default function AddResource() {
               value={selectedCategory}
               onChange={handleCategory}
               id="category"
-              className="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+              className="block w-full px-3 py-2.5 bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand shadow-xs placeholder:text-body"
             >
               <option value="">Select a category</option>
               {categories.map((category) => (
@@ -133,7 +134,7 @@ export default function AddResource() {
                       type="button"
                       key={tag.val}
                       onClick={() => toggleTag(tag.val)}
-                      className={`inline-flex items-center px-2 py-1 text-sm font-medium rounded ${selected ? "bg-brand text-white ring-2 ring-brand" : "bg-brand-softer ring-1 ring-inset ring-brand-subtle text-fg-brand-strong"}`}
+                      className={`inline-flex items-center px-2 py-1 text-sm font-medium rounded ${selected ? "bg-brand text-white ring-2 ring-fg-brand" : "bg-brand-softer ring-1 ring-inset ring-fg-brand-subtle text-fg-fg-brand-strong"}`}
                       aria-pressed={selected}
                     >
                       {tag.name}
@@ -154,7 +155,7 @@ export default function AddResource() {
               value={selectedValue}
               onChange={handleChange}
               id="type"
-              className="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+              className="block w-full px-3 py-2.5 bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand shadow-xs placeholder:text-body"
             >
               {options.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -165,6 +166,7 @@ export default function AddResource() {
           </div>
           {(selectedValue === "document" ||
             selectedValue === "video" ||
+            selectedValue === "tools" ||
             selectedValue === "template" ||
             selectedValue === "collectionFile") && (
             <div className="mb-5">
@@ -179,7 +181,7 @@ export default function AddResource() {
                   setUploadFile(e.target.files ? e.target.files[0] : null)
                 }
                 id="file"
-                className="cursor-pointer bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body"
+                className="cursor-pointer bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand block w-full shadow-xs placeholder:text-body"
                 type="file"
               />
             </div>
@@ -196,7 +198,7 @@ export default function AddResource() {
                 onChange={(e) => setLink(e.target.value)}
                 value={link}
                 id="link"
-                className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                className="bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                 type="text"
                 placeholder="Enter link"
               />
@@ -214,7 +216,7 @@ export default function AddResource() {
                 onChange={(e) => setCodeSnippet(e.target.value)}
                 value={codeSnippet}
                 id="code"
-                className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                className="bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                 rows={10}
                 placeholder="Enter code snippet"
               />
@@ -223,7 +225,7 @@ export default function AddResource() {
 
           <button
             onClick={create}
-            className="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            className="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-fg-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
           >
             Create
           </button>

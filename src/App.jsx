@@ -6,6 +6,9 @@ import LandingPage from './pages/LandingPage.jsx';
 import AddResource from './pages/AddResource.jsx';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
+import AllResources from './pages/AllResources.jsx';
+import UserDashboard from './pages/UserDashboard.jsx';
+import ViewResource from './pages/ViewResource.jsx';
 // import "flowbite";
 
 export default function App() {
@@ -17,6 +20,9 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/add-resource" element={<AddResource />} />
+        <Route path="/resources" element={<AllResources />} />
+        <Route path="/my-dashboard" element={<UserDashboard />} />
+        <Route path="/view-resource/:id" element={<ViewResource />} />
       </Routes>
       <Footer />
     </>
