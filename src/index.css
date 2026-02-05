@@ -1,6 +1,24 @@
-@import "tailwindcss";
-/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap'); */
 @import "flowbite/src/themes/default";
+
+/* input.css file */
+@import "tailwindcss";
 
 @plugin "flowbite/plugin";
 @source "../node_modules/flowbite";
+
+
+@theme {
+    --color-fg-brand-subtle: var(--color-red-200);
+    --color-fg-brand: var(--color-red-700);
+    --color-fg-brand-strong: var(--color-red-900);
+
+    --color-brand-softer: var(--color-red-50);
+    --color-brand-soft: var(--color-red-100);
+    --color-brand: var(--color-red-700);
+    --color-brand-medium: var(--color-red-200);
+    --color-brand-strong: var(--color-red-800);
+    
+    --font-sans: 'Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-body: 'Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-mono: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace';
+}

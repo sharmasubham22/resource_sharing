@@ -5,20 +5,15 @@ export default function Navbar() {
   const firebase = useFirebase();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   return (
-    <div>
+    <div className="mb-10">
       <nav className="bg-neutral-primary fixed w-full z-20 top-0 start-0 border-b border-default">
         <div className="max-w-7xl flex flex-wrap items-center justify-between mx-auto p-2">
           <a
-            href="https://flowbite.com/"
+            href="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <img
-              src="https://flowbite.com/docs/images/logo.svg"
-              className="h-7"
-              alt="Flowbite Logo"
-            />
             <span className="self-center text-xl text-heading font-semibold whitespace-nowrap">
-              Flowbite
+              ShareStack
             </span>
           </a>
 
@@ -43,8 +38,8 @@ export default function Navbar() {
                   <img
                     className="w-8 h-8 rounded-full"
                     src={
-                      firebase.user?.profilePicture ||
-                      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlciUyMHByb2ZpbGV8ZW58MHx8MHx8fDA%3D"
+                      firebase.user?.userPhoto ||
+                      "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
                     }
                     alt="user photo"
                   />
@@ -68,31 +63,14 @@ export default function Navbar() {
                   >
                     <li>
                       <a
-                        href="/add-resource"
+                        href="/my-dashboard"
                         onClick={() => setDropdownOpen(false)}
                         className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
                       >
-                        Add a Resource
+                        My Dashboard
                       </a>
                     </li>
-                    <li>
-                      <a
-                        href="#"
-                        onClick={() => setDropdownOpen(false)}
-                        className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                      >
-                        Dashboard
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        onClick={() => setDropdownOpen(false)}
-                        className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
-                      >
-                        Settings
-                      </a>
-                    </li>
+
                     <li>
                       <a
                         onClick={() => {
@@ -143,10 +121,18 @@ export default function Navbar() {
               <li>
                 <a
                   href="/"
-                  className="block py-2 px-3 text-white bg-brand rounded md:bg-transparent md:text-fg-brand md:p-0"
+                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
                   aria-current="page"
                 >
                   Home
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/resources"
+                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
+                >
+                  Resources
                 </a>
               </li>
               <li>
