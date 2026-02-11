@@ -2,32 +2,34 @@ import React from 'react'
 
 export default function Footer() {
   return (
-    <div className='mt-10'>
-      <footer className="fixed bottom-0 left-0 z-20 w-full p-4 bg-neutral-primary-soft border-t border-default shadow-sm md:flex md:items-center md:justify-between md:p-6">
-        <span className="text-sm text-body sm:text-center">
-          © 2026{" "}
-          <a href="https://flowbite.com/" className="hover:underline">
-            ShareStack™
-          </a>
-          . All Rights Reserved.
-        </span>
-        <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-body sm:mt-0">
-          <li>
-            <a href="#" className="hover:underline me-4 md:me-6">
-              About
+    <div>
+      <footer class="bg-neutral-950">
+        <div class="w-full mx-auto max-w-7xl p-4 md:flex md:items-center md:justify-between">
+          <span class="text-sm text-white sm:text-center">
+            © 2026{" "}
+            <a href="/" class="hover:underline">
+              ShareStack™
             </a>
-          </li>
-          <li>
-            <a href="#" className="hover:underline me-4 md:me-6">
-              Privacy Policy
-            </a>
-          </li>
-          <li>
-            <a href="#" className="hover:underline">
-              Contact
-            </a>
-          </li>
-        </ul>
+            . All Rights Reserved.
+          </span>
+          <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-white sm:mt-0">
+            <li>
+              <a href="#" class="hover:underline me-4 md:me-6">
+                About
+              </a>
+            </li>
+            <li>
+              <a href="#" class="hover:underline me-4 md:me-6">
+                Privacy Policy
+              </a>
+            </li>
+            <li>
+              <a href="#" class="hover:underline">
+                Contact
+              </a>
+            </li>
+          </ul>
+        </div>
       </footer>
     </div>
   );

@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { createContext, useContext, useEffect, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut} from "firebase/auth";
-import { getFirestore, setDoc, doc, serverTimestamp, addDoc, collection, getDocs, getDoc } from "firebase/firestore";
+import { getFirestore, setDoc, doc, serverTimestamp, addDoc, collection, getDocs, getDoc, query, where } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const provider = new GoogleAuthProvider();
@@ -30,42 +30,51 @@ export const FirebaseProvider = (props)=>{
   const [user, setUser] = useState(null);
     const signUp = async (email, password, name, userPhoto) => {
       let user;
-        
-          const create = await createUserWithEmailAndPassword(firebaseAuth, email, password);
-          user = create.user;
+            const create = await createUserWithEmailAndPassword(firebaseAuth, email, password);
+            user = create.user;
 
-           let UserPhotoPath = null;
-           if (userPhoto) {
-             const imageRef = ref(
-               storage,
-               `resources/user/${Date.now()}-${userPhoto.name}`,
-             );
-             const snapshot = await uploadBytes(imageRef, userPhoto);
-             UserPhotoPath = snapshot.ref.fullPath;
-           }
+            const defaultPhoto = "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png";
+            let userPhotoUrl = defaultPhoto;
 
-          return await setDoc(doc(firestore, "users", user.uid), {
-            uid: user.uid,
-            email,
-            name: name,
-            role: "user",
-            userPhoto:
-              "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png" || UserPhotoPath,
-            createdAt: serverTimestamp(),
-          });
+            if (userPhoto) {
+              const imageRef = ref(storage, `users/${user.uid}/profile/${Date.now()}-${userPhoto.name}`);
+              const snapshot = await uploadBytes(imageRef, userPhoto);
+              userPhotoUrl = await getDownloadURL(snapshot.ref);
+            }
+
+            return await setDoc(doc(firestore, "users", user.uid), {
+              uid: user.uid,
+              email,
+              name: name,
+              role: "user",
+              userPhoto: userPhotoUrl,
+              createdAt: serverTimestamp(),
+            });
         };
 
       const signUpWithGoogle = async () => {
         let user;
         const result = await signInWithPopup(firebaseAuth, provider);
         user = result.user;
+        const defaultPhoto = "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png";
         return (await setDoc(doc(firestore,"users", user.uid), {
             uid: user.uid,
             name: user.displayName,
             email: user.email,
             role: "user",
+            userPhoto: user.photoURL || defaultPhoto,
             createdAt: serverTimestamp(),
           }));
+      };
+
+      const updateProfilePhoto = async (file) => {
+        if (!user) throw new Error("No authenticated user");
+        const imageRef = ref(storage, `users/${user.uid}/profile/${Date.now()}-${file.name}`);
+        const snapshot = await uploadBytes(imageRef, file);
+        const url = await getDownloadURL(snapshot.ref);
+        await setDoc(doc(firestore, "users", user.uid), { userPhoto: url }, { merge: true });
+        setUser((prev) => ({ ...prev, userPhoto: url }));
+        return url;
       };
 
     const login = (email, password) => {
@@ -175,12 +184,21 @@ export const FirebaseProvider = (props)=>{
         return result;
       }
 
+      const categorizedResources = async (category) => {
+        const q = query(
+          collection(firestore, "allResources"),
+          where("category", "==", category)
+        );
+        const querySnapshot = await getDocs(q);
+        return querySnapshot;
+      }
+
       const getResourceImg = (path) => {
         return getDownloadURL(ref(storage, path));
       }
 
   return (
-    <FirebaseContext.Provider value={{signUp, signUpWithGoogle, login, loggedin, user, logout, addResource, getAllResources, getMyResources, viewResource, getResourceImg}}>
+    <FirebaseContext.Provider value={{signUp, signUpWithGoogle, login, loggedin, user, logout, addResource, getAllResources, getMyResources, viewResource, getResourceImg, categorizedResources, updateProfilePhoto}}>
       {props.children}
     </FirebaseContext.Provider>
   )

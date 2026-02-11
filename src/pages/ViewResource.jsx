@@ -25,8 +25,10 @@ export default function ViewResource() {
         return <div>Loading...</div>
     }
     return (
-      <div>
-        <h1 className="text-6xl font-bold">{resourceData.title}</h1>
+      <div className='max-w-5xl mx-auto px-5 md:px-10'>
+        <h1 className="text-6xl font-bold text-center pt-10">
+          {resourceData.title}
+        </h1>
         {Array.isArray(resourceData.tags) && resourceData.tags.length > 0 && (
           <div className="flex flex-wrap justify-center gap-2 my-5">
             {resourceData.tags.map((tag, idx) => (
@@ -39,11 +41,11 @@ export default function ViewResource() {
             ))}
           </div>
         )}
-        <img className="rounded-base mb-10 h-100 mx-auto" src={imgUrl} alt="" />
+        <img className="rounded-base mb-10 h-full mx-auto" src={imgUrl} alt="" />
 
         <p className="text-body">{resourceData.description}</p>
 
-        <p className='text-body mt-5'>Author: {resourceData.userName}</p>
+        <p className="text-body mt-5">Author: {resourceData.userName}</p>
       </div>
     );
 }

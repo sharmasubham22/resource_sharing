@@ -1,52 +1,50 @@
+import Hero from '../components/Hero';
 import { useFirebase } from '../context/Firebase';
-
+import { categories } from '../data/addResourceData';
+import { useNavigate } from 'react-router-dom';
 
 export default function LandingPage() {
+  const firebase = useFirebase();
+  const nav = useNavigate();
   return (
-    <div className="mt-5">
-      <section className="bg-neutral-primary">
-        <div className="py-8 px-4 mx-auto max-w-screen-2xl text-center lg:py-16">
-          <h1 className="mb-4 text-4xl font-bold tracking-tight text-heading md:text-5xl lg:text-6xl">
-            The community's just getting{" "}
-            <span className="text-fg-brand">Bigger</span>
+    <div>
+      <section>
+        <Hero />
+      </section>
+      <section className="py-8 px-4 mx-auto lg:py-16 bg-linear-to-t from-gray-200 to-neutral-primary">
+        <div className="max-w-7xl rounded-base mx-auto bg-neutral-primary p-4 md:p-12">
+          <h1 className="text-2xl md:text-4xl  mb-10 font-bold">
+            Popular Topics
           </h1>
-          <p className="mb-8 text-base font-normal text-body md:text-xl">
-            Here at ShareStack, we focus on sharing our resources with our peers. It's a 
-            platform where technology, innovation, and ideas can unlock long-term value and drive
-            personal growth.
-          </p>
-          <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 md:space-x-4">
-            <button
-              type="button"
-              className="inline-flex items-center justify-center text-white bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium rounded-base text-base px-5 py-3 focus:outline-none"
-            >
-              Find Resources
-              <svg
-                className="w-4 h-4 ms-1.5 -me-0.5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M19 12H5m14 0-4 4m4-4-4-4"
-                />
-              </svg>
-            </button>
-            <button
-              type="button"
-              className="text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-base px-5 py-3 focus:outline-none"
-            >
-              Learn more
-            </button>
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
+            <div>
+              {categories.map((category) => (
+                <button
+                  onClick={(e) => nav(`/resources/${category.value}`)}
+                  key={category.value}
+                  className="inline-flex items-center border text-body text-s m-2 font-medium px-3 py-1 cursor-pointer hover:bg-brand-soft rounded-2xl"
+                >
+                  {category.label}
+                </button>
+              ))}
+            </div>
+            <img
+              src="https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832_960_720.jpg"
+              alt=""
+              className="rounded-base"
+            />
           </div>
         </div>
+      </section>
+      <section className="h-full bg-neutral-950 p-10">
+        <h1 className="text-2xl md:text-4xl  text-white mb-10 font-bold">
+          Trending Resources
+        </h1>
+      </section>
+      <section className="h-full p-10">
+        <h1 className="text-2xl md:text-4xl  mb-10 font-bold">
+          Trending Blogs
+        </h1>
       </section>
     </div>
   );
