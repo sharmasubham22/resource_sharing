@@ -5,14 +5,14 @@ export default function Navbar() {
   const firebase = useFirebase();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   return (
-    <div className="mb-10">
-      <nav className="bg-neutral-primary fixed w-full z-20 top-0 start-0 border-b border-default">
+    <div className="mb-12">
+      <nav className="bg-neutral-primary fixed w-full z-20 top-0 start-0 p-3 shadow-lg">
         <div className="max-w-7xl flex flex-wrap items-center justify-between mx-auto p-2">
           <a
             href="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <span className="self-center text-xl text-heading font-semibold whitespace-nowrap">
+            <span className="self-center text-xl text-heading font-bold whitespace-nowrap">
               ShareStack
             </span>
           </a>
@@ -21,7 +21,7 @@ export default function Navbar() {
             {firebase.user === null ? (
               <a
                 href="/login"
-                className="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+                className="text-fg-brand hover:underline font-medium text-lg inline-flex items-center py-1"
               >
                 Login
               </a>
@@ -30,13 +30,13 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex text-sm bg-neutral-primary rounded-full md:me-0 focus:ring-4 focus:ring-neutral-tertiary"
+                  className="flex text-sm bg-neutral-primary rounded-full md:me-0 hover:ring-4 hover:ring-neutral-tertiary"
                   id="user-menu-button"
                   aria-expanded={dropdownOpen}
                 >
                   <span className="sr-only">Open user menu</span>
                   <img
-                    className="w-8 h-8 rounded-full"
+                    className="w-8 h-8 rounded-full border border-brand"
                     src={
                       firebase.user?.userPhoto ||
                       "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
@@ -117,11 +117,11 @@ export default function Navbar() {
             className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
             id="navbar-user"
           >
-            <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-neutral-primary">
+            <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base  md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ">
               <li>
                 <a
                   href="/"
-                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
+                  className="block py-2 px-3 text-heading hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
                   aria-current="page"
                 >
                   Home
@@ -140,7 +140,7 @@ export default function Navbar() {
                   href="#"
                   className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
                 >
-                  About
+                  Blog
                 </a>
               </li>
               <li>
@@ -148,9 +148,10 @@ export default function Navbar() {
                   href="#"
                   className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
                 >
-                  Services
+                  About
                 </a>
               </li>
+
               <li>
                 <a
                   href="#"

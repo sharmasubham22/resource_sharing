@@ -13,28 +13,27 @@ export default function ResourceCard(props) {
     const navigate = useNavigate();
   return (
     <div>
-      <div className="bg-neutral-primary-soft block max-w-sm border border-default rounded-base shadow-xs">
-        <a href="#">
-          <img className="rounded-t-base h-full" src={imgUrl} alt="" />
-        </a>
+      <div className="bg-neutral-secondary-soft rounded-base block max-w-sm shadow-md mb-10">
+      
+          <img className="h-50 w-full rounded-t-base" src={imgUrl} alt="" />
+        
         <div className="p-6 text-center">
           <h5 className="mt-3 mb-6 text-2xl font-semibold tracking-tight text-heading">
             {props.title}
           </h5>
-          <p className="mb-6 text-body">
+          {/* <p className="mb-6 text-body">
             {(typeof props.description === "string"
               ? props.description.slice(0, 100)
               : Array.isArray(props.description)
-              ? props.description.slice(0, 100).join(" ")
-              : ""
-            ) + "..."}
-          </p>
+                ? props.description.slice(0, 100).join(" ")
+                : "") + "..."}
+          </p> */}
           {Array.isArray(props.tags) && props.tags.length > 0 && (
             <div className="flex flex-wrap justify-center gap-2">
               {props.tags.map((tag, idx) => (
                 <span
                   key={idx}
-                  className="inline-flex items-center bg-brand-softer border border-brand-soft text-fg-brand-strong text-xs font-medium px-2 py-0.5 rounded-sm"
+                  className="inline-flex items-center bg-neutral-200 capitalize text-xs font-medium px-2 py-0.5 rounded-sm"
                 >
                   {tag}
                 </span>
@@ -42,10 +41,10 @@ export default function ResourceCard(props) {
             </div>
           )}
           <button
-            onClick={e => navigate(`/view-resource/${props.id}`)}
-            className="mt-3 inline-flex items-center text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            onClick={(e) => navigate(`/view-resource/${props.id}`)}
+            className="bg-brand text-white px-3 py-1 rounded-3xl font-medium text-sm inline-flex items-center mt-5"
           >
-            Read more
+            Read Full Article
             <svg
               className="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5"
               aria-hidden="true"

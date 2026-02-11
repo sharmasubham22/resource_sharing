@@ -36,16 +36,12 @@ export default function AddResource() {
 
     
   return (
-    <div className="text-left">
-      {/* <a href="/">
-        <span className="inline-flex items-center px-2 py-1 ring-1 ring-inset ring-default-medium text-heading text-sm font-medium rounded bg-neutral-secondary-medium mb-5">
-          Back
-        </span>
-      </a> */}
-      <form className="max-w-3xl">
+    <div className="text-left mt-30">
+      <h2 className="text-3xl md:text-5xl pl-2  mx-10 my-2 border-l-8  font-sans font-bold border-brand ">
+        Add a Resource
+      </h2>
+      <form className="max-w-3xl p-10">
         <div className="add-resource">
-          <h2 className="text-4xl font-bold text-heading mb-5">Add a Resource</h2>
-
           <div className="mb-5">
             <label
               htmlFor="title"
@@ -57,7 +53,7 @@ export default function AddResource() {
               onChange={(e) => setTitle(e.target.value)}
               value={title}
               id="title"
-              className="border border-default-medium text-heading text-sm rounded-base bg-neutral-secondary-medium focus:bg-brand-softer focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="border border-default-medium text-heading text-sm  bg-neutral-secondary-medium focus:bg-brand-softer focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               type="text"
               required
               placeholder="Enter title"
@@ -74,7 +70,7 @@ export default function AddResource() {
               onChange={(e) => setDesc(e.target.value)}
               value={desc}
               id="description"
-              className="bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm  focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               required
               rows={10}
               placeholder="Enter description"
@@ -92,7 +88,7 @@ export default function AddResource() {
                 setCoverPhoto(e.target.files ? e.target.files[0] : null)
               }
               id="coverPhoto"
-              className="cursor-pointer bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand block w-full shadow-xs placeholder:text-body"
+              className="cursor-pointer bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm  focus:ring-fg-brand focus:border-fg-brand block w-full shadow-xs placeholder:text-body"
               type="file"
               accept="image/*"
             />
@@ -108,7 +104,7 @@ export default function AddResource() {
               value={selectedCategory}
               onChange={handleCategory}
               id="category"
-              className="block w-full px-3 py-2.5 bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand shadow-xs placeholder:text-body"
+              className="block w-full px-3 py-2.5 bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm  focus:ring-fg-brand focus:border-fg-brand shadow-xs placeholder:text-body"
             >
               <option value="">Select a category</option>
               {categories.map((category) => (
@@ -155,7 +151,7 @@ export default function AddResource() {
               value={selectedValue}
               onChange={handleChange}
               id="type"
-              className="block w-full px-3 py-2.5 bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand shadow-xs placeholder:text-body"
+              className="block w-full px-3 py-2.5 bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm  focus:ring-fg-brand focus:border-fg-brand shadow-xs placeholder:text-body"
             >
               {options.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -181,7 +177,7 @@ export default function AddResource() {
                   setUploadFile(e.target.files ? e.target.files[0] : null)
                 }
                 id="file"
-                className="cursor-pointer bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand block w-full shadow-xs placeholder:text-body"
+                className="cursor-pointer bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm  focus:ring-fg-brand focus:border-fg-brand block w-full shadow-xs placeholder:text-body"
                 type="file"
               />
             </div>
@@ -198,7 +194,7 @@ export default function AddResource() {
                 onChange={(e) => setLink(e.target.value)}
                 value={link}
                 id="link"
-                className="bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                className="bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm  focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                 type="text"
                 placeholder="Enter link"
               />
@@ -216,7 +212,7 @@ export default function AddResource() {
                 onChange={(e) => setCodeSnippet(e.target.value)}
                 value={codeSnippet}
                 id="code"
-                className="bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                className="bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm  focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                 rows={10}
                 placeholder="Enter code snippet"
               />
@@ -225,9 +221,9 @@ export default function AddResource() {
 
           <button
             onClick={create}
-            className="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-fg-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            className="text-white bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-fg-brand-medium shadow-xs font-medium leading-5  text-sm px-4 py-2.5 focus:outline-none"
           >
-            Create
+            Create Resource
           </button>
         </div>
       </form>
