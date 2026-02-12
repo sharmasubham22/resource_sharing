@@ -4,6 +4,7 @@ import { useFirebase } from '../context/Firebase';
 export default function Navbar() {
   const firebase = useFirebase();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
   return (
     <div className="mb-12">
       <nav className="bg-neutral-primary fixed w-full z-20 top-0 start-0 p-3 shadow-lg">
@@ -89,9 +90,10 @@ export default function Navbar() {
             <button
               data-collapse-toggle="navbar-user"
               type="button"
+              onClick={() => setNavOpen(!navOpen)}
               className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
               aria-controls="navbar-user"
-              aria-expanded="false"
+              aria-expanded={navOpen}
             >
               <span className="sr-only">Open main menu</span>
               <svg
@@ -114,13 +116,14 @@ export default function Navbar() {
           </div>
 
           <div
-            className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+            className={`${navOpen ? '' : 'hidden'} items-center justify-between w-full md:flex md:w-auto md:order-1`}
             id="navbar-user"
           >
             <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base  md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ">
               <li>
                 <a
                   href="/"
+                  onClick={() => setNavOpen(false)}
                   className="block py-2 px-3 text-heading hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
                   aria-current="page"
                 >
@@ -130,6 +133,7 @@ export default function Navbar() {
               <li>
                 <a
                   href="/resources"
+                  onClick={() => setNavOpen(false)}
                   className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
                 >
                   Resources
@@ -138,6 +142,7 @@ export default function Navbar() {
               <li>
                 <a
                   href="#"
+                  onClick={() => setNavOpen(false)}
                   className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
                 >
                   Blog
@@ -146,6 +151,7 @@ export default function Navbar() {
               <li>
                 <a
                   href="#"
+                  onClick={() => setNavOpen(false)}
                   className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
                 >
                   About
@@ -155,6 +161,7 @@ export default function Navbar() {
               <li>
                 <a
                   href="#"
+                  onClick={() => setNavOpen(false)}
                   className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
                 >
                   Contact

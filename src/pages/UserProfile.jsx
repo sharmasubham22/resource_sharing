@@ -42,7 +42,11 @@ export default function UserProfile() {
     <div className="text-left max-w-2xl mx-auto my-10">
       <div className="mb-5 text-center">
         <img
-          src={preview || firebase.user?.userPhoto}
+          src={
+            preview ||
+            firebase.user?.userPhoto ||
+            "https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png"
+          }
           alt="Profile"
           onClick={() => fileInputRef.current && fileInputRef.current.click()}
           className="w-32 h-32 mb-3 mx-auto rounded-full object-cover cursor-pointer"
@@ -56,17 +60,28 @@ export default function UserProfile() {
             className="hidden"
           />
           {selectedFile ? (
-            <button onClick={uploadPhoto} disabled={uploading} className="bg-brand text-white px-4 py-2 rounded-base">
-              {uploading ? 'Uploading...' : 'Upload Photo'}
+            <button
+              onClick={uploadPhoto}
+              disabled={uploading}
+              className="bg-brand text-white px-4 py-2 rounded-base"
+            >
+              {uploading ? "Uploading..." : "Upload Photo"}
             </button>
           ) : (
-            <button onClick={() => fileInputRef.current && fileInputRef.current.click()} className="bg-neutral-secondary-medium px-4 py-2 rounded-base">
+            <button
+              onClick={() =>
+                fileInputRef.current && fileInputRef.current.click()
+              }
+              className="bg-neutral-secondary-medium px-4 py-2 rounded-base"
+            >
               Change Photo
             </button>
           )}
         </div>
       </div>
-      <p className='text-center text-brand'>{firebase.user?.name} | {firebase.user?.email}</p>
+      <p className="text-center text-brand">
+        {firebase.user?.name} | {firebase.user?.email}
+      </p>
     </div>
   );
 }

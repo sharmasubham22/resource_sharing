@@ -13,10 +13,36 @@ export default function ResourceCard(props) {
     const navigate = useNavigate();
   return (
     <div>
-      <div className="bg-neutral-secondary-soft rounded-base block max-w-sm shadow-md mb-10">
-      
-          <img className="h-50 w-full rounded-t-base" src={imgUrl} alt="" />
-        
+      <div className="bg-neutral-secondary-soft rounded-base block shadow-md">
+        <div className="relative">
+          <img className="h-60 w-full rounded-t-base" src={imgUrl} alt="" />
+          {!props.hideDelete && (
+            <button
+              className="cursor-pointer"
+              onClick={() => firebase.deleteResource(props.id)}
+            >
+          <span class="absolute top-3 right-3 bg-red-500 px-3 py-1 rounded-full text-sm font-medium">
+            <svg
+              className="w-6 h-6 text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+              />
+            </svg>
+          </span>
+          </button>
+          )}
+        </div>
         <div className="p-6 text-center">
           <h5 className="mt-3 mb-6 text-2xl font-semibold tracking-tight text-heading">
             {props.title}
@@ -42,7 +68,7 @@ export default function ResourceCard(props) {
           )}
           <button
             onClick={(e) => navigate(`/view-resource/${props.id}`)}
-            className="bg-brand text-white px-3 py-1 rounded-3xl font-medium text-sm inline-flex items-center mt-5"
+            className="bg-brand cursor-pointer text-white px-3 py-1 rounded-3xl font-medium text-sm inline-flex items-center mt-5"
           >
             Read Full Article
             <svg
@@ -63,6 +89,31 @@ export default function ResourceCard(props) {
               />
             </svg>
           </button>
+          {/* <br />
+          {!props.hideDelete && (
+            <button
+              className="cursor-pointer mt-5"
+              onClick={() => firebase.deleteResource(props.id)}
+            >
+              <svg
+                className="w-6 h-6 text-red-600"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                />
+              </svg>
+            </button>
+          )} */}
         </div>
       </div>
     </div>

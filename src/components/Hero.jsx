@@ -2,26 +2,26 @@ import React from 'react'
 
 export default function Hero() {
   return (
-    <div class="py-8 px-4 mx-auto max-w-7xl lg:py-16">
-      <div class="text-center p-4 md:p-12 mb-8">
-        <span class="inline-flex items-center bg-brand-softer border border-brand-soft text-fg-brand-strong text-xs font-medium px-1.5 py-0.5 rounded-sm">
+    <div className="py-8 px-4 mx-auto max-w-7xl lg:py-16">
+      <div className="text-center p-4 md:p-12 mb-8">
+        <span className="inline-flex items-center bg-brand-softer border border-brand-soft text-fg-brand-strong text-xs font-medium px-1.5 py-0.5 rounded-sm">
           Resources
         </span>
-        <h1 class="text-heading tracking-tighter text-3xl md:text-5xl font-bold my-6">
+        <h1 className="text-heading tracking-tighter text-3xl md:text-5xl font-bold my-6">
           The community's just getting Bigger!!
         </h1>
-        <p class="md:text-lg font-normal text-body mb-6">
+        <p className="md:text-lg font-normal text-body mb-6">
           Static websites are now used to bootstrap lots of websites and are
           becoming the basis for a variety of tools that even influence web
           designers.
         </p>
         <button
           type="button"
-          class="inline-flex items-center justify-center text-white bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium  text-base px-5 py-3 focus:outline-none"
+          className="inline-flex items-center justify-center text-white bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium  text-base px-5 py-3 focus:outline-none"
         >
           Find out more
           <svg
-            class="w-4 h-4 ms-1.5 -me-0.5"
+            className="w-4 h-4 ms-1.5 -me-0.5"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -39,11 +39,11 @@ export default function Hero() {
           </svg>
         </button>
       </div>
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="bg-gray-100 rounded-base p-4 md:p-12">
-          <span class="inline-flex items-center bg-brand-softer border border-brand-soft text-fg-brand-strong text-xs font-medium px-1.5 py-0.5 rounded-sm">
+      <div className="grid md:grid-cols-2 gap-8">
+        <div className="bg-gray-100 rounded-base p-4 md:p-12">
+          <span className="inline-flex items-center bg-brand-softer border border-brand-soft text-fg-brand-strong text-xs font-medium px-1.5 py-0.5 rounded-sm">
             <svg
-              class="w-3 h-3 me-1"
+              className="w-3 h-3 me-1"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -61,21 +61,21 @@ export default function Hero() {
             </svg>
             Collaborate
           </span>
-          <h2 class="text-heading text-xl md:text-3xl font-semibold my-4">
+          <h2 className="text-heading text-xl md:text-3xl font-semibold my-4">
             Start with Flowbite Design System
           </h2>
-          <p class=" font-normal text-body mb-4">
+          <p className=" font-normal text-body mb-4">
             Static websites are now used to bootstrap lots of websites and are
             becoming the basis for a variety of tools that even influence both
             web designers and developers.
           </p>
           <a
             href="#"
-            class="text-fg-brand hover:underline font-medium text-lg inline-flex items-center"
+            className="text-fg-brand hover:underline font-medium text-lg inline-flex items-center"
           >
             Read more
             <svg
-              class="w-6 h-6 rtl:rotate-180 ms-1.5"
+              className="w-6 h-6 rtl:rotate-180 ms-1.5"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -93,10 +93,10 @@ export default function Hero() {
             </svg>
           </a>
         </div>
-        <div class="bg-gray-100 rounded-base p-4 md:p-12">
-          <span class="inline-flex items-center bg-brand-softer border border-brand-soft text-fg-brand-strong text-xs font-medium px-1.5 py-0.5 rounded-sm">
+        <div className="bg-gray-100 rounded-base p-4 md:p-12">
+          <span className="inline-flex items-center bg-brand-softer border border-brand-soft text-fg-brand-strong text-xs font-medium px-1.5 py-0.5 rounded-sm">
             <svg
-              class="w-3 h-3 me-1"
+              className="w-3 h-3 me-1"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -114,21 +114,21 @@ export default function Hero() {
             </svg>
             Code
           </span>
-          <h2 class="text-heading text-xl md:text-3xl font-semibold my-4">
+          <h2 className="text-heading text-xl md:text-3xl font-semibold my-4">
             Best react libraries around the web
           </h2>
-          <p class=" font-normal text-body mb-4">
+          <p className=" font-normal text-body mb-4">
             Static websites are now used to bootstrap lots of websites and are
             becoming the basis for a variety of tools that even influence both
             web designers and developers.
           </p>
           <a
             href="#"
-            class="text-fg-brand hover:underline font-medium text-lg inline-flex items-center"
+            className="text-fg-brand hover:underline font-medium text-lg inline-flex items-center"
           >
             Read more
             <svg
-              class="w-6 h-6 rtl:rotate-180 ms-1.5"
+              className="w-6 h-6 rtl:rotate-180 ms-1.5"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               width="24"
