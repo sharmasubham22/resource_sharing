@@ -23,7 +23,7 @@ export default function AllResources() {
     }
   return (
     <div className="mt-30">
-      <h1 class="text-3xl md:text-5xl pl-2 mx-10 my-2 border-l-8  font-sans font-bold border-brand ">
+      <h1 className="text-3xl md:text-5xl pl-2 mx-10 my-2 border-l-8  font-sans font-bold border-brand ">
         Resources
       </h1>
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 p-10">
@@ -31,6 +31,7 @@ export default function AllResources() {
           <ResourceCard
             key={resource.id}
             id={resource.id}
+            hideDelete={true}
             {...resource.data()}
           />
         ))}
@@ -38,6 +39,7 @@ export default function AllResources() {
           <ResourceCard
             key={resource.id}
             id={resource.id}
+            hideDelete={true}
             {...resource.data()}
           />
         ))}
@@ -45,6 +47,7 @@ export default function AllResources() {
           <ResourceCard
             key={resource.id}
             id={resource.id}
+            hideDelete={true}
             {...resource.data()}
           />
         ))}

@@ -10,7 +10,7 @@ const options = [
 ];
 
 const categories = [
-    { label: "Frontend Development", value: "frontend", tags: [
+    { label: "Frontend Development", value: "Frontend Development", tags: [
         { name: "React", val:"react" },
         { name: "Vue", val:"vue" },
         { name: "Angular", val:"angular" },
@@ -24,7 +24,7 @@ const categories = [
         { name: "Next.js", val:"nextjs" },
         { name: "Gatsby", val:"gatsby" }
     ]},
-    { label: "Backend Development", value: "backend", tags: [
+    { label: "Backend Development", value: "Backend Development", tags: [
         { name: "Node.js", val:"nodejs" },
         { name: "Django", val:"django" },
         { name: "Flask", val:"flask" },
@@ -37,7 +37,7 @@ const categories = [
         { name: "Go", val:"go" },
         { name: "Java", val:"java" }
     ]},
-    { label: "Full Stack Development", value: "fullStack", tags: [
+    { label: "Full Stack Development", value: "Full-Stack Development", tags: [
         { name: "MERN", val:"mern" },
         { name: "MEAN", val:"mean" },
         { name: "Django + React", val:"djangoReact" },
@@ -45,7 +45,7 @@ const categories = [
         { name: "LAMP", val:"lamp" },
         { name: "Ruby on Rails + React", val:"rubyOnRailsReact" }
     ] },
-    { label: "Databases", value: "databases", tags: [
+    { label: "Databases", value: "Databases", tags: [
         { name: "MySQL", val:"mysql" },
         { name: "PostgreSQL", val:"postgresql" },
         { name: "MongoDB", val:"mongodb" },
@@ -55,7 +55,7 @@ const categories = [
         { name: "Cassandra", val:"cassandra" },
         { name: "DynamoDB", val:"dynamodb" }
     ]},
-    { label: "Mobile Development", value: "mobileDevelopment", tags: [
+    { label: "Mobile Development", value: "Mobile Development", tags: [
         { name: "React Native", val:"reactNative" },
         { name: "Flutter", val:"flutter" },
         { name: "Swift", val:"swift" },
@@ -63,7 +63,7 @@ const categories = [
         { name: "Ionic", val:"ionic" },
         { name: "Xamarin", val:"xamarin" }
     ]},
-    { label: "Data Science & Machine Learning", value: "dataScienceAndMachineLearning", tags: [
+    { label: "Data Science & Machine Learning", value: "Data Science And Machine Learning", tags: [
         { name: "Python", val:"python" },
         { name: "R", val:"r" },
         { name: "TensorFlow", val:"tensorflow" },
@@ -79,7 +79,7 @@ const categories = [
         { name: "Statistics", val:"statistics" },
         { name: "Deep Learning", val:"deepLearning" }
     ]},
-    { label: "Data Structures & Algorithms", value: "dsa", tags: [
+    { label: "Data Structures & Algorithms", value: "Data Strucutres and Algorithm", tags: [
         { name: "Arrays", val:"arrays" },
         { name: "Linked Lists", val:"linkedLists" },
         { name: "Stacks", val:"stacks" },
@@ -97,7 +97,7 @@ const categories = [
         { name: "Bit Manipulation", val:"bitManipulation" },
         { name: "Complexity Analysis", val:"complexityAnalysis" }  
     ]},
-    { label: "System Design", value: "systemDesign", tags: [
+    { label: "System Design", value: "System Design", tags: [
         { name: "Scalability", val:"scalability" },
         { name: "Load Balancing", val:"loadBalancing" },
         { name: "Caching", val:"caching" },
@@ -114,7 +114,7 @@ const categories = [
         { name: "Fault Tolerance", val:"faultTolerance" },
         { name: "Monitoring & Logging", val:"monitoringAndLogging" }
     ]},
-    { label: "DevOps & CI/CD", value: "devOpsAndCICD", tags: [
+    { label: "DevOps & CI/CD", value: "DevOps And CICD", tags: [
         { name: "Docker", val:"docker" },
         { name: "Kubernetes", val:"kubernetes" },
         { name: "Jenkins", val:"jenkins" },
@@ -126,7 +126,7 @@ const categories = [
         { name: "Monitoring Tools", val:"monitoringTools" },
         { name: "Infrastructure as Code", val:"infrastructureAsCode" }
     ]},
-    { label: "Cloud Computing", value: "cloudComputing", tags: [
+    { label: "Cloud Computing", value: "Cloud Computing", tags: [
         { name: "AWS", val:"aws" },
         { name: "Azure", val:"azure" },
         { name: "Google Cloud", val:"googleCloud" },
@@ -138,7 +138,7 @@ const categories = [
         { name: "Cloud Monitoring", val:"cloudMonitoring" },
         { name: "Cloud DevOps", val:"cloudDevOps" }
     ]},
-    { label: "Interview Preparation", value: "interviewPreparation", tags: [
+    { label: "Interview Preparation", value: "Interview Preparation", tags: [
         { name: "Behavioral Questions", val:"behavioralQuestions" },
         { name: "Technical Questions", val:"technicalQuestions" },
         { name: "Mock Interviews", val:"mockInterviews" },
@@ -147,7 +147,7 @@ const categories = [
         { name: "System Design Interviews", val:"systemDesignInterviews" },
         { name: "Aptitude Tests", val:"aptitudeTests" }
     ]},
-    { label: "Career & Resume", value: "careerAndResume", tags: [
+    { label: "Career & Resume", value: "Career And Resume", tags: [
         { name: "Resume Writing", val:"resumeWriting" },
         { name: "Cover Letters", val:"coverLetters" },
         { name: "Job Search Strategies", val:"jobSearchStrategies" },

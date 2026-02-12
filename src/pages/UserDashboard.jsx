@@ -68,12 +68,12 @@ export default function UserDashboard() {
             >
               <a
                 href="/add-resource"
-                className="bg-brand text-white p-4 rounded-lg hover:bg-brand-strong transition-colors md:float-end mb-6 mx-5"
+                className="bg-brand text-white p-4 rounded-lg hover:bg-brand-strong transition-colors sm:float-end mb-6 mx-5"
               >
                 <span className="inline-flex">
                   Add a new Resource
                   <svg
-                    class="w-6 h-6 text-gray-800 dark:text-white"
+                    className="w-6 h-6 text-gray-800 dark:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -91,7 +91,7 @@ export default function UserDashboard() {
                   </svg>
                 </span>
               </a>
-              <div className="mt-5 w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-20">
+              <div className="mt-5 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-10">
                 {myResources.map((resource) => (
                   <ResourceCard
                     key={resource.id}
@@ -114,7 +114,7 @@ export default function UserDashboard() {
                 <span className="inline-flex">
                   Write a new Blog
                   <svg
-                    class="w-6 h-6 text-gray-800 dark:text-white"
+                    className="w-6 h-6 text-gray-800 dark:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
