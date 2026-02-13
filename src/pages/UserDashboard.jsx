@@ -19,7 +19,7 @@ export default function UserDashboard() {
       
 
     return (
-      <div className="mt-20">
+      <div className="mt-10">
         <UserProfile />
         <div>
           <div className="mb-4">
@@ -73,7 +73,7 @@ export default function UserDashboard() {
                 <span className="inline-flex">
                   Add a new Resource
                   <svg
-                    className="w-6 h-6 text-gray-800 dark:text-white"
+                    className="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5 text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -92,13 +92,19 @@ export default function UserDashboard() {
                 </span>
               </a>
               <div className="mt-5 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-10">
-                {myResources.map((resource) => (
-                  <ResourceCard
-                    key={resource.id}
-                    id={resource.id}
-                    {...resource.data()}
-                  />
-                ))}
+                {myResources.length === 0 ? (
+                  <p className="text-center">
+                    You haven't added any resources yet
+                  </p>
+                ) : (
+                  myResources.map((resource) => (
+                    <ResourceCard
+                      key={resource.id}
+                      id={resource.id}
+                      {...resource.data()}
+                    />
+                  ))
+                )}
               </div>
             </div>
             <div
@@ -114,7 +120,7 @@ export default function UserDashboard() {
                 <span className="inline-flex">
                   Write a new Blog
                   <svg
-                    className="w-6 h-6 text-gray-800 dark:text-white"
+                    className="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5 text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -132,9 +138,7 @@ export default function UserDashboard() {
                   </svg>
                 </span>
               </a>
-              <div className='my-20'>
-                Blogs
-              </div>
+              <div className="my-20">Blogs</div>
             </div>
           </div>
         </div>

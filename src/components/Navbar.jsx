@@ -78,7 +78,7 @@ export default function Navbar() {
                           setDropdownOpen(false);
                           firebase.logout();
                         }}
-                        className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded cursor-pointer"
+                        className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium text-red-600 rounded cursor-pointer"
                       >
                         Sign out
                       </a>
