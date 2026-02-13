@@ -14,7 +14,7 @@ import CategorizedResources from './pages/CategorizedResources.jsx';
 
 export default function App() {
   return (
-    <>
+    <div className='flex flex-col min-h-screen'>
       <Navbar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -27,7 +27,7 @@ export default function App() {
         <Route path='/resources/:category' element={<CategorizedResources />}/>
       </Routes>
       <Footer />
-    </>
+    </div>
   );
 }
 

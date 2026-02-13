@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Footer() {
   return (
-    <div>
+    <div className='mt-auto'>
       <footer className="bg-neutral-950">
         <div className="w-full mx-auto max-w-7xl p-4 md:flex md:items-center md:justify-between">
           <span className="text-sm text-white sm:text-center">
