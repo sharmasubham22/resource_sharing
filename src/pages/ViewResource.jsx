@@ -9,16 +9,18 @@ export default function ViewResource() {
     const [imgUrl, setImgUrl] = useState(null);
     const [rating, setRating] = useState(3.5);
     
-        useEffect(() => {
-            if (resourceData) {
-                const imgURL = resourceData.coverPhoto;
-                firebase.getResourceImg(imgURL).then(url => setImgUrl(url));
-            }
-        }, [resourceData]);
+    useEffect(() => {
+        if (resourceData) {
+            const imgURL = resourceData.coverPhoto;
+            firebase.getResourceImg(imgURL).then(url => setImgUrl(url));
+        }
+    }, [resourceData]);
 
     useEffect(() => {
         firebase.viewResource(params.id).then(resource => {
             setResourceData(resource.data());
+        }).catch(err => {
+            console.error("Error fetching my resources:", err);
         })
     }, []);
 
@@ -78,7 +80,7 @@ export default function ViewResource() {
             rows={5}
             placeholder="Enter your comment"
           />
-          <button className="text-white mt-5 bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-fg-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+          <button className="text-white my-5 bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-fg-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
             Post Your Review
           </button>
         </div>

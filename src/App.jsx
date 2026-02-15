@@ -10,6 +10,7 @@ import AllResources from './pages/AllResources.jsx';
 import UserDashboard from './pages/UserDashboard.jsx';
 import ViewResource from './pages/ViewResource.jsx';
 import CategorizedResources from './pages/CategorizedResources.jsx';
+import EditResource from './pages/EditResource.jsx';
 // import "flowbite";
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/my-dashboard" element={<UserDashboard />} />
         <Route path="/view-resource/:id" element={<ViewResource />} />
         <Route path='/resources/:category' element={<CategorizedResources />}/>
+        <Route path='/edit-resource/:id' element={<EditResource />}/>
       </Routes>
       <Footer />
     </div>
