@@ -67,7 +67,7 @@ export default function ResourceCard(props) {
             </div>
           )}
 
-          <div class="flex mt-4 md:mt-6 gap-4 items-center justify-center">
+          <div className="flex mt-4 md:mt-6 gap-4 items-center justify-center">
             <button
               type="button"
               onClick={(e) => navigate(`/view-resource/${props.id}`)}
@@ -75,7 +75,7 @@ export default function ResourceCard(props) {
             >
               Read Full Article
               <svg
-                class="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5"
+                className="w-4 h-4 ms-1.5 rtl:rotate-180 -me-0.5"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -95,6 +95,7 @@ export default function ResourceCard(props) {
             {!props.hideDelete && (
             <button
               type="button"
+              onClick={(e) => navigate(`/edit-resource/${props.id}`)}
               className="inline-flex cursor-pointer self-start w-auto text-body bg-neutral-secondary-medium box-border border border-default-medium hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
             >
               Edit Article
@@ -106,3 +107,4 @@ export default function ResourceCard(props) {
     </div>
   );
 }
+ 

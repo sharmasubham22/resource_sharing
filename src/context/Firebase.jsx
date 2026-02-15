@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { createContext, useContext, useEffect, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut} from "firebase/auth";
-import { getFirestore, setDoc, doc, serverTimestamp, addDoc, collection, getDocs, getDoc, query, where, deleteDoc } from "firebase/firestore";
+import { getFirestore, setDoc, doc, serverTimestamp, addDoc, collection, getDocs, getDoc, query, where, deleteDoc, updateDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const provider = new GoogleAuthProvider();
@@ -207,8 +207,18 @@ export const FirebaseProvider = (props)=>{
         return { result, result2 };
       }
 
+      const updateResource = async (id, data) => {
+        const userRef = doc(firestore, "users", user.uid, "resources", id);
+        const ResourceRef = doc(firestore, "allResources", id);
+
+        const result = await updateDoc(userRef, data);
+        const result2 = await updateDoc(ResourceRef, data);
+
+        return { result, result2 };
+      }
+
   return (
-    <FirebaseContext.Provider value={{signUp, signUpWithGoogle, login, loggedin, user, logout, addResource, getAllResources, getMyResources, viewResource, getResourceImg, categorizedResources, updateProfilePhoto, deleteResource}}>
+    <FirebaseContext.Provider value={{signUp, signUpWithGoogle, login, loggedin, user, logout, addResource, getAllResources, getMyResources, viewResource, getResourceImg, categorizedResources, updateProfilePhoto, deleteResource, updateResource}}>
       {props.children}
     </FirebaseContext.Provider>
   )
