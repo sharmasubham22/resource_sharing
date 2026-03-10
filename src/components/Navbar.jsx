@@ -7,8 +7,8 @@ export default function Navbar() {
   const [navOpen, setNavOpen] = useState(false);
   return (
     <div className="mb-12">
-      <nav className="bg-neutral-primary fixed w-full z-20 top-0 start-0 p-3 shadow-lg">
-        <div className="max-w-7xl flex flex-wrap items-center justify-between mx-auto p-2">
+      <nav className="bg-neutral-primary fixed w-full z-20 top-0 start-0 p-3">
+        <div className="flex flex-wrap items-center justify-between mx-auto px-5 py-2">
           <a
             href="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
@@ -22,7 +22,7 @@ export default function Navbar() {
             {firebase.user === null ? (
               <a
                 href="/login"
-                className="text-fg-brand hover:underline font-medium text-lg inline-flex items-center py-1"
+                className="text-brand-medium hover:underline font-medium text-md inline-flex items-center py-1"
               >
                 Login
               </a>
@@ -91,7 +91,7 @@ export default function Navbar() {
               data-collapse-toggle="navbar-user"
               type="button"
               onClick={() => setNavOpen(!navOpen)}
-              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
+              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-medium hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
               aria-controls="navbar-user"
               aria-expanded={navOpen}
             >
@@ -124,7 +124,7 @@ export default function Navbar() {
                 <a
                   href="/"
                   onClick={() => setNavOpen(false)}
-                  className="block py-2 px-3 text-heading hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
+                  className="block py-2 px-3 text-heading hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-brand-medium md:p-0 md:dark:hover:bg-transparent"
                   aria-current="page"
                 >
                   Home
@@ -134,16 +134,16 @@ export default function Navbar() {
                 <a
                   href="/resources"
                   onClick={() => setNavOpen(false)}
-                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
+                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-brand-medium md:p-0 md:dark:hover:bg-transparent"
                 >
                   Resources
                 </a>
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/blogs"
                   onClick={() => setNavOpen(false)}
-                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
+                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-brand-medium md:p-0 md:dark:hover:bg-transparent"
                 >
                   Blog
                 </a>
@@ -152,7 +152,7 @@ export default function Navbar() {
                 <a
                   href="#"
                   onClick={() => setNavOpen(false)}
-                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
+                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-brand-medium md:p-0 md:dark:hover:bg-transparent"
                 >
                   About
                 </a>
@@ -162,7 +162,7 @@ export default function Navbar() {
                 <a
                   href="#"
                   onClick={() => setNavOpen(false)}
-                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
+                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-brand-medium md:p-0 md:dark:hover:bg-transparent"
                 >
                   Contact
                 </a>

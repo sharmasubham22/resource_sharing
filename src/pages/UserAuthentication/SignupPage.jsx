@@ -1,27 +1,27 @@
-import { useFirebase } from '../context/Firebase';
-import {useState, useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useFirebase } from "../../context/Firebase";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SignupPage() {
   const firebase = useFirebase();
   const [name, setName] = useState("");
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [userPhoto, setUserPhoto] = useState("");
   const navigate = useNavigate();
 
-   useEffect(() => {
-          if (firebase.loggedin) {
-              navigate('/');
-          }
-      },[firebase, navigate]);
-  
-      const submit = (e) => {
-          e.preventDefault();
-  
-          const result = firebase.signUp(email, password, name, userPhoto);
-          console.log("Success");
-      }
+  useEffect(() => {
+    if (firebase.loggedin) {
+      navigate("/");
+    }
+  }, [firebase, navigate]);
+
+  const submit = (e) => {
+    e.preventDefault();
+
+    const result = firebase.signUp(email, password, name, userPhoto);
+    console.log("Success");
+  };
 
   return (
     <div class="w-full max-w-sm mx-auto mt-15  bg-neutral-primary-soft p-6 border border-default rounded-base shadow-xs">
@@ -43,7 +43,7 @@ export default function SignupPage() {
               id="name"
               type="text"
               required
-              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               placeholder="Enter your name"
             />
           </div>
@@ -60,7 +60,7 @@ export default function SignupPage() {
               type="email"
               id="email"
               required
-              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               placeholder="Enter email address"
             />
           </div>
@@ -77,13 +77,13 @@ export default function SignupPage() {
               type="password"
               id="user-password"
               required
-              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               placeholder="Enter password"
             />
           </div>
           <div class="">
             <button
-              className="text-white w-full bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-fg-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+              className="text-white w-full bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
               onClick={submit}
             >
               Create Account
@@ -114,7 +114,7 @@ export default function SignupPage() {
         </div>
         <div class="text-sm font-medium text-body">
           Already registered?{" "}
-          <a href="/login" class="text-fg-brand hover:underline">
+          <a href="/login" class="text-brand-medium hover:underline">
             Go to your account
           </a>
         </div>
@@ -122,5 +122,3 @@ export default function SignupPage() {
     </div>
   );
 }
-
-

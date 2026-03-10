@@ -1,6 +1,6 @@
 import {React, useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-import { useFirebase } from '../context/Firebase';
+import { useFirebase } from '../../context/Firebase'
 
 
 export default function LoginPage() {
@@ -38,7 +38,7 @@ export default function LoginPage() {
             <input
               onChange={(e) => setEmail(e.target.value)}
               value={email}
-              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               type="email"
               required
               placeholder="Enter email address"
@@ -52,14 +52,14 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               value={password}
               type="password"
-              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               required
               placeholder="Enter password"
             />
           </div>
           <div>
             <button
-              className="text-white w-full bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-fg-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+              className="text-white w-full bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
               onClick={submit}
             >
               Login
@@ -89,7 +89,7 @@ export default function LoginPage() {
         </div>
         <div class="text-sm font-medium text-body">
           Not registered?{" "}
-          <a href="/signup" class="text-fg-brand hover:underline">
+          <a href="/signup" className="text-brand-medium hover:underline">
             Create account
           </a>
         </div>
