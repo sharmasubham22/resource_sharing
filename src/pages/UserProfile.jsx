@@ -79,7 +79,7 @@ export default function UserProfile() {
           )}
         </div>
       </div>
-      <p className="text-center text-brand">
+      <p className="text-center text-brand-medium">
         {firebase.user?.name} | {firebase.user?.email}
       </p>
     </div>

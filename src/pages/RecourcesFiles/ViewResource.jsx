@@ -1,13 +1,13 @@
 import { React, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
-import { useFirebase } from '../context/Firebase';
+import { useFirebase } from '../../context/Firebase';
 
 export default function ViewResource() {
     const params = useParams();
     const firebase = useFirebase();
     const [resourceData, setResourceData] = useState(null);
     const [imgUrl, setImgUrl] = useState(null);
-    const [rating, setRating] = useState(3.5);
+    const [rating, setRating] = useState(0);
     
     useEffect(() => {
         if (resourceData) {
@@ -45,7 +45,7 @@ export default function ViewResource() {
             {resourceData.tags.map((tag, idx) => (
               <span
                 key={idx}
-                className="inline-flex items-center bg-brand-softer border border-brand-soft text-fg-brand-strong text-xs font-medium px-2 py-0.5 rounded-sm"
+                className="inline-flex items-center bg-brand-softer border border-brand-soft text-brand-strong text-xs font-medium px-2 py-0.5 rounded-sm"
               >
                 {tag}
               </span>
@@ -58,7 +58,7 @@ export default function ViewResource() {
           alt=""
         />
 
-        <p className="text-body">{resourceData.description}</p>
+        <div className="text-body" dangerouslySetInnerHTML={{ __html: resourceData.description }} />
         <div className="mt-5">
           <label className="block mb-2.5 text-sm font-medium text-heading">
             Leave a Review:{rating}
@@ -68,7 +68,7 @@ export default function ViewResource() {
             max="5"
             step="0.5"
             type="range"
-            defaultValue="3.5"
+            defaultValue="0"
             onChange={valuetext}
           />
 
@@ -76,11 +76,11 @@ export default function ViewResource() {
             Add a Comment
           </label>
           <textarea
-            className="bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm rounded-base focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+            className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
             rows={5}
             placeholder="Enter your comment"
           />
-          <button className="text-white my-5 bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-fg-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+          <button className="text-white my-5 bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
             Post Your Review
           </button>
         </div>

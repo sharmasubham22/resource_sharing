@@ -13,9 +13,11 @@
     "@tailwindcss/vite": "^4.1.18",
     "firebase": "^12.8.0",
     "flowbite": "^4.0.1",
+    "jodit-react": "^5.3.21",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.13.0",
+    "sweetalert2": "^11.26.21",
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from 'react';
-import { useFirebase } from '../context/Firebase'
-import ResourceCard from '../components/ResourceCard';
+import { useFirebase } from '../../context/Firebase'
+import ResourceCard from '../../components/ResourceCard';
 
 export default function AllResources() {
     const firebase = useFirebase();
@@ -108,7 +108,7 @@ export default function AllResources() {
           />
         </div>
       </div>
-      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 p-10">
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 p-10">
         {filterResources.length === 0 ? (
           <p className="col-span-full text-center text-gray-500">
             No resources found

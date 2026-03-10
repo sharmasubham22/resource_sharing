@@ -11,7 +11,7 @@ export default function LandingPage() {
       <section>
         <Hero />
       </section>
-      <section className="py-8 px-4 mx-auto lg:py-16 bg-linear-to-t from-gray-200 to-neutral-primary">
+      <section className="py-8 px-4 mx-auto lg:py-16 bg-linear-to-t from-brand-softer to-neutral-primary">
         <div className="max-w-7xl rounded-base mx-auto bg-neutral-primary p-4 md:p-12">
           <h1 className="text-2xl md:text-4xl  mb-10 font-bold text-center">
             Popular Topics
@@ -22,7 +22,7 @@ export default function LandingPage() {
                 <button
                   onClick={(e) => nav(`/resources/${category.value}`)}
                   key={category.value}
-                  className="inline-flex items-center border text-body text-s m-2 font-medium px-3 py-1 cursor-pointer hover:bg-black hover:text-white rounded-2xl"
+                  className="inline-flex items-center border border-bg-brand text-brand text-s m-2 font-medium px-3 py-1 cursor-pointer hover:bg-brand hover:text-white rounded-2xl"
                 >
                   {category.label}
                 </button>
@@ -40,6 +40,7 @@ export default function LandingPage() {
         <h1 className="text-2xl md:text-4xl text-center text-white mb-10 font-bold">
           Trending Resources
         </h1>
+
       </section>
       <section className="h-full p-10">
         <h1 className="text-2xl md:text-4xl  mb-10 font-bold text-center">

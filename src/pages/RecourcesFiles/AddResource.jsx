@@ -1,6 +1,9 @@
-import { useFirebase } from "../context/Firebase";
-import { useState } from "react";
-import { options, categories } from '../data/addResourceData';
+import { useFirebase } from "../../context/Firebase";
+import { useState, useRef, useMemo } from "react";
+import { options, categories } from '../../data/addResourceData';
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import JoditEditor from "jodit-react";
 
 export default function AddResource() {
     const [title, setTitle] = useState('');
@@ -12,6 +15,60 @@ export default function AddResource() {
     const [selectedValue, setSelectedValue] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedTags, setSelectedTags] = useState([]);
+
+    const nav = useNavigate();
+
+    const editor = useRef(null);
+    const codeEditor = useRef(null);
+
+    const config = useMemo(
+      () => ({
+        placeholder: "Enter description",
+        height: 150,
+        minHeight: 300,
+        buttons: [
+          "bold",
+          "italic",
+          "underline",
+          "strikethrough",
+          "ul",
+          "ol",
+          "paragraph",
+          "lineHeight",
+          "source",
+          "spellcheck",
+          "cut",
+          "copy",
+          "paste",
+          "selectall",
+          "copyformat",
+          "hr",
+          "table",
+          "link",
+          "symbols",
+          "indent",
+          "outdent",
+          "left",
+          "undo",
+          "redo",
+          "find",
+          "fullsize",
+          "preview",
+          "print",
+        ],
+        toolbarAdaptive: false,
+      }),
+      [],
+    );
+
+    const config2 = useMemo(
+      () => ({
+        defaultMode: "source",
+        buttons: ["source"],
+        toolbarAdaptive: false,
+      }),
+      [],
+    );
 
     const toggleTag = (val) => {
       setSelectedTags((prev) => (prev.includes(val) ? prev.filter((t) => t !== val) : [...prev, val]));
@@ -32,15 +89,21 @@ export default function AddResource() {
         e.preventDefault();
         const result = firebase.addResource(title, desc, coverPhoto, selectedValue, link, codeSnippet, uploadFile, selectedCategory, selectedTags);
         console.log("Success");
+        // nav('/my-dashboard');
+        Swal.fire({
+          title: "Success!",
+          text: "Resource created successfully!",
+          icon: "success",
+        });
       };
 
     
   return (
-    <div className="text-left mt-30">
-      <h2 className="text-3xl md:text-5xl pl-2  mx-10 my-2 border-l-8  font-sans font-bold border-brand ">
+    <div className="text-left mt-15">
+      <h2 className="text-3xl md:text-5xl pl-2   mx-5 md:mx-10 my-2 border-l-8  font-sans font-bold border-brand ">
         Add a Resource
       </h2>
-      <form className="max-w-3xl p-10">
+      <form className="max-w-3xl p-5 md:p-10">
         <div className="add-resource">
           <div className="mb-5">
             <label
@@ -53,7 +116,7 @@ export default function AddResource() {
               onChange={(e) => setTitle(e.target.value)}
               value={title}
               id="title"
-              className="border border-default-medium text-heading text-sm  bg-neutral-secondary-medium focus:bg-brand-softer focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="border border-default-medium rounded-base text-heading text-sm  bg-neutral-secondary-medium  focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
               type="text"
               required
               placeholder="Enter title"
@@ -66,14 +129,14 @@ export default function AddResource() {
             >
               Description
             </label>
-            <textarea
-              onChange={(e) => setDesc(e.target.value)}
+            <JoditEditor
+              ref={editor}
+              config={config}
               value={desc}
+              onChange={(value) => setDesc(value)}
               id="description"
-              className="bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm  focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="bg-neutral-secondary-medium rounded-base border border-default-medium text-heading text-sm  focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body"
               required
-              rows={10}
-              placeholder="Enter description"
             />
           </div>
           <div className="mb-5">
@@ -88,7 +151,7 @@ export default function AddResource() {
                 setCoverPhoto(e.target.files ? e.target.files[0] : null)
               }
               id="coverPhoto"
-              className="cursor-pointer bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm  focus:ring-fg-brand focus:border-fg-brand block w-full shadow-xs placeholder:text-body"
+              className="cursor-pointer bg-neutral-secondary-medium rounded-base border border-default-medium text-heading text-sm  focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body"
               type="file"
               accept="image/*"
             />
@@ -104,7 +167,7 @@ export default function AddResource() {
               value={selectedCategory}
               onChange={handleCategory}
               id="category"
-              className="block w-full px-3 py-2.5 bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm  focus:ring-fg-brand focus:border-fg-brand shadow-xs placeholder:text-body"
+              className="block w-full px-3 py-2.5 bg-neutral-secondary-medium rounded-base border border-default-medium text-heading text-sm  focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
             >
               <option value="">Select a category</option>
               {categories.map((category) => (
@@ -130,7 +193,7 @@ export default function AddResource() {
                       type="button"
                       key={tag.val}
                       onClick={() => toggleTag(tag.val)}
-                      className={`inline-flex items-center px-2 py-1 text-sm font-medium rounded ${selected ? "bg-brand text-white ring-2 ring-fg-brand" : "bg-brand-softer ring-1 ring-inset ring-fg-brand-subtle text-fg-fg-brand-strong"}`}
+                      className={`inline-flex items-center px-2 py-1 text-sm font-medium rounded ${selected ? "bg-brand text-white ring-2 ring-brand" : "bg-brand-softer ring-1 ring-inset ring-brand-medium text-brand-strong"}`}
                       aria-pressed={selected}
                     >
                       {tag.name}
@@ -151,7 +214,7 @@ export default function AddResource() {
               value={selectedValue}
               onChange={handleChange}
               id="type"
-              className="block w-full px-3 py-2.5 bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm  focus:ring-fg-brand focus:border-fg-brand shadow-xs placeholder:text-body"
+              className="block w-full px-3 py-2.5 bg-neutral-secondary-medium rounded-base border border-default-medium text-heading text-sm  focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
             >
               {options.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -177,7 +240,7 @@ export default function AddResource() {
                   setUploadFile(e.target.files ? e.target.files[0] : null)
                 }
                 id="file"
-                className="cursor-pointer bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm  focus:ring-fg-brand focus:border-fg-brand block w-full shadow-xs placeholder:text-body"
+                className="cursor-pointer bg-neutral-secondary-medium rounded-base border border-default-medium text-heading text-sm  focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body"
                 type="file"
               />
             </div>
@@ -194,7 +257,7 @@ export default function AddResource() {
                 onChange={(e) => setLink(e.target.value)}
                 value={link}
                 id="link"
-                className="bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm  focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+                className="bg-neutral-secondary-medium rounded-base border border-default-medium text-heading text-sm  focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
                 type="text"
                 placeholder="Enter link"
               />
@@ -208,20 +271,20 @@ export default function AddResource() {
               >
                 Code Snippet
               </label>
-              <textarea
+              <JoditEditor
+                ref={codeEditor}
+                config={config2}
                 onChange={(e) => setCodeSnippet(e.target.value)}
                 value={codeSnippet}
                 id="code"
-                className="bg-neutral-secondary-medium focus:bg-brand-softer border border-default-medium text-heading text-sm  focus:ring-fg-brand focus:border-fg-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-                rows={10}
-                placeholder="Enter code snippet"
+                className="bg-neutral-secondary-medium rounded-base border border-default-medium text-heading text-sm  focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body"
               />
             </div>
           )}
 
           <button
             onClick={create}
-            className="text-white bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-fg-brand-medium shadow-xs font-medium leading-5  text-sm px-4 py-2.5 focus:outline-none"
+            className="text-white bg-brand rounded-base hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5  text-sm px-4 py-2.5 focus:outline-none"
           >
             Create Resource
           </button>

@@ -1,16 +1,20 @@
 import './App.css'
 import {Route, Routes} from 'react-router-dom';
-import LoginPage from './pages/LoginPage.jsx';
-import SignupPage from './pages/SignupPage.jsx';
+import LoginPage from './pages/UserAuthentication/LoginPage.jsx';
+import SignupPage from './pages/UserAuthentication/SignupPage.jsx';
 import LandingPage from './pages/LandingPage.jsx';
-import AddResource from './pages/AddResource.jsx';
+import AddResource from './pages/RecourcesFiles/AddResource.jsx';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
-import AllResources from './pages/AllResources.jsx';
+import AllResources from './pages/RecourcesFiles/AllResources.jsx';
 import UserDashboard from './pages/UserDashboard.jsx';
-import ViewResource from './pages/ViewResource.jsx';
-import CategorizedResources from './pages/CategorizedResources.jsx';
-import EditResource from './pages/EditResource.jsx';
+import ViewResource from './pages/RecourcesFiles/ViewResource.jsx';
+import CategorizedResources from './pages/RecourcesFiles/CategorizedResources.jsx';
+import EditResource from './pages/RecourcesFiles/EditResource.jsx';
+import AddBlog from "./pages/Blogs/AddBlog.jsx";
+import AllBlogs from "./pages/Blogs/AllBlogs.jsx";
+import ViewBlog from './pages/Blogs/ViewBlog.jsx';
+import EditBlog from './pages/Blogs/EditBlog.jsx';
 // import "flowbite";
 
 export default function App() {
@@ -27,6 +31,10 @@ export default function App() {
         <Route path="/view-resource/:id" element={<ViewResource />} />
         <Route path='/resources/:category' element={<CategorizedResources />}/>
         <Route path='/edit-resource/:id' element={<EditResource />}/>
+        <Route path='/add-blog' element={<AddBlog />}/>
+        <Route path='/blogs' element={<AllBlogs />}/>
+        <Route path='/view-blog/:id' element={<ViewBlog />}/>
+        <Route path='/edit-blog/:id' element={<EditBlog />}/>
       </Routes>
       <Footer />
     </div>
