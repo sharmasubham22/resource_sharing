@@ -2,6 +2,7 @@ import {React, useState, useRef, useMemo} from 'react'
 import { useFirebase } from "../../context/Firebase";
 import Swal from 'sweetalert2'
 import JoditEditor from "jodit-react";
+import Button from '../../components/Button';
 
 export default function AddBlog() {
     const [title, setTitle] = useState('');
@@ -11,11 +12,12 @@ export default function AddBlog() {
 
     const editor = useRef(null);
     
-        const config = useMemo(
+    const config = useMemo(
           () => ({
             placeholder: "Enter description",
             height: 150,
             minHeight: 300,
+            theme: "editor",
             buttons: [
               "bold",
               "italic",
@@ -49,7 +51,7 @@ export default function AddBlog() {
             toolbarAdaptive: false,
           }),
           [],
-        );
+        );    
 
     const create = (e) => {
             e.preventDefault();
@@ -64,7 +66,7 @@ export default function AddBlog() {
           };
   return (
     <div className="text-left mt-15">
-      <h2 className="text-3xl md:text-5xl pl-2   mx-5 md:mx-10 my-2 border-l-8  font-sans font-bold border-brand ">
+      <h2 className="text-3xl md:text-5xl pl-2 text-text-primary mx-5 md:mx-10 my-2 border-l-8  font-sans font-bold border-brand ">
         Add a Blog post
       </h2>
       <form className="max-w-3xl p-5 md:p-10">
@@ -72,7 +74,7 @@ export default function AddBlog() {
           <div className="mb-5">
             <label
               htmlFor="title"
-              className="block mb-2.5 text-sm font-medium text-heading"
+              className="block mb-2.5 text-sm font-medium text-text-primary"
             >
               Title
             </label>
@@ -80,7 +82,7 @@ export default function AddBlog() {
               onChange={(e) => setTitle(e.target.value)}
               value={title}
               id="title"
-              className="border border-default-medium rounded-base text-heading text-sm  bg-neutral-secondary-medium  focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="block w-full px-3 py-2.5 bg-input-bg border border-input-border text-input-text text-sm focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder rounded-base"
               type="text"
               required
               placeholder="Enter title"
@@ -89,7 +91,7 @@ export default function AddBlog() {
           <div className="mb-5">
             <label
               htmlFor="description"
-              className="block mb-2.5 text-sm font-medium text-heading"
+              className="block mb-2.5 text-sm font-medium text-text-primary"
             >
               Description
             </label>
@@ -99,14 +101,14 @@ export default function AddBlog() {
               value={desc}
               onChange={(value) => setDesc(value)}
               id="description"
-              className="bg-neutral-secondary-medium rounded-base border border-default-medium text-heading text-sm  focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body"
+              className="block w-full bg-input-bg border border-input-border text-input-text text-sm focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder"
               required
             />
           </div>
           <div className="mb-5">
             <label
               htmlFor="coverPhoto"
-              className="block mb-2.5 text-sm font-medium text-heading"
+              className="block mb-2.5 text-sm font-medium text-text-primary"
             >
               Upload Cover Photo
             </label>
@@ -115,17 +117,18 @@ export default function AddBlog() {
                 setCoverPhoto(e.target.files ? e.target.files[0] : null)
               }
               id="coverPhoto"
-              className="cursor-pointer bg-neutral-secondary-medium rounded-base border border-default-medium text-heading text-sm  focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body"
+              className="block w-full bg-input-bg border border-input-border text-input-text text-sm focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder rounded-base"
               type="file"
               accept="image/*"
             />
           </div>
-          <button
+          <Button
             onClick={create}
-            className="text-white bg-brand rounded-base hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5  text-sm px-4 py-2.5 focus:outline-none"
+            variant="primary"
+            size="md"
           >
             Create Blog Post
-          </button>
+          </Button>
         </div>
       </form>
     </div>

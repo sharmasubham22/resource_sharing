@@ -1,6 +1,7 @@
 import {React, useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useFirebase } from '../../context/Firebase'
+import Button from '../../components/Button';
 
 
 export default function LoginPage() {
@@ -25,52 +26,56 @@ export default function LoginPage() {
     }
 
   return (
-    <div class="w-full max-w-sm mx-auto mt-15  bg-neutral-primary-soft p-6 border border-default rounded-base shadow-xs">
+    <div class="w-full max-w-sm mx-auto mt-15  bg-background p-6 border border-border rounded-base shadow-xs">
       <form>
-        <h1 className="text-2xl md:text-3xl pl-2 my-2 border-l-8  font-sans font-bold border-brand mb-10">
+        <h1 className="text-2xl md:text-3xl pl-2 my-2 border-l-8 text-text-primary font-sans font-bold border-brand mb-10">
           Welcome back!!
         </h1>
         <div className="login-page">
           <div className="mb-5">
-            <label className="block mb-2.5 text-sm font-medium text-heading">
+            <label className="block mb-2.5 text-sm font-medium text-text-primary">
               Email address
             </label>
             <input
               onChange={(e) => setEmail(e.target.value)}
               value={email}
-              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="block w-full px-3 py-2.5 bg-input-bg border border-input-border text-input-text text-sm focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder rounded-base"
               type="email"
               required
               placeholder="Enter email address"
             />
           </div>
           <div className="mb-5">
-            <label className="block mb-2.5 text-sm font-medium text-heading">
+            <label className="block mb-2.5 text-sm font-medium text-text-primary">
               Password
             </label>
             <input
               onChange={(e) => setPassword(e.target.value)}
               value={password}
               type="password"
-              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="block w-full px-3 py-2.5 bg-input-bg border border-input-border text-input-text text-sm focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder rounded-base"
               required
               placeholder="Enter password"
             />
           </div>
           <div>
-            <button
-              className="text-white w-full bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            <Button
               onClick={submit}
+              variant="primary"
+              size="sm"
+              className="w-full"
             >
               Login
-            </button>
-            <button
-              className="text-heading w-full flex items-center justify-center my-5 bg-neutral-secondary-medium box-border border border-transparent hover:bg-neutral-tertiary-medium focus:ring-4 focus:ring-fg-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            </Button>
+            <Button
               onClick={() => firebase.signUpWithGoogle()}
+              variant="secondary"
+              size="sm"
+              className="w-full my-5"
             >
               Sign in with Google
               <svg
-                class="w-5 h-5 ms-1.5 rtl:rotate-180 -me-0.5 text-heading"
+                class="w-5 h-5 ms-1.5 rtl:rotate-180 -me-0.5"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -84,10 +89,10 @@ export default function LoginPage() {
                   clip-rule="evenodd"
                 />
               </svg>
-            </button>
+            </Button>
           </div>
         </div>
-        <div class="text-sm font-medium text-body">
+        <div class="text-sm font-medium text-text-secondary">
           Not registered?{" "}
           <a href="/signup" className="text-brand-medium hover:underline">
             Create account

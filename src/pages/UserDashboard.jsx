@@ -3,30 +3,35 @@ import { useFirebase } from '../context/Firebase'
 import ResourceCard from '../components/ResourceCard';
 import UserProfile from './UserProfile';
 import BlogCard from '../components/BlogCard';
+import { useNavigate } from 'react-router-dom';
+import Button from '../components/Button';
 
 export default function UserDashboard() {
   const firebase = useFirebase();
-      const [myResources, setMyResources] = useState([]);
-      const [myBlogs, setMyBlogs] = useState([]);
+  const [myResources, setMyResources] = useState([]);
+  const [myBlogs, setMyBlogs] = useState([]);
 
-      useEffect(() => {
-    
-        firebase.getMyResources()
-          .then(resources => setMyResources(resources?.docs || []))
-          .catch(err => {
-            console.error("Error fetching my resources:", err);
-            setMyResources([]);
-          });
+  useEffect(() => {
+    if (!firebase.user?.uid) return;
 
-        firebase.getMyBlogs()
-          .then((blogs) => setMyBlogs(blogs?.docs || []))
-          .catch((err) => {
-            console.error("Error fetching my blogs:", err);
-            setMyBlogs([]);
-          });
-      }, [firebase.user]);
-      
+    firebase
+      .getMyResources(firebase.user.uid)
+      .then((res) => setMyResources(res))
+      .catch((err) => {
+        console.error(err);
+        setMyResources([]);
+      });
 
+    firebase
+      .getMyBlogs(firebase.user.uid)
+      .then((blogs) => setMyBlogs(blogs))
+      .catch((err) => {
+        console.error(err);
+        setMyBlogs([]);
+      });
+  }, [firebase.user]);    
+
+  const nav = useNavigate();
     return (
       <div className="mt-10">
         <UserProfile />
@@ -37,7 +42,7 @@ export default function UserDashboard() {
               id="default-styled-tab"
               data-tabs-toggle="#default-styled-tab-content"
               data-tabs-active-classes="text-brand-medium hover:text-brand-medium border-brand-medium"
-              data-tabs-inactive-classes="dark:border-transparent text-body hover:text-brand-medium border-default hover:border-brand"
+              data-tabs-inactive-classes="dark:border-transparent text-text-secondary hover:text-brand-medium border-default hover:border-brand"
               role="tablist"
             >
               <li className="me-2" role="presentation">
@@ -75,14 +80,16 @@ export default function UserDashboard() {
               role="tabpanel"
               aria-labelledby="resource-tab"
             >
-              <a
-                href="/add-resource"
-                className="bg-brand text-white p-4 rounded-lg hover:bg-brand-strong transition-colors sm:float-end mb-6 mx-5"
+              <Button
+                onClick={() => nav("/add-resource")}
+                variant="primary"
+                size="md"
+                className="float-end mt-5 mr-10"
               >
-                <span className="inline-flex">
+                <span className="inline-flex text-sm md:text-base">
                   Add a new Resource
                   <svg
-                    className="w-4 h-6 ms-1.5 rtl:rotate-180 -me-0.5 text-white"
+                    className="w-4 h-6 ms-1.5 rtl:rotate-180 -me-0.5"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -99,10 +106,10 @@ export default function UserDashboard() {
                     />
                   </svg>
                 </span>
-              </a>
-              <div className="mt-5 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-10">
+              </Button>
+              <div className="mt-5 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 p-5 md:p-10">
                 {myResources.length === 0 ? (
-                  <p className="text-center">
+                  <p className="text-center text-text-secondary">
                     You haven't added any resources yet
                   </p>
                 ) : (
@@ -110,7 +117,8 @@ export default function UserDashboard() {
                     <ResourceCard
                       key={resource.id}
                       id={resource.id}
-                      {...resource.data()}
+                      {...resource}
+                      profile={true}
                     />
                   ))
                 )}
@@ -122,14 +130,16 @@ export default function UserDashboard() {
               role="tabpanel"
               aria-labelledby="blog-tab"
             >
-              <a
-                href="/add-blog"
-                className="bg-brand text-white p-4 rounded-lg hover:bg-brand-strong transition-colors md:float-end mb-6 mx-5"
+              <Button
+                onClick={() => nav("/add-blog")}
+                variant="primary"
+                size="md"
+                className="float-end mt-5 mr-10"
               >
-                <span className="inline-flex">
+                <span className="inline-flex text-sm md:text-base">
                   Write a new Blog
                   <svg
-                    className="w-4 h-6 ms-1.5 rtl:rotate-180 -me-0.5 text-white"
+                    className="w-4 h-6 ms-1.5 rtl:rotate-180 -me-0.5 "
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -146,10 +156,10 @@ export default function UserDashboard() {
                     />
                   </svg>
                 </span>
-              </a>
-              <div className="mt-5 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-10">
+              </Button>
+              <div className="mt-5 w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-5 md:p-10">
                 {myBlogs.length === 0 ? (
-                  <p className="text-center">
+                  <p className="text-center text-text-secondary">
                     You haven't written any blogs yet
                   </p>
                 ) : (
@@ -157,7 +167,8 @@ export default function UserDashboard() {
                     <BlogCard
                       key={blog.id}
                       id={blog.id}
-                      {...blog.data()}
+                      {...blog}
+                      profile={true}
                     />
                   ))
                 )}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useFirebase } from '../context/Firebase'
+import Button from '../components/Button';
 
 export default function UserProfile() {
     const firebase = useFirebase();
@@ -68,14 +69,15 @@ export default function UserProfile() {
               {uploading ? "Uploading..." : "Upload Photo"}
             </button>
           ) : (
-            <button
+            <Button
               onClick={() =>
                 fileInputRef.current && fileInputRef.current.click()
               }
-              className="bg-neutral-secondary-medium px-4 py-2 rounded-base"
+              variant='primary'
+              size='md'
             >
               Change Photo
-            </button>
+            </Button>
           )}
         </div>
       </div>

@@ -23,12 +23,12 @@ export default function CategorizedResources() {
 
   return (
     <div className="mt-15">
-      <h1 className="text-3xl md:text-5xl pl-2 mx-10 my-2 border-l-8 font-bold border-brand capitalize">
+      <h1 className="text-3xl md:text-5xl pl-2 mx-10 my-2 border-l-8 font-bold border-brand text-text-primary capitalize">
         {params.category}
       </h1>
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 p-10">
         {resourceData.length === 0 ? (
-          <p>No resources found for this category.</p>
+          <p className="text-text-secondary">No resources found for this category.</p>
         ) : (
           resourceData.map(({ id, ...rest }) => (
             <ResourceCard key={id} id={id} hideDelete={true} {...rest} />

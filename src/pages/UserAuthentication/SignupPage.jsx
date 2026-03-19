@@ -1,6 +1,7 @@
 import { useFirebase } from "../../context/Firebase";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button";
 
 export default function SignupPage() {
   const firebase = useFirebase();
@@ -24,16 +25,16 @@ export default function SignupPage() {
   };
 
   return (
-    <div class="w-full max-w-sm mx-auto mt-15  bg-neutral-primary-soft p-6 border border-default rounded-base shadow-xs">
+    <div class="w-full max-w-sm mx-auto mt-15  bg-background p-6 border border-border rounded-base shadow-xs">
       <form>
-        <h1 className="text-2xl md:text-3xl pl-2 border-l-8  font-sans font-bold border-brand mb-10">
+        <h1 className="text-2xl md:text-3xl pl-2 border-l-8 text-text-primary font-sans font-bold border-brand mb-10">
           Join us!!
         </h1>
         <div className="signup-page">
           <div className="mb-5">
             <label
               htmlFor="name"
-              className="block mb-2.5 text-sm font-medium text-heading"
+              className="block mb-2.5 text-sm font-medium text-text-primary"
             >
               Name
             </label>
@@ -43,14 +44,14 @@ export default function SignupPage() {
               id="name"
               type="text"
               required
-              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="block w-full px-3 py-2.5 bg-input-bg border border-input-border text-input-text text-sm focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder rounded-base"
               placeholder="Enter your name"
             />
           </div>
           <div className="mb-5">
             <label
               htmlFor="email"
-              className="block mb-2.5 text-sm font-medium text-heading"
+              className="block mb-2.5 text-sm font-medium text-text-primary"
             >
               Email address
             </label>
@@ -60,14 +61,14 @@ export default function SignupPage() {
               type="email"
               id="email"
               required
-              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="block w-full px-3 py-2.5 bg-input-bg border border-input-border text-input-text text-sm focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder rounded-base"
               placeholder="Enter email address"
             />
           </div>
           <div className="mb-5">
             <label
               htmlFor="user-password"
-              className="block mb-2.5 text-sm font-medium text-heading"
+              className="block mb-2.5 text-sm font-medium text-text-primary"
             >
               Password
             </label>
@@ -77,25 +78,29 @@ export default function SignupPage() {
               type="password"
               id="user-password"
               required
-              className="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+              className="block w-full px-3 py-2.5 bg-input-bg border border-input-border text-input-text text-sm focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder rounded-base"
               placeholder="Enter password"
             />
           </div>
           <div class="">
-            <button
-              className="text-white w-full bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            <Button
               onClick={submit}
+              variant="primary"
+              size="sm"
+              className="w-full"
             >
               Create Account
-            </button>
+            </Button>
             <br />
-            <button
-              className="text-heading flex items-center justify-center my-5 w-full bg-neutral-secondary-medium box-border border border-transparent hover:bg-neutral-tertiary-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none"
+            <Button
               onClick={() => firebase.signUpWithGoogle()}
+              variant="secondary"
+              size="sm"
+              className="w-full my-5"
             >
               Sign Up with Google
               <svg
-                class="w-5 h-5 ms-1.5 rtl:rotate-180 -me-0.5 text-heading"
+                class="w-5 h-5 ms-1.5 rtl:rotate-180 -me-0.5"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -109,10 +114,10 @@ export default function SignupPage() {
                   clip-rule="evenodd"
                 />
               </svg>
-            </button>
+            </Button>
           </div>
         </div>
-        <div class="text-sm font-medium text-body">
+        <div class="text-sm font-medium text-text-secondary">
           Already registered?{" "}
           <a href="/login" class="text-brand-medium hover:underline">
             Go to your account
