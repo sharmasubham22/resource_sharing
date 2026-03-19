@@ -1,43 +1,44 @@
 import React from 'react'
+import Button from './Button';
+import { MoveRight, Upload } from 'lucide-react';
+import { useFirebase } from '../context/Firebase';
+import { useNavigate } from 'react-router-dom';
 
 export default function Hero() {
+  const firebase = useFirebase();
+  const navigate = useNavigate();
+
+  const handleUploadClick = () => {
+    if (firebase.user) {
+      navigate("/add-resource");
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
     <div className="py-8 px-4 mx-auto max-w-7xl lg:py-16">
       <div className="text-center p-4 md:p-12 mb-8">
         <span className="inline-flex items-center bg-brand-softer border border-brand-soft text-brand-strong text-xs font-medium px-1.5 py-0.5 rounded-sm">
           Resources
         </span>
-        <h1 className="text-heading tracking-tighter text-3xl md:text-6xl font-bold my-6">
+        <h1 className="text-text-primary tracking-tighter text-3xl md:text-6xl font-bold my-6">
           The community's just getting Bigger!!
         </h1>
-        <p className="md:text-lg font-normal text-body mb-6">
-          Static websites are now used to bootstrap lots of websites and are
-          becoming the basis for a variety of tools that even influence web
-          designers.
+        <p className="md:text-lg font-normal text-text-secondary mb-6">
+          Discover, share, and organize the best learning resources — from code
+          to concepts — all in one place.
         </p>
-        <button
-          type="button"
-          className="inline-flex items-center rounded-base cursor-pointer justify-center text-white bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-softer shadow-xs font-medium  text-base px-5 py-3 focus:outline-none"
-        >
-          Find out more
-          <svg
-            className="w-4 h-4 ms-1.5 -me-0.5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M19 12H5m14 0-4 4m4-4-4-4"
-            />
-          </svg>
-        </button>
+        <div className="block md:inline-flex md:gap-3">
+          <Button variant="primary" size="lg" className='inline-flex gap-2'>
+            Explore Resources
+            <MoveRight />
+          </Button>
+          <Button variant="secondary" size="lg" className='inline-flex gap-2 mt-2 md:mt-0' onClick={handleUploadClick}>
+            Upload your own
+            <Upload size={20}/>
+          </Button>
+        </div>
       </div>
       <div className="grid md:grid-cols-2 gap-8">
         <div className="bg-card rounded-base p-4 md:p-12">
@@ -61,36 +62,20 @@ export default function Hero() {
             </svg>
             Collaborate
           </span>
-          <h2 className="text-heading text-xl md:text-3xl font-semibold my-4">
+          <h2 className="text-text-primary text-xl md:text-3xl font-semibold my-4">
             Start with Flowbite Design System
           </h2>
-          <p className=" font-normal text-body mb-4">
+          <p className=" font-normal text-text-secondary mb-4">
             Static websites are now used to bootstrap lots of websites and are
             becoming the basis for a variety of tools that even influence both
             web designers and developers.
           </p>
           <a
             href="#"
-            className="text-brand hover:underline font-medium text-lg inline-flex items-center"
+            className="text-brand hover:underline font-medium text-lg inline-flex items-center gap-2"
           >
             Read more
-            <svg
-              className="w-6 h-6 rtl:rotate-180 ms-1.5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M19 12H5m14 0-4 4m4-4-4-4"
-              />
-            </svg>
+            <MoveRight />
           </a>
         </div>
         <div className="bg-card rounded-base p-4 md:p-12">
@@ -114,36 +99,20 @@ export default function Hero() {
             </svg>
             Code
           </span>
-          <h2 className="text-heading text-xl md:text-3xl font-semibold my-4">
+          <h2 className="text-text-primary text-xl md:text-3xl font-semibold my-4">
             Best react libraries around the web
           </h2>
-          <p className=" font-normal text-body mb-4">
+          <p className=" font-normal text-text-secondary mb-4">
             Static websites are now used to bootstrap lots of websites and are
             becoming the basis for a variety of tools that even influence both
             web designers and developers.
           </p>
           <a
             href="#"
-            className="text-brand hover:underline font-medium text-lg inline-flex items-center"
+            className="text-brand hover:underline font-medium text-lg inline-flex items-center gap-2"
           >
             Read more
-            <svg
-              className="w-6 h-6 rtl:rotate-180 ms-1.5"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M19 12H5m14 0-4 4m4-4-4-4"
-              />
-            </svg>
+            <MoveRight/>
           </a>
         </div>
       </div>

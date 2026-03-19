@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useFirebase } from '../context/Firebase';
+import DarkMode from './DarkMode';
 
 export default function Navbar() {
   const firebase = useFirebase();
@@ -7,18 +8,19 @@ export default function Navbar() {
   const [navOpen, setNavOpen] = useState(false);
   return (
     <div className="mb-12">
-      <nav className="bg-neutral-primary fixed w-full z-20 top-0 start-0 p-3">
+      <nav className="bg-background fixed w-full z-20 top-0 start-0 p-3">
         <div className="flex flex-wrap items-center justify-between mx-auto px-5 py-2">
           <a
             href="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <span className="self-center text-xl text-heading font-bold whitespace-nowrap">
+            <span className="self-center text-xl text-text-primary font-bold whitespace-nowrap">
               ShareStack
             </span>
           </a>
 
           <div className="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            <DarkMode />
             {firebase.user === null ? (
               <a
                 href="/login"
@@ -31,7 +33,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex text-sm bg-neutral-primary rounded-full md:me-0 hover:ring-4 hover:ring-neutral-tertiary"
+                  className="flex text-sm bg-background rounded-full md:me-0 hover:ring-4 hover:ring-brand-softer"
                   id="user-menu-button"
                   aria-expanded={dropdownOpen}
                 >
@@ -47,26 +49,26 @@ export default function Navbar() {
                 </button>
 
                 <div
-                  className={`absolute right-0 mt-2 z-50 ${dropdownOpen ? "" : "hidden"} bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44`}
+                  className={`absolute right-0 mt-2 z-50 ${dropdownOpen ? "" : "hidden"} bg-card border border-border rounded-base shadow-lg w-44`}
                   id="user-dropdown"
                 >
-                  <div className="px-4 py-3 text-sm border-b border-default">
-                    <span className="block text-heading font-medium">
+                  <div className="px-4 py-3 text-sm border-b border-border">
+                    <span className="block text-text-primary font-medium">
                       {firebase.user?.name}
                     </span>
-                    <span className="block text-body truncate">
+                    <span className="block text-text-secondary truncate">
                       {firebase.user?.email}
                     </span>
                   </div>
                   <ul
-                    className="p-2 text-sm text-body font-medium"
+                    className="p-2 text-sm text-text-secondary font-medium"
                     aria-labelledby="user-menu-button"
                   >
                     <li>
                       <a
                         href="/my-dashboard"
                         onClick={() => setDropdownOpen(false)}
-                        className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded"
+                        className="inline-flex items-center w-full p-2 hover:bg-brand-softer hover:text-text-primary rounded"
                       >
                         My Dashboard
                       </a>
@@ -78,7 +80,7 @@ export default function Navbar() {
                           setDropdownOpen(false);
                           firebase.logout();
                         }}
-                        className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium text-red-600 rounded cursor-pointer"
+                        className="inline-flex items-center w-full p-2 hover:bg-brand-softer text-red-400 rounded cursor-pointer"
                       >
                         Sign out
                       </a>
@@ -87,11 +89,12 @@ export default function Navbar() {
                 </div>
               </div>
             )}
+
             <button
               data-collapse-toggle="navbar-user"
               type="button"
               onClick={() => setNavOpen(!navOpen)}
-              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-medium hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
+              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-text-primary rounded-base md:hidden hover:bg-brand-medium hover:text-text-primary focus:outline-none focus:ring-2 focus:ring-brand-soft"
               aria-controls="navbar-user"
               aria-expanded={navOpen}
             >
@@ -116,15 +119,15 @@ export default function Navbar() {
           </div>
 
           <div
-            className={`${navOpen ? '' : 'hidden'} items-center justify-between w-full md:flex md:w-auto md:order-1`}
+            className={`${navOpen ? "" : "hidden"} items-center justify-between w-full md:flex md:w-auto md:order-1`}
             id="navbar-user"
           >
-            <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-default rounded-base  md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ">
+            <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-border rounded-base  md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ">
               <li>
                 <a
                   href="/"
                   onClick={() => setNavOpen(false)}
-                  className="block py-2 px-3 text-heading hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-brand-medium md:p-0 md:dark:hover:bg-transparent"
+                  className="block py-2 px-3 text-text-primary hover:bg-brand-softer md:hover:bg-transparent md:border-0 md:hover:text-brand-medium md:p-0 md:dark:hover:bg-transparent"
                   aria-current="page"
                 >
                   Home
@@ -134,7 +137,7 @@ export default function Navbar() {
                 <a
                   href="/resources"
                   onClick={() => setNavOpen(false)}
-                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-brand-medium md:p-0 md:dark:hover:bg-transparent"
+                  className="block py-2 px-3 text-text-primary rounded hover:bg-brand-softer md:hover:bg-transparent md:border-0 md:hover:text-brand-medium md:p-0 md:dark:hover:bg-transparent"
                 >
                   Resources
                 </a>
@@ -143,7 +146,7 @@ export default function Navbar() {
                 <a
                   href="/blogs"
                   onClick={() => setNavOpen(false)}
-                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-brand-medium md:p-0 md:dark:hover:bg-transparent"
+                  className="block py-2 px-3 text-text-primary rounded hover:bg-brand-softer md:hover:bg-transparent md:border-0 md:hover:text-brand-medium md:p-0 md:dark:hover:bg-transparent"
                 >
                   Blog
                 </a>
@@ -152,7 +155,7 @@ export default function Navbar() {
                 <a
                   href="#"
                   onClick={() => setNavOpen(false)}
-                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-brand-medium md:p-0 md:dark:hover:bg-transparent"
+                  className="block py-2 px-3 text-text-primary rounded hover:bg-brand-softer md:hover:bg-transparent md:border-0 md:hover:text-brand-medium md:p-0 md:dark:hover:bg-transparent"
                 >
                   About
                 </a>
@@ -162,7 +165,7 @@ export default function Navbar() {
                 <a
                   href="#"
                   onClick={() => setNavOpen(false)}
-                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-brand-medium md:p-0 md:dark:hover:bg-transparent"
+                  className="block py-2 px-3 text-text-primary rounded hover:bg-brand-softer md:hover:bg-transparent md:border-0 md:hover:text-brand-medium md:p-0 md:dark:hover:bg-transparent"
                 >
                   Contact
                 </a>
