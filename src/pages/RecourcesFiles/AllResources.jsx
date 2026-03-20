@@ -61,9 +61,11 @@ export default function AllResources() {
        const searchTerm = e.target.value;
        setSearchItem(searchTerm);
      };
+
+     console.log(resources);
   return (
     <div className="mt-15">
-      <h1 className="text-3xl md:text-5xl pl-2 mx-5 md:mx-10 my-2 border-l-8 text-text-primary font-sans font-bold border-brand ">
+      <h1 className="text-3xl md:text-5xl pl-2 mx-5 md:mx-10 my-2 border-l-8 text-text-primary font-heading border-brand ">
         Resources
       </h1>
       <div className="max-w-xl mt-10 mx-5 md:mx-10">
@@ -73,10 +75,10 @@ export default function AllResources() {
         >
           Search
         </label>
-        <div class="relative">
-          <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+        <div className="relative">
+          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg
-              class="w-4 h-4 text-text-secondary"
+              className="w-4 h-4 text-text-secondary"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               width="24"

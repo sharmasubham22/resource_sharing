@@ -50,7 +50,7 @@ export default function UserProfile() {
           }
           alt="Profile"
           onClick={() => fileInputRef.current && fileInputRef.current.click()}
-          className="w-32 h-32 mb-3 mx-auto rounded-full object-cover cursor-pointer"
+          className="w-32 h-32 mb-3 mx-auto rounded-full object-cover cursor-pointer border-4 border-border"
         />
         <div>
           <input
@@ -61,13 +61,15 @@ export default function UserProfile() {
             className="hidden"
           />
           {selectedFile ? (
-            <button
+            <Button
               onClick={uploadPhoto}
               disabled={uploading}
-              className="bg-brand text-white px-4 py-2 rounded-base"
+              variant='secondary'
+              size="md"
+              className='mx-auto'
             >
               {uploading ? "Uploading..." : "Upload Photo"}
-            </button>
+            </Button>
           ) : (
             <Button
               onClick={() =>
@@ -75,6 +77,7 @@ export default function UserProfile() {
               }
               variant='primary'
               size='md'
+              className='mx-auto'
             >
               Change Photo
             </Button>

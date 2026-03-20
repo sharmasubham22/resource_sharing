@@ -23,45 +23,45 @@ export default function AddResource() {
     const codeEditor = useRef(null);
 
     const config = useMemo(
-          () => ({
-            placeholder: "Enter description",
-            height: 150,
-            minHeight: 300,
-            theme: "editor",
-            buttons: [
-              "bold",
-              "italic",
-              "underline",
-              "strikethrough",
-              "ul",
-              "ol",
-              "paragraph",
-              "lineHeight",
-              "source",
-              "spellcheck",
-              "cut",
-              "copy",
-              "paste",
-              "selectall",
-              "copyformat",
-              "hr",
-              "table",
-              "link",
-              "symbols",
-              "indent",
-              "outdent",
-              "left",
-              "undo",
-              "redo",
-              "find",
-              "fullsize",
-              "preview",
-              "print",
-            ],
-            toolbarAdaptive: false,
-          }),
-          [],
-        );    
+      () => ({
+        placeholder: "Enter description",
+        height: 150,
+        minHeight: 300,
+        theme: "editor",
+        buttons: [
+          "bold",
+          "italic",
+          "underline",
+          "strikethrough",
+          "ul",
+          "ol",
+          "paragraph",
+          "lineHeight",
+          "source",
+          "spellcheck",
+          "cut",
+          "copy",
+          "paste",
+          "selectall",
+          "copyformat",
+          "hr",
+          "table",
+          "link",
+          "symbols",
+          "indent",
+          "outdent",
+          "left",
+          "undo",
+          "redo",
+          "find",
+          "fullsize",
+          "preview",
+          "print",
+        ],
+        toolbarAdaptive: false,
+      }),
+      [],
+    );    
 
     const config2 = useMemo(
       () => ({
@@ -103,7 +103,7 @@ export default function AddResource() {
     
   return (
     <div className="text-left mt-15">
-      <h2 className="text-3xl md:text-5xl pl-2 text-text-primary mx-5 md:mx-10 my-2 border-l-8  font-sans font-bold border-brand ">
+      <h2 className="text-3xl md:text-5xl pl-2 text-text-primary mx-5 md:mx-10 my-2 border-l-8 font-heading border-brand ">
         Add a Resource
       </h2>
       <form className="max-w-3xl p-5 md:p-10">
@@ -285,11 +285,7 @@ export default function AddResource() {
             </div>
           )}
 
-          <Button
-            onClick={create}
-            variant="primary"
-            size="md"
-          >
+          <Button onClick={create} variant="primary" size="md">
             Create Resource
           </Button>
         </div>

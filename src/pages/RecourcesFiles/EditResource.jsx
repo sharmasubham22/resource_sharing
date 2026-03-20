@@ -136,7 +136,7 @@ export default function EditResource() {
 
   return (
     <div className="text-left mt-15">
-      <h2 className="text-3xl md:text-5xl pl-2 mx-5 md:mx-10 my-2 border-l-8 text-text-primary font-sans font-bold border-brand ">
+      <h2 className="text-3xl md:text-5xl pl-2 mx-5 md:mx-10 my-2 border-l-8 text-text-primary font-heading border-brand ">
         Edit Resource
       </h2>
       <form className="max-w-3xl p-5 md:p-10">
@@ -349,11 +349,7 @@ export default function EditResource() {
             />
           </div>
         )}
-        <Button
-          onClick={updateResources}
-          variant="primary"
-          size="md"
-        >
+        <Button onClick={updateResources} variant="primary" size="md">
           Update Resource
         </Button>
       </form>

@@ -12,10 +12,10 @@ const Button = ({
   className = "",
 }) => {
   const base =
-    "inline-flex items-center justify-center rounded-base font-medium transition duration-200 cursor-pointer";
+    "flex items-center justify-center rounded-base font-medium transition duration-200 cursor-pointer";
 
   const variants = {
-    primary: "bg-brand text-white hover:bg-brand-strong hover:text-background",
+    primary: "bg-brand text-white hover:bg-brand-strong hover:text-white",
     secondary: "bg-gray-200 text-gray-900 hover:bg-gray-300",
     // danger: "bg-red-600 text-white hover:bg-red-700",
     // outline: "border border-gray-300 hover:bg-gray-100",
