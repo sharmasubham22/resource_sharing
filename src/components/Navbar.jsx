@@ -68,14 +68,14 @@ export default function Navbar() {
                       <a
                         href="/my-dashboard"
                         onClick={() => setDropdownOpen(false)}
-                        className="inline-flex items-center w-full p-2 hover:bg-brand-softer hover:text-text-primary rounded"
+                        className="inline-flex items-center w-full p-2 hover:bg-brand-softer hover:text-text-primary rounded cursor-pointer"
                       >
                         My Dashboard
                       </a>
                     </li>
 
                     <li>
-                      <a
+                      <button
                         onClick={() => {
                           setDropdownOpen(false);
                           firebase.logout();
@@ -83,7 +83,7 @@ export default function Navbar() {
                         className="inline-flex items-center w-full p-2 hover:bg-brand-softer text-red-400 rounded cursor-pointer"
                       >
                         Sign out
-                      </a>
+                      </button>
                     </li>
                   </ul>
                 </div>

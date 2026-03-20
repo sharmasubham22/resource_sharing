@@ -28,8 +28,8 @@ export default function LoginPage() {
   return (
     <div class="w-full max-w-sm mx-auto mt-15  bg-background p-6 border border-border rounded-base shadow-xs">
       <form>
-        <h1 className="text-2xl md:text-3xl pl-2 my-2 border-l-8 text-text-primary font-sans font-bold border-brand mb-10">
-          Welcome back!!
+        <h1 className="text-2xl md:text-3xl pl-2 my-2 border-l-8 text-text-primary font-heading border-brand mb-10">
+          Log in
         </h1>
         <div className="login-page">
           <div className="mb-5">

@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { createContext, useContext, useEffect, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut} from "firebase/auth";
-import { getFirestore, setDoc, doc, serverTimestamp, addDoc, collection, getDocs, getDoc, query, where, deleteDoc, updateDoc } from "firebase/firestore";
+import { getFirestore, setDoc, doc, serverTimestamp, addDoc, collection, getDocs, getDoc, query, where, deleteDoc, updateDoc, orderBy } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 
 const provider = new GoogleAuthProvider();
@@ -122,6 +122,20 @@ export const FirebaseProvider = (props)=>{
         tags,
       ) => {
         try {
+          if (!user?.uid) {
+            throw new Error("User not loaded");
+          }
+
+          // 🔥 fetch user from Firestore
+          const userRef = doc(firestore, "users", user.uid);
+          const userSnap = await getDoc(userRef);
+
+          if (!userSnap.exists()) {
+            throw new Error("User data not found in Firestore");
+          }
+
+          const userData = userSnap.data();
+
           let coverPhotoPath = null;
           if (coverPhoto) {
             const imageRef = ref(
@@ -145,9 +159,10 @@ export const FirebaseProvider = (props)=>{
           const result = await addDoc(collection(firestore, "allResources"), {
             user: {
               uid: user.uid,
-              name: user.name,
-              userPhoto: user.photoURL,
+              name: userData.name,
+              userPhoto: userData.userPhoto,
             },
+
             title,
             description,
             coverPhoto: coverPhotoPath,
@@ -160,7 +175,6 @@ export const FirebaseProvider = (props)=>{
 
             ratingAverage: 0,
             ratingCount: 0,
-
             createdAt: serverTimestamp(),
           });
 
@@ -172,7 +186,7 @@ export const FirebaseProvider = (props)=>{
         }
       };
 
-      const addComment = async (resourceId, comment) => {
+      const addReviews = async (resourceId, comment, rating) => {
         try {
           const result = await addDoc(
             collection(firestore, `allResources/${resourceId}/comments`),
@@ -180,37 +194,70 @@ export const FirebaseProvider = (props)=>{
               user: {
                 uid: user.uid,
                 name: user.name,
-                userPhoto: user.photoURL,
+                userPhoto: user.userPhoto,
               },
               comment: comment,
               createdAt: serverTimestamp(),
             },
           );
 
-          return result;
+          const result2 = await setDoc(
+            doc(firestore, "allResources", resourceId, "ratings", user.uid),
+            {
+              user: {
+                uid: user.uid,
+                name: user.name,
+                userPhoto: user.userPhoto,
+              },
+              rating: rating,
+              createdAt: serverTimestamp(),
+            },
+          );
+          return result, result2;
         } catch (error) {
           console.error("Error adding comment:", error);
           throw error;
         }
       };
 
-      const getComments = async (resourceId) => {
-        try {          
-          const snapshot = await getDocs(
-            collection(firestore, `allResources/${resourceId}/comments`),
-          );
+      const getReviews = async (resourceId) => {
+  try {
+    const commentsQuery = query(
+      collection(firestore, "allResources", resourceId, "comments"),
+      orderBy("createdAt", "desc")
+    );
 
-          return snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }));
-        } catch (error) {
-          console.error("Error fetching comments:", error);
-          return [];
-        }
-      }
+    const ratingsRef = collection(
+      firestore,
+      "allResources",
+      resourceId,
+      "ratings"
+    );
 
-      const addRating = async (resourceId, rating) => {
+    const [commentsSnap, ratingsSnap] = await Promise.all([
+      getDocs(commentsQuery),
+      getDocs(ratingsRef),
+    ]);
+
+    const comments = commentsSnap.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    const ratings = ratingsSnap.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return { comments, ratings };
+
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+    return { comments: [], ratings: [] }; // ✅ consistent return
+  }
+}
+
+      const addRatingAvg = async (resourceId, rating) => {
         try {
           const resourceRef = doc(firestore, "allResources", resourceId);
           const resourceSnap = await getDoc(resourceRef);
@@ -245,31 +292,10 @@ export const FirebaseProvider = (props)=>{
         try {
           const snapshot = await getDocs(collection(firestore, "allResources"));
 
-          const resources = await Promise.all(
-            snapshot.docs.map(async (resourceDoc) => {
-              const resourceData = resourceDoc.data();
-
-              let userData = null;
-
-              // check if user_id exists
-              if (resourceData.user_id) {
-                const userRef = doc(firestore, "users", resourceData.user_id);
-                const userSnap = await getDoc(userRef);
-
-                if (userSnap.exists()) {
-                  userData = userSnap.data();
-                }
-              }
-
-              return {
-                id: resourceDoc.id,
-                ...resourceData,
-                user: userData,
-              };
-            }),
-          );
-
-          return resources;
+          return snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(), // ✅ keeps existing user
+          }));
         } catch (error) {
           console.error("Error fetching resources:", error);
           return [];
@@ -289,7 +315,7 @@ export const FirebaseProvider = (props)=>{
 
             const q = query(
               collection(firestore, "allResources"),
-              where("user_id", "==", userId),
+              where('user.uid', '==', userId),
             );
 
             const snapshot = await getDocs(q);
@@ -313,23 +339,9 @@ export const FirebaseProvider = (props)=>{
             throw new Error("Resource not found");
           }
 
-          const resourceData = resourceSnap.data();
-
-          let userData = null;
-
-          if (resourceData.user_id) {
-            const userRef = doc(firestore, "users", resourceData.user_id);
-            const userSnap = await getDoc(userRef);
-
-            if (userSnap.exists()) {
-              userData = userSnap.data();
-            }
-          }
-
           return {
             id: resourceSnap.id,
-            ...resourceData,
-            user: userData,
+            ...resourceSnap.data(), // ✅ keep stored user
           };
         } catch (error) {
           console.error("Error fetching resource:", error);
@@ -600,7 +612,7 @@ export const FirebaseProvider = (props)=>{
       };
 
   return (
-    <FirebaseContext.Provider value={{signUp, signUpWithGoogle, login, loggedin, user, logout, addResource, addComment, getComments, addRating, getAllResources, getMyResources, viewResource, getResourceImg, categorizedResources, updateProfilePhoto, deleteResource, updateResource, addBlog, getAllBlogs, getMyBlogs, viewBlog, getBlogImg, deleteBlog, updateBlog}}>
+    <FirebaseContext.Provider value={{signUp, signUpWithGoogle, login, loggedin, user, logout, addResource, addReviews, getReviews, addRatingAvg, getAllResources, getMyResources, viewResource, getResourceImg, categorizedResources, updateProfilePhoto, deleteResource, updateResource, addBlog, getAllBlogs, getMyBlogs, viewBlog, getBlogImg, deleteBlog, updateBlog}}>
       {props.children}
     </FirebaseContext.Provider>
   )

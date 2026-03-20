@@ -74,7 +74,7 @@ export default function BlogCard(props) {
                         .replace(/<[^>]+>/g, " ")
                         .replace(/\s+/g, " ")
                         .trim()
-                        .slice(0, 100) + "..."
+                        .slice(0, 200) + "..."
                     : "",
               }}
             />
@@ -111,7 +111,7 @@ export default function BlogCard(props) {
                 size="md"
                 className="inline-flex items-center justify-center gap-2"
               >
-                Edit Article
+                Edit Post
                 <Pencil size={16} />
               </Button>
             )}

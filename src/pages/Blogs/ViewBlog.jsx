@@ -62,7 +62,7 @@ export default function ViewBlog() {
   return (
     <div>
       <div className="max-w-5xl mx-auto mt-15 px-5 md:px-15">
-        <h1 className="text-4xl md:text-6xl font-bold text-brand">
+        <h1 className="text-4xl md:text-6xl font-heading text-brand">
           {blogData.title}
         </h1>
         <div className="flex items-center my-5 gap-2">

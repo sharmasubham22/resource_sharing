@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { useFirebase } from '../../context/Firebase';
 import StarReview from '../../components/StarReview';
 import Button from '../../components/Button';
+import { Rat } from 'lucide-react';
+import Rating from '../../components/Rating';
 
 export default function ViewResource() {
     const params = useParams();
@@ -21,24 +23,24 @@ export default function ViewResource() {
     }, [resourceData]);
 
     useEffect(() => {
-      firebase
-        .viewResource(params.id)
-        .then((resource) => {
+      const fetchData = async () => {
+        try {
+          const [resource, reviews] = await Promise.all([
+            firebase.viewResource(params.id),
+            firebase.getReviews(params.id),
+          ]);
+
           setResourceData(resource);
-        })
-        .catch((err) => {
-          console.error("Error fetching resource:", err);
-        });
+          setCommentsData(reviews);
+        } catch (err) {
+          console.error("Error fetching data:", err);
 
-      firebase.getComments(params.id).then((comments) => {
-        setCommentsData(comments);
-      })
-      .catch((err) => {
-        console.error("Error fetching comments:", err);
-        setCommentsData([]);
-      });
+          setCommentsData({ comments: [], ratings: [] });
+        }
+      };
+
+      fetchData();
     }, [params.id]);
-
 
     if(resourceData == null) {
         return (
@@ -46,7 +48,7 @@ export default function ViewResource() {
             <div role="status">
               <svg
                 aria-hidden="true"
-                class="inline w-8 h-8 text-brand-softer animate-spin fill-brand"
+                className="inline w-8 h-8 text-brand-softer animate-spin fill-brand"
                 viewBox="0 0 100 101"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +74,7 @@ export default function ViewResource() {
 
     return (
       <div className="max-w-5xl mx-auto px-5 md:px-10">
-        <h1 className="text-3xl md:text-6xl font-bold text-center text-text-primary mt-10">
+        <h1 className="text-3xl md:text-6xl font-heading text-center text-text-primary mt-10">
           {resourceData.title}
         </h1>
         <div className="flex items-center justify-center mt-5 gap-2">
@@ -114,13 +116,17 @@ export default function ViewResource() {
         >
           {resourceData.link}
         </a>
-
-        <div className="mt-20">
+        <div className="my-10">
+          <h1 className="text-4xl text-text-primary">Ratings & Reviews</h1>
+          <p className="text-text-primary text-xl mt-5">
+            <span className="text-2xl">{resourceData.ratingAverage}</span> out of 5
+          </p>
+          <p className="text-text-secondary">
+            ({resourceData.ratingCount} reviews)
+          </p>
+        </div>
+        <div>
           <StarReview rating={rating} setRating={setRating} />
-
-          <label className="block mb-2.5 text-sm font-medium text-text-primary">
-            Add a Comment
-          </label>
           <textarea
             className="block w-full px-3 py-2.5 bg-input-bg border border-input-border text-input-text text-sm rounded-base focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder"
             rows={5}
@@ -128,7 +134,10 @@ export default function ViewResource() {
             placeholder="Enter your comment"
           />
           <Button
-            onClick={(e) => firebase.addComment(params.id, comment)}
+            onClick={(e) => {
+              firebase.addReviews(params.id, comment, rating);
+              firebase.addRatingAvg(params.id, rating);
+            }}
             variant="primary"
             size="md"
             className="mt-5"
@@ -136,22 +145,23 @@ export default function ViewResource() {
             Post Your Review
           </Button>
         </div>
-        <div className='mb-30'>
-          {commentsData.map((comment, idx) => (
-            <div
-              key={idx}
-              className="border-b border-border p-5 mt-5"
-            >
+
+        <div className="mb-30">
+          {commentsData.comments.map((comment, idx) => (
+            <div key={idx} className="border-b border-border p-5 mt-5">
               <div className="flex items-center gap-2 mb-3">
                 <img
                   src={comment.user?.userPhoto}
                   className="rounded-full w-8 h-8 border border-brand-medium"
                 />
-                <p className="text-text-secondary capitalize text-sm">
+                <p className="text-text-primary capitalize">
                   {comment.user?.name}
                 </p>
+                {commentsData.ratings.map((rating, id) => (
+                  <Rating key={id} rating={rating.rating} />
+                ))}
               </div>
-              <p className="text-text-primary">{comment.comment}</p>
+              <p className="text-text-secondary text-sm">{comment.comment}</p>
             </div>
           ))}
         </div>

@@ -15,45 +15,45 @@ export default function EditBlog() {
     const editor = useRef(null);
 
     const config = useMemo(
-          () => ({
-            placeholder: "Enter description",
-            height: 150,
-            minHeight: 400,
-            theme: "editor",
-            buttons: [
-              "bold",
-              "italic",
-              "underline",
-              "strikethrough",
-              "ul",
-              "ol",
-              "paragraph",
-              "lineHeight",
-              "source",
-              "spellcheck",
-              "cut",
-              "copy",
-              "paste",
-              "selectall",
-              "copyformat",
-              "hr",
-              "table",
-              "link",
-              "symbols",
-              "indent",
-              "outdent",
-              "left",
-              "undo",
-              "redo",
-              "find",
-              "fullsize",
-              "preview",
-              "print",
-            ],
-            toolbarAdaptive: false,
-          }),
-          [],
-        );    
+      () => ({
+        placeholder: "Enter description",
+        height: 150,
+        minHeight: 400,
+        theme: "editor",
+        buttons: [
+          "bold",
+          "italic",
+          "underline",
+          "strikethrough",
+          "ul",
+          "ol",
+          "paragraph",
+          "lineHeight",
+          "source",
+          "spellcheck",
+          "cut",
+          "copy",
+          "paste",
+          "selectall",
+          "copyformat",
+          "hr",
+          "table",
+          "link",
+          "symbols",
+          "indent",
+          "outdent",
+          "left",
+          "undo",
+          "redo",
+          "find",
+          "fullsize",
+          "preview",
+          "print",
+        ],
+        toolbarAdaptive: false,
+      }),
+      [],
+    );    
 
     useEffect(() => {
           firebase.viewBlog(params.id)
@@ -125,7 +125,7 @@ export default function EditBlog() {
         }
   return (
     <div className="text-left mt-15">
-      <h2 className="text-3xl md:text-5xl pl-2 mx-5 md:mx-10 my-2 border-l-8  font-sans font-bold border-brand ">
+      <h2 className="text-3xl md:text-5xl pl-2 mx-5 md:mx-10 my-2 border-l-8 text-text-primary font-heading border-brand ">
         Edit Blog
       </h2>
       <form className="max-w-3xl p-5 md:p-10">
@@ -142,7 +142,7 @@ export default function EditBlog() {
             value={blogData.title}
             name="title"
             id="title"
-            className="border border-default-medium text-text-primary text-sm rounded-base bg-neutral-secondary-medium  focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-text-secondary"
+            className="block w-full px-3 py-2.5 bg-input-bg border border-input-border text-input-text text-sm focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder rounded-base"
             type="text"
             required
           />
@@ -181,7 +181,7 @@ export default function EditBlog() {
             }
             name="coverPhoto"
             id="coverPhoto"
-            className="cursor-pointer bg-neutral-secondary-medium rounded-base border border-default-medium text-text-primary text-sm  focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-text-secondary"
+            className="block w-full bg-input-bg border border-input-border text-input-text text-sm focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder rounded-base"
             type="file"
             accept="image/*"
           />

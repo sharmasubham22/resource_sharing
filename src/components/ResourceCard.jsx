@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import Button from './Button';
 import { MoveRight, Pencil, Trash2 } from 'lucide-react';
+import Rating from './Rating';
 
 export default function ResourceCard(props) {
     const firebase = useFirebase();
@@ -41,54 +42,35 @@ export default function ResourceCard(props) {
   return (
     <div>
       <div className="bg-card rounded-base shadow-md relative flex flex-col justify-between h-full p-4 md:p-8">
-        {/* Author profile section */}
-        {props.authorProfile && (
-          <div className="flex flex-col items-center mb-4">
-            <img
-              src={props.authorProfile.userPhoto}
-              alt={props.authorProfile.name}
-              className="w-12 h-12 rounded-full mb-1 border border-brand"
-            />
-            <span className="text-text-secondary text-sm font-semibold">
-              {props.authorProfile.name}
-            </span>
-          </div>
-        )}
         {/* <img className="h-60 w-full rounded-t-base" src={imgUrl} alt="" /> */}
         {!props.hideDelete && (
           <button className="cursor-pointer" onClick={deleteResource}>
             <span className="absolute inline-flex items-center justify-center top-3 right-3 bg-red-400 text-white px-3 py-1 rounded-full text-xs lg:text-sm font-medium gap-1">
               Delete
-              <Trash2 size={16}/>
+              <Trash2 size={16} />
             </span>
           </button>
         )}
 
-        <div>
+        <div className="mb-5">
           {Array.isArray(props.tags) && props.tags.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-5">
               {props.tags.map((tag, idx) => (
                 <span
                   key={idx}
-                  className="inline-flex items-center border border-brand-soft bg-brand-softer capitalize text-xs text-text-secondary font-medium px-2 py-0.5 rounded-sm"
+                  className="inline-flex items-center border border-brand-soft bg-brand-softer capitalize text-xs text-text-secondary font-medium font-mono px-2 py-0.5 rounded-sm"
                 >
                   {tag}
                 </span>
               ))}
             </div>
           )}
-          <h5 className="mb-6 text-lg md:text-2xl font-semibold tracking-tight text-text-primary">
+          <h5 className="mb-6 text-lg md:text-2xl tracking-tight text-text-primary font-mono font-bold">
             {props.title}
           </h5>
           <p className="text-text-secondary mb-5">
-            {/* Render normalized preview, truncate for safety */}
             <span
-              className="text-text-secondary"
-              style={{
-                fontSize: "1rem",
-                lineHeight: "1.5",
-                whiteSpace: "normal",
-              }}
+              className="text-text-secondary text-md font-mono"
               dangerouslySetInnerHTML={{
                 __html:
                   typeof props.description === "string"
@@ -101,6 +83,10 @@ export default function ResourceCard(props) {
               }}
             />
           </p>
+          <div className='inline-flex gap-4'>
+            <Rating rating={props.ratingAverage} />
+            <p className="text-text-secondary text-sm">{props.ratingCount}</p>
+          </div>
         </div>
 
         <div className="mt-auto">
@@ -111,7 +97,7 @@ export default function ResourceCard(props) {
                 className="w-10 h-10 rounded-full border border-brand-soft"
               />
 
-              <span className="mx-3 capitalize text-text-primary">
+              <span className="mx-3 capitalize text-text-primary font-mono">
                 {props.user?.name}
               </span>
             </div>
@@ -121,7 +107,7 @@ export default function ResourceCard(props) {
               onClick={(e) => navigate(`/view-resource/${props.id}`)}
               variant="primary"
               size="md"
-              className="w-full inline-flex items-center justify-center gap-2"
+              className="w-full inline-flex items-center justify-center gap-2 font-mono"
             >
               Read Full Article
               <MoveRight />
@@ -131,7 +117,7 @@ export default function ResourceCard(props) {
                 onClick={(e) => navigate(`/edit-resource/${props.id}`)}
                 variant="secondary"
                 size="md"
-                className="w-full mt-2 inline-flex items-center justify-center gap-2"
+                className="w-full mt-2 inline-flex items-center justify-center gap-2 font-mono"
               >
                 Edit Article
                 <Pencil size={16} />
