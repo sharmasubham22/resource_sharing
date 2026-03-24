@@ -1,5 +1,6 @@
 import './App.css'
 import {Route, Routes} from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import LoginPage from './pages/UserAuthentication/LoginPage.jsx';
 import SignupPage from './pages/UserAuthentication/SignupPage.jsx';
 import LandingPage from './pages/LandingPage.jsx';
@@ -15,28 +16,37 @@ import AddBlog from "./pages/Blogs/AddBlog.jsx";
 import AllBlogs from "./pages/Blogs/AllBlogs.jsx";
 import ViewBlog from './pages/Blogs/ViewBlog.jsx';
 import EditBlog from './pages/Blogs/EditBlog.jsx';
-// import "flowbite";
+import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
 
 export default function App() {
+  const location = useLocation();
+  const noBarPaths = ["/admin", "/user-table"]; 
   return (
-    <div className='flex flex-col min-h-screen'>
-      <Navbar />
+    <div className="flex flex-col min-h-screen">
+      {!noBarPaths.includes(location.pathname) && <Navbar />}
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/my-dashboard" element={<UserDashboard />} />
+
+        {/* Resources Routes */}
         <Route path="/add-resource" element={<AddResource />} />
         <Route path="/resources" element={<AllResources />} />
-        <Route path="/my-dashboard" element={<UserDashboard />} />
         <Route path="/view-resource/:id" element={<ViewResource />} />
-        <Route path='/resources/:category' element={<CategorizedResources />}/>
-        <Route path='/edit-resource/:id' element={<EditResource />}/>
-        <Route path='/add-blog' element={<AddBlog />}/>
-        <Route path='/blogs' element={<AllBlogs />}/>
-        <Route path='/view-blog/:id' element={<ViewBlog />}/>
-        <Route path='/edit-blog/:id' element={<EditBlog />}/>
+        <Route path="/resources/:category" element={<CategorizedResources />} />
+        <Route path="/edit-resource/:id" element={<EditResource />} />
+
+        {/* Blog Routes */}
+        <Route path="/add-blog" element={<AddBlog />} />
+        <Route path="/blogs" element={<AllBlogs />} />
+        <Route path="/view-blog/:id" element={<ViewBlog />} />
+        <Route path="/edit-blog/:id" element={<EditBlog />} />
+
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminDashboard />} />
       </Routes>
-      <Footer />
+      {!noBarPaths.includes(location.pathname) && <Footer />}
     </div>
   );
 }

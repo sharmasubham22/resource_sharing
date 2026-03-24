@@ -70,8 +70,12 @@ export default function ViewBlog() {
             src={blogData.user?.userPhoto}
             className="rounded-full w-10 h-10 border border-brand-medium"
           />
-          <p className="text-text-secondary capitalize">{blogData.user?.name} |</p>
-          <p className="text-text-secondary">{displayDate}</p>
+          <p className="text-text-secondary font-body text-lg capitalize">
+            {blogData.user?.name} |
+          </p>
+          <p className="text-text-secondary font-body text-lg">
+            {displayDate}
+          </p>
         </div>
       </div>
 
@@ -82,7 +86,7 @@ export default function ViewBlog() {
       />
       <div className="max-w-5xl mx-auto px-5 md:px-10">
         <div
-          className="text-text-secondary mb-30"
+          className="text-text-secondary font-body text-lg mb-30"
           dangerouslySetInnerHTML={{ __html: blogData.description }}
         />
       </div>

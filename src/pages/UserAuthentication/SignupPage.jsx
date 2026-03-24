@@ -9,6 +9,8 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userPhoto, setUserPhoto] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,12 +19,58 @@ export default function SignupPage() {
     }
   }, [firebase, navigate]);
 
-  const submit = (e) => {
-    e.preventDefault();
+  const handleNameChange = (e) => {
+    const value = e.target.value;
+    setName(value);
 
-    const result = firebase.signUp(email, password, name, userPhoto);
-    console.log("Success");
+    setErrors((prev) => ({
+      ...prev,
+      name: !value
+        ? "Name is required"
+        : null,
+    }));
   };
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+
+    setErrors((prev) => ({
+      ...prev,
+      email: !value
+        ? "Email is required"
+        : !/\S+@\S+\.\S+/.test(value)
+          ? "Invalid email format"
+          : null,
+    }));
+  };
+
+  const handlePasswordChange = (e) => {
+    const value = e.target.value;
+    setPassword(value);
+
+    setErrors((prev) => ({
+      ...prev,
+      password: !value
+        ? "Password is required"
+        : value.length < 6
+          ? "Minimum 6 characters"
+          : null,
+    }));
+  };
+
+  const submit = async (e) => {
+    e.preventDefault();
+    try {
+      setIsLoading(true);
+      await firebase.signUp(email, password, name, userPhoto);
+      console.log("Success");
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <div className="w-full max-w-sm mx-auto mt-15  bg-background p-6 border border-border rounded-base shadow-xs">
@@ -39,7 +87,7 @@ export default function SignupPage() {
               Name
             </label>
             <input
-              onChange={(e) => setName(e.target.value)}
+              onChange={handleNameChange}
               value={name}
               id="name"
               type="text"
@@ -47,6 +95,9 @@ export default function SignupPage() {
               className="block w-full px-3 py-2.5 bg-input-bg border border-input-border text-input-text text-sm focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder rounded-base"
               placeholder="Enter your name"
             />
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+            )}
           </div>
           <div className="mb-5">
             <label
@@ -56,7 +107,7 @@ export default function SignupPage() {
               Email address
             </label>
             <input
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmailChange}
               value={email}
               type="email"
               id="email"
@@ -64,6 +115,9 @@ export default function SignupPage() {
               className="block w-full px-3 py-2.5 bg-input-bg border border-input-border text-input-text text-sm focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder rounded-base"
               placeholder="Enter email address"
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            )}
           </div>
           <div className="mb-5">
             <label
@@ -73,7 +127,7 @@ export default function SignupPage() {
               Password
             </label>
             <input
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handlePasswordChange}
               value={password}
               type="password"
               id="user-password"
@@ -81,6 +135,12 @@ export default function SignupPage() {
               className="block w-full px-3 py-2.5 bg-input-bg border border-input-border text-input-text text-sm focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder rounded-base"
               placeholder="Enter password"
             />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            )}
+            {errors.general && (
+              <p className="text-red-500 text-sm mb-2">{errors.general}</p>
+            )}
           </div>
           <div className="">
             <Button
@@ -88,10 +148,18 @@ export default function SignupPage() {
               variant="primary"
               size="sm"
               className="w-full"
+              loading={isLoading}
+              disabled={
+                isLoading ||
+                !!errors.email ||
+                !!errors.password ||
+                !name ||
+                !email ||
+                !password
+              }
             >
-              Create Account
+              Sign up
             </Button>
-            <br />
             <Button
               onClick={() => firebase.signUpWithGoogle()}
               variant="secondary"

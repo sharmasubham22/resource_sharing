@@ -8,7 +8,7 @@ export default function Navbar() {
   const [navOpen, setNavOpen] = useState(false);
   return (
     <div className="mb-12">
-      <nav className="bg-background fixed w-full z-20 top-0 start-0 p-3">
+      <nav className="bg-background fixed w-full z-20 top-0 start-0 p-3 font-body">
         <div className="flex flex-wrap items-center justify-between mx-auto px-5 py-2">
           <a
             href="/"
@@ -24,7 +24,7 @@ export default function Navbar() {
             {firebase.user === null ? (
               <a
                 href="/login"
-                className="text-brand-medium hover:underline font-medium text-md inline-flex items-center py-1"
+                className="text-brand-medium hover:underline  text-lg inline-flex items-center py-1"
               >
                 Login
               </a>
@@ -52,8 +52,8 @@ export default function Navbar() {
                   className={`absolute right-0 mt-2 z-50 ${dropdownOpen ? "" : "hidden"} bg-card border border-border rounded-base shadow-lg w-44`}
                   id="user-dropdown"
                 >
-                  <div className="px-4 py-3 text-sm border-b border-border">
-                    <span className="block text-text-primary font-medium">
+                  <div className="px-4 py-3 text-md border-b border-border">
+                    <span className="block text-text-primary ">
                       {firebase.user?.name}
                     </span>
                     <span className="block text-text-secondary truncate">
@@ -61,7 +61,7 @@ export default function Navbar() {
                     </span>
                   </div>
                   <ul
-                    className="p-2 text-sm text-text-secondary font-medium"
+                    className="p-2 text-md text-text-secondary "
                     aria-labelledby="user-menu-button"
                   >
                     <li>
@@ -122,7 +122,7 @@ export default function Navbar() {
             className={`${navOpen ? "" : "hidden"} items-center justify-between w-full md:flex md:w-auto md:order-1`}
             id="navbar-user"
           >
-            <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-border rounded-base  md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ">
+            <ul className=" flex flex-col p-4 md:p-0 mt-4 border border-border rounded-base text-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ">
               <li>
                 <a
                   href="/"

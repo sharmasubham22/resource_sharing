@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { createContext, useContext, useEffect, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut} from "firebase/auth";
-import { getFirestore, setDoc, doc, serverTimestamp, addDoc, collection, getDocs, getDoc, query, where, deleteDoc, updateDoc, orderBy } from "firebase/firestore";
+import { getFirestore, setDoc, doc, serverTimestamp, addDoc, collection, getDocs, getDoc, query, where, deleteDoc, updateDoc, orderBy, collectionGroup } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 
 const provider = new GoogleAuthProvider();
@@ -43,6 +43,7 @@ export const FirebaseProvider = (props)=>{
             return await setDoc(doc(firestore, "users", user.uid), {
               uid: user.uid,
               email,
+              password,
               name: name,
               role: "user",
               userPhoto: userPhotoUrl,
@@ -73,6 +74,33 @@ export const FirebaseProvider = (props)=>{
         await setDoc(doc(firestore, "users", user.uid), { userPhoto: url }, { merge: true });
         setUser((prev) => ({ ...prev, userPhoto: url }));
         return url;
+      };
+
+      const adminUpdatePhoto = async (targetUserId, file) => {
+        try {
+          if (!targetUserId) throw new Error("No target user ID provided");
+
+          // upload to that user's folder
+          const imageRef = ref(
+            storage,
+            `users/${targetUserId}/profile/${Date.now()}-${file.name}`,
+          );
+
+          const snapshot = await uploadBytes(imageRef, file);
+          const url = await getDownloadURL(snapshot.ref);
+
+          // update Firestore user document
+          await setDoc(
+            doc(firestore, "users", targetUserId),
+            { userPhoto: url },
+            { merge: true },
+          );
+
+          return url;
+        } catch (error) {
+          console.error("Error updating user profile photo:", error);
+          throw error;
+        }
       };
 
     const login = (email, password) => {
@@ -157,12 +185,7 @@ export const FirebaseProvider = (props)=>{
           }
 
           const result = await addDoc(collection(firestore, "allResources"), {
-            user: {
-              uid: user.uid,
-              name: userData.name,
-              userPhoto: userData.userPhoto,
-            },
-
+            user_id: user.uid,
             title,
             description,
             coverPhoto: coverPhotoPath,
@@ -186,29 +209,43 @@ export const FirebaseProvider = (props)=>{
         }
       };
 
-      const addReviews = async (resourceId, comment, rating) => {
+      const getUserById = async (uid) => {
+        if (!uid) return null;
+
         try {
-          const result = await addDoc(
+          const snap = await getDoc(doc(firestore, "users", uid));
+          return snap.exists() ? snap.data() : null;
+        } catch (error) {
+          console.error("Error fetching user:", error);
+          return null;
+        }
+      };
+
+      const addReviews = async (resourceId, resourceTitle, comment, rating) => {
+        try {
+          const commentDoc = await addDoc(
             collection(firestore, `allResources/${resourceId}/comments`),
             {
+              user_id: user.uid,
+              userName: user.name,
+              comment: comment,
               user: {
                 uid: user.uid,
                 name: user.name,
-                userPhoto: user.userPhoto,
+                userPhoto: user.userPhoto, // 🔥 important
               },
-              comment: comment,
+              resourceId,
+              resourceTitle,
               createdAt: serverTimestamp(),
             },
           );
 
-          const result2 = await setDoc(
-            doc(firestore, "allResources", resourceId, "ratings", user.uid),
+          // Store rating with unique ID and link to comment
+          const ratingDoc = await addDoc(
+            collection(firestore, "allResources", resourceId, "ratings"),
             {
-              user: {
-                uid: user.uid,
-                name: user.name,
-                userPhoto: user.userPhoto,
-              },
+              user_id: user.uid,
+              comment_id: commentDoc.id,
               rating: rating,
               createdAt: serverTimestamp(),
             },
@@ -249,6 +286,8 @@ export const FirebaseProvider = (props)=>{
       ...doc.data(),
     }));
 
+    console.log('Fetched ratings:', ratings.map(r => ({ id: r.id, rating: r.rating, user_id: r.user_id, comment_id: r.comment_id })));
+
     return { comments, ratings };
 
   } catch (error) {
@@ -256,6 +295,43 @@ export const FirebaseProvider = (props)=>{
     return { comments: [], ratings: [] }; // ✅ consistent return
   }
 }
+
+const getAllComments = async () => {
+  const snapshot = await getDocs(collectionGroup(firestore, "comments"));
+
+  return snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+};
+
+      const deleteCommentAndRating = async (resourceId, commentId) => {
+        if (!resourceId || !commentId) {
+          throw new Error("resourceId and commentId are required");
+        }
+
+        try {
+          // Delete the comment document.
+          await deleteDoc(doc(firestore, "allResources", resourceId, "comments", commentId));
+
+          // Delete all linked rating docs for this comment.
+          const ratingsQuery = query(
+            collection(firestore, "allResources", resourceId, "ratings"),
+            where("comment_id", "==", commentId),
+          );
+
+          const ratingsSnap = await getDocs(ratingsQuery);
+          const batchDeletes = ratingsSnap.docs.map((ratingDoc) =>
+            deleteDoc(doc(firestore, "allResources", resourceId, "ratings", ratingDoc.id)),
+          );
+          await Promise.all(batchDeletes);
+
+          return { success: true };
+        } catch (error) {
+          console.error("Error deleting comment and rating:", error);
+          return { success: false, error };
+        }
+      };
 
       const addRatingAvg = async (resourceId, rating) => {
         try {
@@ -315,7 +391,7 @@ export const FirebaseProvider = (props)=>{
 
             const q = query(
               collection(firestore, "allResources"),
-              where('user.uid', '==', userId),
+              where('user_id', '==', userId),
             );
 
             const snapshot = await getDocs(q);
@@ -358,10 +434,19 @@ export const FirebaseProvider = (props)=>{
         return querySnapshot;
       }
 
-      const getResourceImg = (path) => {
-        if (!path) return Promise.resolve(null); // prevent root reference error
-        const imageRef = ref(storage, path);
-        return getDownloadURL(imageRef);
+      const getResourceImg = async (path) => {
+        if (!path) return null;
+
+        // if already a full URL
+        if (path.startsWith("http")) return path;
+
+        try {
+          const imageRef = ref(storage, path);
+          return await getDownloadURL(imageRef);
+        } catch (error) {
+          console.error("Error fetching image:", error);
+          return null;
+        }
       };
 
       const deleteResource = async (id) => {
@@ -441,6 +526,55 @@ export const FirebaseProvider = (props)=>{
 
         return { result };
       }
+
+      const reportResource = async (resource, reason) => {
+        try {
+          if (!user?.uid) throw new Error("User not authenticated");
+
+          const q = query(
+            collection(firestore, "reports"),
+            where("resourceId", "==", resource.id),
+            where("reportedBy.uid", "==", user.uid),
+          );
+
+          const snapshot = await getDocs(q);
+
+          if (!snapshot.empty) {
+            throw new Error("You have already reported this resource");
+          }
+
+          if (!resource?.id) {
+            throw new Error("Invalid resource");
+          }
+
+          if (!reason) {
+            throw new Error("Reason is required");
+          }
+
+          const reportData = {
+            resourceId: resource.id,
+            resourceTitle: resource.title || "Untitled",
+
+            reportedBy: {
+              uid: user.uid,
+              name: user.name || "Anonymous",
+            },
+
+            reason,
+            createdAt: serverTimestamp(),
+          };
+
+          const result = await addDoc(
+            collection(firestore, "reports"),
+            reportData,
+          );
+
+          return result;
+        } catch (error) {
+          console.error("Error reporting resource:", error);
+          throw error;
+        }
+      };
 
       const addBlog = async (
         title,
@@ -611,8 +745,32 @@ export const FirebaseProvider = (props)=>{
         return result;
       };
 
+      const getAllUsers = async () => {
+        try {
+          const snapshot = await getDocs(collection(firestore, "users"));
+
+          return snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(), // ✅ keeps existing user
+          }));
+        } catch (error) {
+          console.error("Error fetching users:", error);
+          return [];
+        }
+      };
+
+      const updateUser = async (id, data) => {
+        const userRef = doc(firestore, "users", id);
+
+        let updatePayload = { ...data };
+
+        const result = await updateDoc(userRef, updatePayload);
+
+        return result;
+      }
+
   return (
-    <FirebaseContext.Provider value={{signUp, signUpWithGoogle, login, loggedin, user, logout, addResource, addReviews, getReviews, addRatingAvg, getAllResources, getMyResources, viewResource, getResourceImg, categorizedResources, updateProfilePhoto, deleteResource, updateResource, addBlog, getAllBlogs, getMyBlogs, viewBlog, getBlogImg, deleteBlog, updateBlog}}>
+    <FirebaseContext.Provider value={{signUp, signUpWithGoogle, login, loggedin, user, logout, addResource, addReviews, getReviews, getAllComments, deleteCommentAndRating, addRatingAvg, getAllResources, getMyResources, viewResource, getResourceImg, categorizedResources, updateProfilePhoto, adminUpdatePhoto, deleteResource, updateResource, reportResource, addBlog, getAllBlogs, getMyBlogs, viewBlog, getBlogImg, deleteBlog, updateBlog, getAllUsers, getUserById, updateUser}}>
       {props.children}
     </FirebaseContext.Provider>
   )

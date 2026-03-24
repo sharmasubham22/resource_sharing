@@ -38,7 +38,7 @@ export default function UserDashboard() {
         <div>
           <div className="mb-4">
             <ul
-              className="flex flex-wrap -mb-px text-sm font-medium text-center items-center justify-center"
+              className="flex flex-wrap -mb-px text-lg font-body text-center items-center justify-center"
               id="default-styled-tab"
               data-tabs-toggle="#default-styled-tab-content"
               data-tabs-active-classes="text-brand-medium hover:text-brand-medium border-brand-medium"
@@ -119,6 +119,9 @@ export default function UserDashboard() {
                       id={resource.id}
                       {...resource}
                       profile={true}
+                      onDelete={() => {
+                        setMyResources((prev) => prev.filter((r) => r.id !== resource.id));
+                      }}
                     />
                   ))
                 )}
@@ -169,6 +172,9 @@ export default function UserDashboard() {
                       id={blog.id}
                       {...blog}
                       profile={true}
+                      onDelete={() => {
+                        setMyBlogs((prev) => prev.filter((b) => b.id !== blog.id));
+                      }}
                     />
                   ))
                 )}
