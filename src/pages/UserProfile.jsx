@@ -64,9 +64,9 @@ export default function UserProfile() {
             <Button
               onClick={uploadPhoto}
               disabled={uploading}
-              variant='secondary'
+              variant="secondary"
               size="md"
-              className='mx-auto'
+              className="mx-auto"
             >
               {uploading ? "Uploading..." : "Upload Photo"}
             </Button>
@@ -75,18 +75,19 @@ export default function UserProfile() {
               onClick={() =>
                 fileInputRef.current && fileInputRef.current.click()
               }
-              variant='primary'
-              size='md'
-              className='mx-auto'
+              variant="primary"
+              size="md"
+              className="mx-auto"
             >
               Change Photo
             </Button>
           )}
         </div>
       </div>
-      <p className="text-center text-brand-medium">
-        {firebase.user?.name} | {firebase.user?.email}
+      <p className="text-center text-text-primary font-body text-3xl">
+        {firebase.user?.name}
       </p>
+      <p className='text-text-secondary text-center text-lg font-body'>{firebase.user?.email}</p>
     </div>
   );
 }

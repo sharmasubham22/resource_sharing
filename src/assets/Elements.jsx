@@ -1,6 +1,6 @@
 const dots = (
   <svg
-    width="w-full"
+    width="w-screen"
     height="72"
     viewBox="0 0 1440 72"
     fill="none"

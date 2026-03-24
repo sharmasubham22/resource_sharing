@@ -196,7 +196,7 @@ export default function AddResource() {
                       type="button"
                       key={tag.val}
                       onClick={() => toggleTag(tag.val)}
-                      className={`inline-flex items-center px-2 py-1 text-sm font-medium rounded ${selected ? "bg-brand text-white ring-2 ring-brand" : "bg-brand-softer ring-1 ring-inset ring-brand-medium text-brand-strong"}`}
+                      className={`inline-flex items-center px-2 py-1 text-sm font-medium rounded ${selected ? "bg-brand text-white ring-2 ring-brand" : "bg-brand-softer ring-1 ring-inset ring-brand-medium text-text-secondary"}`}
                       aria-pressed={selected}
                     >
                       {tag.name}

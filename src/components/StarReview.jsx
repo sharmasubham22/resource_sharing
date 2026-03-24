@@ -6,7 +6,7 @@ export default function StarReview({ rating, setRating }) {
 
   return (
     <div className="mb-5">
-      <label className="block mb-2 font-medium text-text-primary">
+      <label className="block mb-2 font-body text-lg text-text-primary">
         Leave a Review:
       </label>
 

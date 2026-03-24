@@ -26,7 +26,12 @@ export default function BlogCard(props) {
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.isConfirmed) {
-          firebase.deleteBlog(props.id);
+          firebase.deleteBlog(props.id).then(() => {
+            // Call the onDelete callback to update the parent state
+            if (props.onDelete) {
+              props.onDelete();
+            }
+          });
           Swal.fire({
             title: "Deleted!",
             text: "The blog post has been deleted.",
@@ -44,7 +49,7 @@ export default function BlogCard(props) {
       <div className="group bg-card relative flex flex-col justify-between h-full border border-border shadow-xs mb-5">
         {!props.hideDelete && (
           <button className="cursor-pointer" onClick={deleteBlog}>
-            <span className="absolute inline-flex items-center justify-center top-3 right-3 bg-red-400 text-white px-3 py-1 rounded-full text-xs lg:text-sm font-medium gap-1">
+            <span className="absolute inline-flex items-center justify-center top-3 right-3 bg-red-400 text-white px-3 py-1 rounded-full text-xs lg:text-sm font-body gap-1">
               Delete
               <Trash2 size={16} />
             </span>
@@ -54,19 +59,14 @@ export default function BlogCard(props) {
         <img className="h-70 w-full object-cover" src={imgUrl} alt="" />
 
         <div className="px-6 py-3">
-          <h5 className="mt-3 mb-6 text-2xl font-semibold tracking-tight text-text-primary">
+          <h5 className="mt-3 mb-6 text-2xl md:text-3xl font-body font-bold tracking-tight text-text-primary">
             {props.title}
           </h5>
 
-          <p className="text-text-secondary">
+          <p className="text-text-secondary font-body text-lg">
             {/* Render normalized preview, truncate for safety */}
             <span
               className="text-text-secondary"
-              style={{
-                fontSize: "1rem",
-                lineHeight: "1.5",
-                whiteSpace: "normal",
-              }}
               dangerouslySetInnerHTML={{
                 __html:
                   typeof props.description === "string"
@@ -89,7 +89,7 @@ export default function BlogCard(props) {
                 className="rounded-full h-10 w-10 border border-brand-medium"
               />
 
-              <span className="mx-3 capitalize text-text-primary">
+              <span className="mx-3 capitalize text-text-primary font-body text-lg">
                 {props.user?.name}
               </span>
             </div>

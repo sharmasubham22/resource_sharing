@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom';
 import { useFirebase } from '../../context/Firebase';
 import StarReview from '../../components/StarReview';
 import Button from '../../components/Button';
-import { Rat } from 'lucide-react';
+import { Rat, TriangleAlert } from 'lucide-react';
 import Rating from '../../components/Rating';
+import Comment from '../../components/Comment';
 
 export default function ViewResource() {
     const params = useParams();
@@ -14,6 +15,10 @@ export default function ViewResource() {
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState("");
     const [commentsData, setCommentsData] = useState([]);
+    const [user, setUser] = useState(null);
+    const [showReportModal, setShowReportModal] = useState(false);
+    const [selectedResource, setSelectedResource] = useState(null);
+    const [selectedReason, setSelectedReason] = useState(null);
     
     useEffect(() => {
         if (resourceData) {
@@ -42,9 +47,35 @@ export default function ViewResource() {
       fetchData();
     }, [params.id]);
 
+    
+
+    useEffect(() => {
+      const userId = resourceData?.user_id;
+      if (!userId) return;
+
+      let isMounted = true;
+
+      const fetchUser = async () => {
+        try {
+          const data = await firebase.getUserById(userId);
+          if (isMounted) {
+            setUser(data);
+          }
+        } catch (err) {
+          console.error("Error fetching user:", err);
+        }
+      };
+
+      fetchUser();
+
+      return () => {
+        isMounted = false; // prevents memory leak
+      };
+    }, [resourceData?.user_id, firebase]);
+
     if(resourceData == null) {
         return (
-          <div class="text-center mt-50">
+          <div className="text-center mt-50">
             <div role="status">
               <svg
                 aria-hidden="true"
@@ -62,7 +93,7 @@ export default function ViewResource() {
                   fill="currentFill"
                 />
               </svg>
-              <span class="sr-only">Loading...</span>
+              <span className="sr-only">Loading...</span>
             </div>
           </div>
         );
@@ -72,18 +103,31 @@ export default function ViewResource() {
       setComment(e.target.value);
     }
 
+    const handleSubmitReport = async () => {
+      try {
+        await firebase.reportResource(resourceData, selectedReason);
+
+        setShowReportModal(false);
+        setSelectedReason(null);
+
+        console.log("Report submitted");
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
     return (
       <div className="max-w-5xl mx-auto px-5 md:px-10">
-        <h1 className="text-3xl md:text-6xl font-heading text-center text-text-primary mt-10">
+        <h1 className="text-4xl md:text-6xl font-heading text-center text-text-primary mt-10">
           {resourceData.title}
         </h1>
         <div className="flex items-center justify-center mt-5 gap-2">
           <img
-            src={resourceData.user?.userPhoto}
+            src={user?.userPhoto}
             className="rounded-full w-10 h-10 border border-brand-medium"
           />
-          <p className="text-text-secondary capitalize">
-            {resourceData.user?.name}
+          <p className="text-text-secondary font-body text-lg capitalize">
+            {user?.name}
           </p>
         </div>
         {Array.isArray(resourceData.tags) && resourceData.tags.length > 0 && (
@@ -91,7 +135,7 @@ export default function ViewResource() {
             {resourceData.tags.map((tag, idx) => (
               <span
                 key={idx}
-                className="inline-flex items-center bg-brand-softer border border-brand-soft text-brand-strong text-xs font-medium px-2 py-0.5 rounded-sm"
+                className="inline-flex items-center bg-brand-softer border border-brand-soft text-text-secondary text-md font-body px-2 py-0.5 rounded-sm"
               >
                 {tag}
               </span>
@@ -105,7 +149,7 @@ export default function ViewResource() {
         />
 
         <div
-          className="text-text-secondary mb-5"
+          className="text-text-secondary font-body text-lg mb-5"
           dangerouslySetInnerHTML={{ __html: resourceData.description }}
         />
         <a
@@ -116,10 +160,69 @@ export default function ViewResource() {
         >
           {resourceData.link}
         </a>
-        <div className="my-10">
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => {
+            setSelectedResource(resourceData);
+            setShowReportModal(true);
+          }}
+          className='flex gap-2 float-end'
+        >
+          <TriangleAlert />
+          Report
+        </Button>
+        {showReportModal && (
+          <div className="fixed inset-0 bg-background/50 flex items-center justify-center z-50">
+            <div className="bg-card text-text-primary p-6 rounded-lg w-96">
+              <h2 className="text-lg font-semibold mb-4">Report Resource</h2>
+
+              {/* Radio options */}
+              <div className="flex flex-col gap-2">
+                {[
+                  "Spam",
+                  "Inappropriate Content",
+                  "Copyright Violation",
+                  "Misleading Information",
+                ].map((reason) => (
+                  <label key={reason} className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="reportReason"
+                      value={reason}
+                      onChange={(e) => setSelectedReason(e.target.value)}
+                    />
+                    {reason}
+                  </label>
+                ))}
+              </div>
+
+              {/* Actions */}
+              <div className="flex justify-end gap-2 mt-5">
+                <Button
+                  variant="secondary"
+                  onClick={() => setShowReportModal(false)}
+                >
+                  Cancel
+                </Button>
+
+                <Button
+                  variant="primary"
+                  onClick={handleSubmitReport}
+                  disabled={!selectedReason}
+                >
+                  Submit
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+        <div className="my-10 font-body">
           <h1 className="text-4xl text-text-primary">Ratings & Reviews</h1>
+
           <p className="text-text-primary text-xl mt-5">
-            <span className="text-2xl">{resourceData.ratingAverage}</span> out of 5
+            <span className="text-2xl">{resourceData.ratingAverage}</span> out
+            of 5
           </p>
           <p className="text-text-secondary">
             ({resourceData.ratingCount} reviews)
@@ -128,41 +231,47 @@ export default function ViewResource() {
         <div>
           <StarReview rating={rating} setRating={setRating} />
           <textarea
-            className="block w-full px-3 py-2.5 bg-input-bg border border-input-border text-input-text text-sm rounded-base focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder"
+            className="block font-body text-lg w-full px-3 py-2.5 bg-input-bg border border-input-border text-input-text rounded-base focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder"
             rows={5}
             onChange={handleCommentChange}
             placeholder="Enter your comment"
           />
-          <Button
-            onClick={(e) => {
-              firebase.addReviews(params.id, comment, rating);
-              firebase.addRatingAvg(params.id, rating);
-            }}
-            variant="primary"
-            size="md"
-            className="mt-5"
-          >
-            Post Your Review
-          </Button>
+          {firebase.user === null ? (
+            <Button
+              variant="primary"
+              size="md"
+              className="mt-5"
+              disabled="disabled"
+            >
+              Post Your Review
+            </Button>
+          ) : (
+            <Button
+              onClick={(e) => {
+                firebase.addReviews(
+                  params.id,
+                  resourceData.title,
+                  comment,
+                  rating,
+                );
+                firebase.addRatingAvg(params.id, rating);
+              }}
+              variant="primary"
+              size="md"
+              className="mt-5"
+            >
+              Post Your Review
+            </Button>
+          )}
         </div>
 
-        <div className="mb-30">
+        <div className="mb-30 font-body">
           {commentsData.comments.map((comment, idx) => (
-            <div key={idx} className="border-b border-border p-5 mt-5">
-              <div className="flex items-center gap-2 mb-3">
-                <img
-                  src={comment.user?.userPhoto}
-                  className="rounded-full w-8 h-8 border border-brand-medium"
-                />
-                <p className="text-text-primary capitalize">
-                  {comment.user?.name}
-                </p>
-                {commentsData.ratings.map((rating, id) => (
-                  <Rating key={id} rating={rating.rating} />
-                ))}
-              </div>
-              <p className="text-text-secondary text-sm">{comment.comment}</p>
-            </div>
+            <Comment
+              key={comment.id || idx}
+              comment={comment}
+              ratings={commentsData.ratings}
+            />
           ))}
         </div>
         {/* <iframe src={""} title="shared link" width="100%" height="300px" /> */}

@@ -9,10 +9,31 @@ import Rating from './Rating';
 export default function ResourceCard(props) {
     const firebase = useFirebase();
     const [imgUrl, setImgUrl] = useState(null);
+    const [user, setUser] = useState(null);
 
     // useEffect(() => {
     //     firebase.getResourceImg(props.coverPhoto).then(url => setImgUrl(url));
     // }, []);
+
+    useEffect(() => {
+      if (!props.user_id) return;
+
+      let isMounted = true;
+
+      const fetchUser = async () => {
+        const data = await firebase.getUserById(props.user_id);
+
+        if (isMounted) {
+          setUser(data);
+        }
+      };
+
+      fetchUser();
+
+      return () => {
+        isMounted = false; // prevents memory leak
+      };
+    }, [props.user_id]);
 
     const navigate = useNavigate();
 
@@ -27,7 +48,12 @@ export default function ResourceCard(props) {
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.isConfirmed) {
-          firebase.deleteResource(props.id);
+          firebase.deleteResource(props.id).then(() => {
+            // Call the onDelete callback to update the parent state
+            if (props.onDelete) {
+              props.onDelete();
+            }
+          });
           Swal.fire({
             title: "Deleted!",
             text: "The resource has been deleted.",
@@ -65,7 +91,7 @@ export default function ResourceCard(props) {
               ))}
             </div>
           )}
-          <h5 className="mb-6 text-lg md:text-2xl tracking-tight text-text-primary font-mono font-bold">
+          <h5 className="mb-6 text-xl md:text-2xl tracking-tight text-text-primary font-mono font-bold">
             {props.title}
           </h5>
           <p className="text-text-secondary mb-5">
@@ -93,12 +119,12 @@ export default function ResourceCard(props) {
           {!props.profile && (
             <div className="flex items-center">
               <img
-                src={props.user?.userPhoto}
+                src={user?.userPhoto}
                 className="w-10 h-10 rounded-full border border-brand-soft"
               />
 
               <span className="mx-3 capitalize text-text-primary font-mono">
-                {props.user?.name}
+                {user?.name}
               </span>
             </div>
           )}
@@ -106,7 +132,7 @@ export default function ResourceCard(props) {
             <Button
               onClick={(e) => navigate(`/view-resource/${props.id}`)}
               variant="primary"
-              size="md"
+              size="sm"
               className="w-full inline-flex items-center justify-center gap-2 font-mono"
             >
               Read Full Article
@@ -116,7 +142,7 @@ export default function ResourceCard(props) {
               <Button
                 onClick={(e) => navigate(`/edit-resource/${props.id}`)}
                 variant="secondary"
-                size="md"
+                size="sm"
                 className="w-full mt-2 inline-flex items-center justify-center gap-2 font-mono"
               >
                 Edit Article

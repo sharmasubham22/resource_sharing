@@ -23,7 +23,7 @@ export default function Hero() {
             <h1 className="text-text-primary tracking-tighter text-3xl md:text-6xl font-heading my-6">
               The community's just getting Bigger!!
             </h1>
-            <p className="md:text-lg font-normal text-text-secondary mb-6">
+            <p className="font-body text-xl text-text-secondary mb-6">
               Discover, share, and organize the best learning resources - from
               code to concepts - all in one place.
             </p>
@@ -57,14 +57,14 @@ export default function Hero() {
           <h2 className="text-text-primary text-xl md:text-2xl font-heading  mb-4">
             Start with Flowbite Design System
           </h2>
-          <p className=" font-normal text-text-secondary mb-4">
+          <p className=" font-body text-lg text-text-secondary mb-4">
             Static websites are now used to bootstrap lots of websites and are
             becoming the basis for a variety of tools that even influence both
             web designers and developers.
           </p>
           <a
             href="#"
-            className="text-brand hover:underline font-medium text-lg inline-flex items-center gap-2"
+            className="text-brand hover:underline font-body text-lg inline-flex items-center gap-2"
           >
             Read more
             <MoveRight />
@@ -74,14 +74,14 @@ export default function Hero() {
           <h2 className="text-text-primary text-xl md:text-2xl font-heading  mb-4">
             Best react libraries around the web
           </h2>
-          <p className=" font-normal text-text-secondary mb-4">
+          <p className=" font-body text-lg text-text-secondary mb-4">
             Static websites are now used to bootstrap lots of websites and are
             becoming the basis for a variety of tools that even influence both
             web designers and developers.
           </p>
           <a
             href="#"
-            className="text-brand hover:underline font-medium text-lg inline-flex items-center gap-2"
+            className="text-brand hover:underline font-body text-lg inline-flex items-center gap-2"
           >
             Read more
             <MoveRight />

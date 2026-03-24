@@ -27,14 +27,14 @@ export default function LandingPage() {
       <section>
         <Hero />
       </section>
-      <div className="text-brand-softer">{dots}</div>
+      <div className="text-brand-softer overflow-hidden">{dots}</div>
 
       <section className="py-8 px-4 mx-auto lg:py-16 bg-linear-to-t from-brand-softer to-background">
-        <div className="max-w-7xl rounded-base mx-auto bg-background p-4 md:p-12">
+        <div className="max-w-7xl rounded-base mx-auto bg-background p-6 md:p-12">
           <h1 className="text-3xl md:text-4xl lg:text-5xl text-text-primary mb-20 font-heading text-center lg:text-left">
             Resources by Categories
           </h1>
-          <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
+          <div className="grid md:gap-6 grid-cols-1 md:grid-cols-2">
             <div>
               {categories.slice(0, 6).map((category) => {
                 const Icons = category.icons;
@@ -45,9 +45,9 @@ export default function LandingPage() {
                     className=" flex items-center py-2 cursor-pointer border-b border-border w-full"
                   >
                     <Icons className="text-brand-medium" />
-                    <p className="text-text-secondary text-md m-2 font-medium px-3 py-1 ">
+                    <span className="text-text-secondary m-2 font-body text-lg px-3 py-1 ">
                       {category.label}
-                    </p>
+                    </span>
                   </button>
                 );
               })}
@@ -62,7 +62,7 @@ export default function LandingPage() {
                     className=" flex items-center py-2 cursor-pointer border-b border-border w-full"
                   >
                     <Icons className="text-brand-medium" />
-                    <p className="text-text-secondary text-md m-2 font-medium px-3 py-1 ">
+                    <p className="text-text-secondary text-lg m-2 font-body px-3 py-1 ">
                       {category.label}
                     </p>
                   </button>
