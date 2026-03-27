@@ -22,8 +22,8 @@ export default function CategorizedResources() {
   }, [params.category, firebase]);
 
   return (
-    <div className="mt-15">
-      <h1 className="text-3xl md:text-5xl pl-2 mx-10 my-2 border-l-8 font-heading border-brand text-text-primary capitalize">
+    <div>
+      <h1 className="text-4xl md:text-5xl lg:text-6xl pl-2 mx-10 my-2 border-l-8 font-heading border-brand text-text-primary capitalize">
         {params.category}
       </h1>
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6 p-10">

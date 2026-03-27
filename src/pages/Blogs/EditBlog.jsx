@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 import JoditEditor from "jodit-react";
 import Swal from "sweetalert2";
 
-export default function EditBlog() {
+export default function EditBlog(props) {
     const firebase = useFirebase();
     const params = useParams();
-
+    const blogId = props.blogId || params.id;
     const [blogData, setBlogData] = useState(null);
     const [updateData, setUpdateData] = useState({});
     
@@ -56,14 +56,14 @@ export default function EditBlog() {
     );    
 
     useEffect(() => {
-          firebase.viewBlog(params.id)
+          firebase.viewBlog(blogId)
             .then((blog) => {
               const data = blog;
               setBlogData(data);
               setUpdateData(data); 
             })
             .catch((err) => console.error(err));
-        }, [params.id, firebase]);
+        }, [blogId, firebase]);
     
         if (!blogData) {
           return (
@@ -118,14 +118,12 @@ export default function EditBlog() {
               icon: "success",
               showConfirmButton: false,
               timer: 1500,
-            }).then(() => {
-              navigate("/my-dashboard");
-            });
+            })
             // navigate(0);
         }
   return (
-    <div className="text-left mt-15">
-      <h2 className="text-3xl md:text-5xl pl-2 mx-5 md:mx-10 my-2 border-l-8 text-text-primary font-heading border-brand ">
+    <div className="text-left">
+      <h2 className="text-4xl md:text-5xl lg:text-6xl pl-2 mx-5 md:mx-10 my-2 border-l-8 text-text-primary font-heading border-brand ">
         Edit Blog
       </h2>
       <form className="max-w-3xl p-5 md:p-10">

@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import JoditEditor from "jodit-react";
 import Button from "../../components/Button";
+import CodeEditor from "../../components/CodeEditor";
 
 export default function AddResource() {
     const [title, setTitle] = useState('');
@@ -20,7 +21,6 @@ export default function AddResource() {
     const nav = useNavigate();
 
     const editor = useRef(null);
-    const codeEditor = useRef(null);
 
     const config = useMemo(
       () => ({
@@ -63,16 +63,6 @@ export default function AddResource() {
       [],
     );    
 
-    const config2 = useMemo(
-      () => ({
-        defaultMode: "source",
-        theme: "editor",
-        buttons: ["source"],
-        toolbarAdaptive: false,
-      }),
-      [],
-    );
-
     const toggleTag = (val) => {
       setSelectedTags((prev) => (prev.includes(val) ? prev.filter((t) => t !== val) : [...prev, val]));
     }; 
@@ -102,8 +92,8 @@ export default function AddResource() {
 
     
   return (
-    <div className="text-left mt-15">
-      <h2 className="text-3xl md:text-5xl pl-2 text-text-primary mx-5 md:mx-10 my-2 border-l-8 font-heading border-brand ">
+    <div className="text-left">
+      <h2 className="text-4xl md:text-5xl lg:text-6xl pl-2 text-text-primary mx-5 md:mx-10 my-2 border-l-8 font-heading border-brand ">
         Add a Resource
       </h2>
       <form className="max-w-3xl p-5 md:p-10">
@@ -274,14 +264,7 @@ export default function AddResource() {
               >
                 Code Snippet
               </label>
-              <JoditEditor
-                ref={codeEditor}
-                config={config2}
-                onChange={(e) => setCodeSnippet(e.target.value)}
-                value={codeSnippet}
-                className="block w-full bg-input-bg border border-input-border text-input-text text-sm focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder"
-                id="code"
-              />
+              <CodeEditor value={codeSnippet} onChange={setCodeSnippet} />
             </div>
           )}
 

@@ -17,18 +17,21 @@ import AllBlogs from "./pages/Blogs/AllBlogs.jsx";
 import ViewBlog from './pages/Blogs/ViewBlog.jsx';
 import EditBlog from './pages/Blogs/EditBlog.jsx';
 import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
+import AdminRoute from './components/AdminRoute.jsx';
+import Contact from './pages/Contact.jsx';
 
 export default function App() {
   const location = useLocation();
-  const noBarPaths = ["/admin", "/user-table"]; 
+  const noBarPaths = ["/admin"]; 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-background ">
       {!noBarPaths.includes(location.pathname) && <Navbar />}
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/my-dashboard" element={<UserDashboard />} />
+        <Route path="/contact" element={<Contact />}/>
 
         {/* Resources Routes */}
         <Route path="/add-resource" element={<AddResource />} />
@@ -44,7 +47,14 @@ export default function App() {
         <Route path="/edit-blog/:id" element={<EditBlog />} />
 
         {/* Admin Routes */}
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
       </Routes>
       {!noBarPaths.includes(location.pathname) && <Footer />}
     </div>

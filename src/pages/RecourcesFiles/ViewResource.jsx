@@ -6,10 +6,12 @@ import Button from '../../components/Button';
 import { Rat, TriangleAlert } from 'lucide-react';
 import Rating from '../../components/Rating';
 import Comment from '../../components/Comment';
+import CodeMirror from "@uiw/react-codemirror";
 
-export default function ViewResource() {
+export default function ViewResource(props) {
     const params = useParams();
     const firebase = useFirebase();
+    const resourceId = props.resourceId || params.id;
     const [resourceData, setResourceData] = useState(null);
     const [imgUrl, setImgUrl] = useState(null);
     const [rating, setRating] = useState(0);
@@ -31,8 +33,8 @@ export default function ViewResource() {
       const fetchData = async () => {
         try {
           const [resource, reviews] = await Promise.all([
-            firebase.viewResource(params.id),
-            firebase.getReviews(params.id),
+            firebase.viewResource(resourceId),
+            firebase.getReviews(resourceId),
           ]);
 
           setResourceData(resource);
@@ -45,7 +47,7 @@ export default function ViewResource() {
       };
 
       fetchData();
-    }, [params.id]);
+    }, [resourceId]);
 
     
 
@@ -117,8 +119,8 @@ export default function ViewResource() {
     };
 
     return (
-      <div className="max-w-5xl mx-auto px-5 md:px-10">
-        <h1 className="text-4xl md:text-6xl font-heading text-center text-text-primary mt-10">
+      <div className="max-w-5xl w-full mx-auto px-5 md:px-10">
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading text-center text-text-primary mt-5">
           {resourceData.title}
         </h1>
         <div className="flex items-center justify-center mt-5 gap-2">
@@ -160,6 +162,10 @@ export default function ViewResource() {
         >
           {resourceData.link}
         </a>
+        {resourceData.codeSnippet == "" ? ( <></> ) : (
+          <CodeMirror value={resourceData.codeSnippet} editable={false} theme="dark" className='mb-10' />
+        )}
+        
         <Button
           variant="secondary"
           size="sm"
@@ -167,7 +173,7 @@ export default function ViewResource() {
             setSelectedResource(resourceData);
             setShowReportModal(true);
           }}
-          className='flex gap-2 float-end'
+          className="flex gap-2 float-end"
         >
           <TriangleAlert />
           Report
@@ -228,42 +234,44 @@ export default function ViewResource() {
             ({resourceData.ratingCount} reviews)
           </p>
         </div>
-        <div>
-          <StarReview rating={rating} setRating={setRating} />
-          <textarea
-            className="block font-body text-lg w-full px-3 py-2.5 bg-input-bg border border-input-border text-input-text rounded-base focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder"
-            rows={5}
-            onChange={handleCommentChange}
-            placeholder="Enter your comment"
-          />
-          {firebase.user === null ? (
-            <Button
-              variant="primary"
-              size="md"
-              className="mt-5"
-              disabled="disabled"
-            >
-              Post Your Review
-            </Button>
-          ) : (
-            <Button
-              onClick={(e) => {
-                firebase.addReviews(
-                  params.id,
-                  resourceData.title,
-                  comment,
-                  rating,
-                );
-                firebase.addRatingAvg(params.id, rating);
-              }}
-              variant="primary"
-              size="md"
-              className="mt-5"
-            >
-              Post Your Review
-            </Button>
-          )}
-        </div>
+        {!props.isAdmin && (
+          <div>
+            <StarReview rating={rating} setRating={setRating} />
+            <textarea
+              className="block font-body text-lg w-full px-3 py-2.5 bg-input-bg border border-input-border text-input-text rounded-base focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder"
+              rows={5}
+              onChange={handleCommentChange}
+              placeholder="Enter your comment"
+            />
+            {firebase.user === null ? (
+              <Button
+                variant="primary"
+                size="md"
+                className="mt-5"
+                disabled="disabled"
+              >
+                Post Your Review
+              </Button>
+            ) : (
+              <Button
+                onClick={(e) => {
+                  firebase.addReviews(
+                    resourceId,
+                    resourceData.title,
+                    comment,
+                    rating,
+                  );
+                  firebase.addRatingAvg(resourceId, rating);
+                }}
+                variant="primary"
+                size="md"
+                className="mt-5"
+              >
+                Post Your Review
+              </Button>
+            )}
+          </div>
+        )}
 
         <div className="mb-30 font-body">
           {commentsData.comments.map((comment, idx) => (

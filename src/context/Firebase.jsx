@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { createContext, useContext, useEffect, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut} from "firebase/auth";
-import { getFirestore, setDoc, doc, serverTimestamp, addDoc, collection, getDocs, getDoc, query, where, deleteDoc, updateDoc, orderBy, collectionGroup } from "firebase/firestore";
+import { getFirestore, setDoc, doc, serverTimestamp, addDoc, collection, getDocs, getDoc, query, where, deleteDoc, updateDoc, orderBy, collectionGroup, getCountFromServer } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "firebase/storage";
 
 const provider = new GoogleAuthProvider();
@@ -26,6 +26,36 @@ export const useFirebase = () => useContext(FirebaseContext);
 
 export const FirebaseProvider = (props)=>{
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(firebaseAuth, async (authUser) => {
+      if (authUser) {
+        try {
+          const snap = await getDoc(doc(firestore, "users", authUser.uid));
+
+          if (snap.exists()) {
+            setUser({
+              uid: authUser.uid,
+              ...snap.data(), // ✅ includes role
+            });
+          } else {
+            setUser(null);
+          }
+        } catch (error) {
+          console.error("Error fetching user:", error);
+          setUser(null);
+        }
+      } else {
+        setUser(null);
+      }
+
+      setLoading(false);
+    });
+
+    return unsubscribe;
+  }, []);
+
     const signUp = async (email, password, name, userPhoto) => {
       let user;
             const create = await createUserWithEmailAndPassword(firebaseAuth, email, password);
@@ -576,6 +606,35 @@ const getAllComments = async () => {
         }
       };
 
+      const getAllReports = async () => {
+        try {
+          const snapshot = await getDocs(collection(firestore, "reports"));
+
+          return snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(), // ✅ keeps existing user
+          }));
+        } catch (error) {
+          console.error("Error fetching reports:", error);
+          return [];
+        }
+      };
+
+      const deleteReport = async (reportId) => {
+        try {
+          if (!reportId) {
+            throw new Error("Report ID is required");
+          }
+
+          await deleteDoc(doc(firestore, "reports", reportId));
+
+          return { success: true };
+        } catch (error) {
+          console.error("Error deleting report:", error);
+          return { success: false, error: error.message };
+        }
+      };
+
       const addBlog = async (
         title,
         description,
@@ -769,8 +828,191 @@ const getAllComments = async () => {
         return result;
       }
 
+      const sendMessage = async (name, email, message) => {
+        try {
+          if (!user?.uid) {
+            throw new Error("User not loaded");
+          }
+          const messageDoc = await addDoc(collection(firestore, 'messages'),
+            {
+              user_id: user.uid,
+              userName: name,
+              email: email,
+              message: message,
+              status: "new",
+              createdAt: serverTimestamp(),
+            },
+          );
+          return messageDoc
+        } catch(err){
+
+        }
+      }
+
+      const getMessages = async () => {
+        try {
+          const snapshot = await getDocs(collection(firestore, "messages"));
+
+          return snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(), // ✅ keeps existing user
+          }));
+        } catch (error) {
+          console.error("Error fetching reports:", error);
+          return [];
+        }
+      };
+
+      const getDashboardCounts = async () => {
+        const resourcesSnap = await getCountFromServer(
+          collection(firestore, "allResources"),
+        );
+
+        const blogsSnap = await getCountFromServer(
+          collection(firestore, "allBlogs"),
+        );
+
+        const usersSnap = await getCountFromServer(collection(firestore, "users"));
+
+        const q = query(
+          collection(firestore, "messages"),
+          where("status", "==", "new"),
+        );
+
+        const messagesSnap = await getCountFromServer(q);
+
+        const reportsSnap = await getCountFromServer(collection(firestore, "reports"));
+
+        return {
+          resources: resourcesSnap.data().count,
+          blogs: blogsSnap.data().count,
+          users: usersSnap.data().count,
+          messages: messagesSnap.data().count,
+          reports: reportsSnap.data().count
+        };
+      };
+
+      const deleteMessage = async (messageId) => {
+        try {
+          if (!messageId) {
+            throw new Error("Message ID is required");
+          }
+
+          await deleteDoc(doc(firestore, "messages", messageId));
+
+          return { success: true };
+        } catch (error) {
+          console.error("Error deleting message:", error);
+          return { success: false, error: error.message };
+        }
+      };
+
+      const updateMessage = async (id, data) => {
+        const messageRef = doc(firestore, "messages", id);
+
+        let updatePayload = { ...data };
+
+        const result = await updateDoc(messageRef, updatePayload);
+
+        return result;
+      };
+
+      const getCategoryStats = async () => {
+        const snap = await getDocs(collection(firestore, "allResources"));
+
+        const map = {};
+
+        snap.forEach((doc) => {
+          const category = doc.data().category || "Other";
+
+          map[category] = (map[category] || 0) + 1;
+        });
+
+        return Object.keys(map).map((key) => ({
+          name: key,
+          value: map[key],
+        }));
+      };
+
+      const getUserActivity = async () => {
+        try {
+          const [resourcesSnap, commentsSnap] = await Promise.all([
+            getDocs(collection(firestore, "allResources")),
+            getDocs(collectionGroup(firestore, "comments")), // ✅ FIXED
+          ]);
+
+          const map = {};
+
+          const process = (snap) => {
+            snap.forEach((doc) => {
+              const data = doc.data();
+
+              if (!data.createdAt?.seconds) return;
+
+              const date = new Date(data.createdAt.seconds * 1000)
+                .toISOString()
+                .split("T")[0];
+
+              map[date] = (map[date] || 0) + 1;
+            });
+          };
+
+          process(resourcesSnap);
+          process(commentsSnap);
+
+          const result = Object.keys(map)
+            .sort()
+            .map((date) => ({
+              date,
+              activity: map[date],
+            }));
+
+          return result;
+        } catch (error) {
+          console.error("Error fetching activity:", error);
+          return [];
+        }
+      };
+
+      const getResourceGrowth = async () => {
+  const snap = await getDocs(collection(firestore, "allResources"));
+
+  const map = {};
+
+  snap.forEach((doc) => {
+    const data = doc.data();
+
+    if (!data.createdAt) return;
+
+    const date = new Date(
+      data.createdAt.seconds * 1000
+    ).toLocaleDateString();
+
+    map[date] = (map[date] || 0) + 1;
+  });
+
+  return Object.keys(map).map((date) => ({
+    date,
+    resources: map[date],
+  }));
+};
+
+    const getTopRatedResources = async () => {
+      const snap = await getDocs(collection(firestore, "allResources"));
+
+      const data = snap.docs
+        .map((doc) => ({
+          title: doc.data().title,
+          rating: doc.data().ratingAverage || 0,
+        }))
+        .sort((a, b) => b.rating - a.rating)
+        .slice(0, 5);
+
+      return data;
+    };
+
   return (
-    <FirebaseContext.Provider value={{signUp, signUpWithGoogle, login, loggedin, user, logout, addResource, addReviews, getReviews, getAllComments, deleteCommentAndRating, addRatingAvg, getAllResources, getMyResources, viewResource, getResourceImg, categorizedResources, updateProfilePhoto, adminUpdatePhoto, deleteResource, updateResource, reportResource, addBlog, getAllBlogs, getMyBlogs, viewBlog, getBlogImg, deleteBlog, updateBlog, getAllUsers, getUserById, updateUser}}>
+    <FirebaseContext.Provider value={{signUp, signUpWithGoogle, login, loggedin, user, loading, logout, addResource, addReviews, getReviews, getAllComments, deleteCommentAndRating, addRatingAvg, getAllResources, getMyResources, viewResource, getResourceImg, categorizedResources, updateProfilePhoto, adminUpdatePhoto, deleteResource, updateResource, reportResource, getAllReports, deleteReport, addBlog, getAllBlogs, getMyBlogs, viewBlog, getBlogImg, deleteBlog, updateBlog, getAllUsers, getUserById, updateUser, sendMessage, getMessages, deleteMessage, updateMessage, getDashboardCounts, getCategoryStats, getUserActivity, getResourceGrowth, getTopRatedResources}}>
       {props.children}
     </FirebaseContext.Provider>
   )
