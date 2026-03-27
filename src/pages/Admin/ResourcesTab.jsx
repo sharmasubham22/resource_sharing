@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useFirebase } from "../../context/Firebase";
-import { MoveRight, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import Button from "../../components/Button";
 import Rating from "../../components/Rating";
 import Swal from "sweetalert2";
@@ -109,12 +109,12 @@ useEffect(() => {
             </div>
             <div className="flex justify-between ">
               <div className="inline-flex gap-2">
-                <Button variant="primary" size="md">
+                <Button variant="primary" size="md" onClick={() => props.onResourceView && props.onResourceView()}>
                   Read
                 </Button>
-                <Button variant="secondary" size="md">
+                {/* <Button variant="secondary" size="md">
                   Edit
-                </Button>
+                </Button> */}
               </div>
               <Button variant="danger" size="md" onClick={deleteResource}>
                 <Trash2 />

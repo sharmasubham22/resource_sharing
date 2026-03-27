@@ -2,9 +2,10 @@ import { React, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useFirebase } from "../../context/Firebase";
 
-export default function ViewBlog() {
+export default function ViewBlog(props) {
   const params = useParams();
   const firebase = useFirebase();
+  const blogId = props.blogId || params.id;
   const [blogData, setBlogData] = useState(null);
   const [imgUrl, setImgUrl] = useState(null);
   
@@ -17,14 +18,14 @@ export default function ViewBlog() {
       }, [blogData]);
   
       useEffect(() => {
-        firebase.viewBlog(params.id)
+        firebase.viewBlog(blogId)
           .then((blog) => {
             setBlogData(blog);
           })
           .catch((err) => {
             console.error("Error fetching blog:", err);
           });
-      }, [params.id]);
+      }, [blogId]);
   
       if(blogData == null) {
           return (
@@ -61,8 +62,8 @@ export default function ViewBlog() {
 
   return (
     <div>
-      <div className="max-w-5xl mx-auto mt-15 px-5 md:px-15">
-        <h1 className="text-4xl md:text-6xl font-heading text-brand">
+      <div className="max-w-5xl mx-auto mt-5 px-5 md:px-15">
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading text-text-primary">
           {blogData.title}
         </h1>
         <div className="flex items-center my-5 gap-2">

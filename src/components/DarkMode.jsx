@@ -21,17 +21,17 @@ export default function DarkMode() {
   return (
     <button
       onClick={() => setDarkMode(!darkMode)}
-      className="px-3 py-2 rounded text-brand"
+      className="px-3 py-2 rounded text-text-primary"
     >
       {darkMode ? (
         <Sun
           strokeWidth={1.5}
-          className="cursor-pointer hover:text-brand-strong"
+          className="cursor-pointer hover:text-brand-medium"
         />
       ) : (
         <Moon
           strokeWidth={1.5}
-          className="cursor-pointer hover:text-brand-strong"
+          className="cursor-pointer hover:text-brand-medium"
         />
       )}
     </button>

@@ -65,8 +65,8 @@ export default function AllResources() {
 
      console.log(resources);
   return (
-    <div className="mt-15">
-      <h1 className="text-3xl md:text-5xl pl-2 mx-5 md:mx-10 my-2 border-l-8 text-text-primary font-heading border-brand ">
+    <div>
+      <h1 className="text-4xl md:text-5xl lg:text-6xl pl-2 mx-5 md:mx-10 my-2 border-l-8 text-text-primary font-heading border-brand ">
         Resources
       </h1>
       <div className="max-w-xl mt-10 mx-5 md:mx-10">

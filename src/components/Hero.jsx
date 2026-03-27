@@ -17,47 +17,47 @@ export default function Hero() {
   };
 
   return (
-    <div className="py-8 px-4 mx-auto max-w-7xl lg:py-16">
-        <div className="inline-flex items-center justify-center">
-          <div className="text-center lg:text-left p-4 md:p-10 my-20">
-            <h1 className="text-text-primary tracking-tighter text-3xl md:text-6xl font-heading my-6">
-              The community's just getting Bigger!!
-            </h1>
-            <p className="font-body text-xl text-text-secondary mb-6">
-              Discover, share, and organize the best learning resources - from
-              code to concepts - all in one place.
-            </p>
-            <div className="block md:inline-flex md:gap-3">
-              <Button
-                variant="primary"
-                size="lg"
-                className="inline-flex gap-2"
-                onClick={() => {
-                  navigate("/resources");
-                }}
-              >
-                Explore Resources
-                <MoveRight />
-              </Button>
-              <Button
-                variant="secondary"
-                size="lg"
-                className="inline-flex gap-2 mt-2 md:mt-0"
-                onClick={handleUploadClick}
-              >
-                Upload your own
-                <Upload size={20} />
-              </Button>
-            </div>
+    <div className="p-4 mx-auto max-w-7xl lg:py-8 relative z-10">
+      <div className="inline-flex items-center justify-center">
+        <div className="text-center lg:text-left p-4 md:p-10">
+          <h1 className="text-text-primary tracking-tighter text-5xl md:text-7xl lg:text-9xl font-heading my-6 text-center">
+            The community's just getting Bigger!!
+          </h1>
+          <p className="font-body text-xl text-text-secondary mb-6 text-center">
+            Discover, share, and organize the best learning resources - from
+            code to concepts - all in one place.
+          </p>
+          <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 md:space-x-4">
+            <Button
+              variant="primary"
+              size="md"
+              className="inline-flex gap-2"
+              onClick={() => {
+                navigate("/resources");
+              }}
+            >
+              Explore Resources
+              <MoveRight />
+            </Button>
+            <Button
+              variant="secondary"
+              size="md"
+              className="inline-flex gap-2 mt-2 md:mt-0"
+              onClick={handleUploadClick}
+            >
+              Upload your own
+              <Upload size={20} />
+            </Button>
           </div>
+        </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
+      {/* <div className="grid md:grid-cols-2 gap-8">
         <div className="bg-card rounded-base p-4 md:p-12">
-          <h2 className="text-text-primary text-xl md:text-2xl font-heading  mb-4">
+          <h2 className="text-text-primary text-2xl md:text-3xl font-heading  mb-4">
             Start with Flowbite Design System
           </h2>
-          <p className=" font-body text-lg text-text-secondary mb-4">
+          <p className=" font-body text-xl text-text-secondary mb-4">
             Static websites are now used to bootstrap lots of websites and are
             becoming the basis for a variety of tools that even influence both
             web designers and developers.
@@ -71,7 +71,7 @@ export default function Hero() {
           </a>
         </div>
         <div className="bg-card rounded-base p-4 md:p-12">
-          <h2 className="text-text-primary text-xl md:text-2xl font-heading  mb-4">
+          <h2 className="text-text-primary text-2xl md:text-3xl font-heading  mb-4">
             Best react libraries around the web
           </h2>
           <p className=" font-body text-lg text-text-secondary mb-4">
@@ -87,7 +87,7 @@ export default function Hero() {
             <MoveRight />
           </a>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

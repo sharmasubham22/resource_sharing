@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import ResourceCard from '../components/ResourceCard';
 import BlogCard from '../components/BlogCard';
 import Button from '../components/Button';
-import { dots } from '../assets/Elements';
+import { dots, heroVector } from '../assets/Elements';
 
 
 export default function LandingPage() {
@@ -24,15 +24,23 @@ export default function LandingPage() {
   
   return (
     <div>
-      <section>
+      <section className="relative overflow-hidden bg-background md:min-h-screen flex items-center justify-center">
+        {/* <div className="absolute right-60 top-10 text-border opacity-50 w-80 z-auto">
+          {heroVector}
+        </div> */}
+        <div className="absolute inset-x-0 bottom-0 flex items-center justify-center z-0 pointer-events-none">
+          <div className="absolute animate-pulse-slow w-150 h-150 md:w-225 md:h-225 rounded-full bg-[radial-gradient(circle,rgba(var(--color-brand-rgb),0.25)_0%,transparent_100%)] blur-3xl" />
+          <div className="absolute w-235 h-235 md:w-325 md:h-325 rounded-full border border-border/35 " />
+          <div className="absolute w-180 h-180 md:w-250 md:h-250 rounded-full border border-border/50" />
+          <div className="absolute w-125 h-125 md:w-175 md:h-175 rounded-full border border-border" />
+        </div>
         <Hero />
       </section>
-      <div className="text-brand-softer overflow-hidden">{dots}</div>
 
       <section className="py-8 px-4 mx-auto lg:py-16 bg-linear-to-t from-brand-softer to-background">
         <div className="max-w-7xl rounded-base mx-auto bg-background p-6 md:p-12">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl text-text-primary mb-20 font-heading text-center lg:text-left">
-            Resources by Categories
+          <h1 className="text-4xl md:text-5xl lg:text-6xl text-text-primary mb-20 font-heading text-center lg:text-left">
+            Resources by <i>Categories</i>
           </h1>
           <div className="grid md:gap-6 grid-cols-1 md:grid-cols-2">
             <div>
@@ -45,7 +53,7 @@ export default function LandingPage() {
                     className=" flex items-center py-2 cursor-pointer border-b border-border w-full"
                   >
                     <Icons className="text-brand-medium" />
-                    <span className="text-text-secondary m-2 font-body text-lg px-3 py-1 ">
+                    <span className="text-text-secondary m-2 font-body text-xl px-3 py-1 ">
                       {category.label}
                     </span>
                   </button>
@@ -62,7 +70,7 @@ export default function LandingPage() {
                     className=" flex items-center py-2 cursor-pointer border-b border-border w-full"
                   >
                     <Icons className="text-brand-medium" />
-                    <p className="text-text-secondary text-lg m-2 font-body px-3 py-1 ">
+                    <p className="text-text-secondary text-xl m-2 font-body px-3 py-1 ">
                       {category.label}
                     </p>
                   </button>
@@ -72,9 +80,10 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      <div className="text-brand-softer overflow-hidden mt-5">{dots}</div>
       <section className="h-full max-w-7xl mx-auto bg-background p-4 lg:p-10">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl text-center lg:text-left text-text-primary my-20 font-heading">
-          Trending Resources
+        <h1 className="text-4xl md:text-5xl lg:text-6xl text-center lg:text-left text-text-primary my-20 font-heading">
+          Trending <i>Resources</i>
         </h1>
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {resources.slice(0, 3).map((resource) => (
@@ -98,17 +107,12 @@ export default function LandingPage() {
         </Button>
       </section>
       <section className="h-full max-w-7xl mx-auto p-4 lg:p-10">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl text-text-primary my-20 font-heading text-center lg:text-left">
-          Trending Blogs
+        <h1 className="text-4xl md:text-5xl lg:text-6xl text-text-primary my-20 font-heading text-center lg:text-left">
+          Trending <i>Blogs</i>
         </h1>
         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-0">
           {blogs.slice(0, 2).map((blog) => (
-            <BlogCard
-              key={blog.id}
-              id={blog.id}
-              hideDelete={true}
-              {...blog}
-            />
+            <BlogCard key={blog.id} id={blog.id} hideDelete={true} {...blog} />
           ))}
         </div>
         <Button

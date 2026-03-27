@@ -111,7 +111,7 @@ export default function ResourceCard(props) {
           </p>
           <div className='inline-flex gap-4'>
             <Rating rating={props.ratingAverage} />
-            <p className="text-text-secondary text-sm">{props.ratingCount}</p>
+            <p className="text-text-secondary text-sm font-mono">({props.ratingCount})</p>
           </div>
         </div>
 

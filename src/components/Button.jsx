@@ -1,3 +1,4 @@
+import { Loader } from "lucide-react";
 import React from "react";
 
 const Button = ({
@@ -40,7 +41,7 @@ const Button = ({
     >
       {loading ? (
         <span className="flex items-center gap-2">
-          <span className="animate-spin">⏳</span>
+          <span className="animate-spin"><Loader /></span>
           Loading...
         </span>
       ) : (

@@ -81,12 +81,20 @@ export default function BlogsTab(props) {
           )}
           <div className="flex justify-between mt-5">
             <div className="inline-flex gap-2">
-              <Button variant="primary" size="md">
+              <Button
+                variant="primary"
+                size="md"
+                onClick={() => props.onBlogView && props.onBlogView()}
+              >
                 Read
               </Button>
-              <Button variant="secondary" size="md">
+              {/* <Button
+                variant="secondary"
+                size="md"
+                onClick={props.onBlogEdit}
+              >
                 Edit
-              </Button>
+              </Button> */}
             </div>
             <Button variant="danger" size="md" onClick={deleteBlog}>
               <Trash2 />

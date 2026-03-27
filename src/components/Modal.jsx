@@ -203,7 +203,7 @@ export default function Modal({ user, onClose, onSave }) {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="bg-input-bg border border-input-bg text-text-primary text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
-              required=""
+              disabled
             />
           </div>
           <div className="col-span-2">

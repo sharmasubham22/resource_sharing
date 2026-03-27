@@ -6,16 +6,17 @@ import { options, categories } from '../../data/addResourceData';
 import Swal from 'sweetalert2';
 import JoditEditor from "jodit-react";
 import Button from '../../components/Button';
+import CodeEditor from '../../components/CodeEditor';
 
 export default function EditResource() {
     const firebase = useFirebase();
     const params = useParams();
     const navigate = useNavigate();
     const [resourceData, setResourceData] = useState(null);
+    const [code, setCode] = useState("");
     const [updateData, setUpdateData] = useState({});
 
     const editor = useRef(null);
-    const codeEditor = useRef(null);
     
     const config = useMemo(
       () => ({
@@ -58,16 +59,6 @@ export default function EditResource() {
       [],
     );    
 
-    const config2 = useMemo(
-      () => ({
-        defaultMode: "source",
-        theme: "editor",
-        buttons: ["source"],
-        toolbarAdaptive: false,
-      }),
-      [],
-    );
-
     useEffect(() => {
       firebase
         .viewResource(params.id)
@@ -77,6 +68,12 @@ export default function EditResource() {
         })
         .catch((err) => console.error(err));
     }, [params.id, firebase]);
+
+    useEffect(() => {
+      if (resourceData?.codeSnippet) {
+        setCode(resourceData.codeSnippet);
+      }
+    }, [resourceData]);
 
     if (!resourceData) {
       return (
@@ -116,6 +113,20 @@ export default function EditResource() {
       });
     };
 
+    const handleCodeChange = (val) => {
+      setCode(val);
+
+      setResourceData((prev) => ({
+        ...prev,
+        codeSnippet: val,
+      }));
+
+      setUpdateData((prev) => ({
+        ...prev,
+        codeSnippet: val,
+      }));
+    };
+
     // Handle JoditEditor change for description
     const handleDescriptionChange = (value) => {
       setResourceData({ ...resourceData, description: value });
@@ -135,8 +146,8 @@ export default function EditResource() {
     }
 
   return (
-    <div className="text-left mt-15">
-      <h2 className="text-3xl md:text-5xl pl-2 mx-5 md:mx-10 my-2 border-l-8 text-text-primary font-heading border-brand ">
+    <div className="text-left">
+      <h2 className="text-4xl md:text-5xl lg:text-6xl pl-2 mx-5 md:mx-10 my-2 border-l-8 text-text-primary font-heading border-brand ">
         Edit Resource
       </h2>
       <form className="max-w-3xl p-5 md:p-10">
@@ -336,16 +347,11 @@ export default function EditResource() {
             >
               Code Snippet
             </label>
-            <JoditEditor
-              ref={codeEditor}
-              config={config2}
-              onChange={handleUpdate}
-              value={resourceData.codeSnippet}
+            <CodeEditor
+              value={code}
+              onChange={handleCodeChange}
               name="codeSnippet"
               id="codeSnippet"
-              className="block w-full bg-input-bg border border-input-border text-input-text text-sm focus:input-focus focus:border-brand shadow-xs placeholder:text-input-placeholder"
-              rows={10}
-              placeholder="Enter code snippet"
             />
           </div>
         )}

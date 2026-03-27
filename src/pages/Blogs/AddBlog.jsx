@@ -65,8 +65,8 @@ export default function AddBlog() {
             // });
           };
   return (
-    <div className="text-left mt-15">
-      <h2 className="text-3xl md:text-5xl pl-2 text-text-primary mx-5 md:mx-10 my-2 border-l-8  font-heading border-brand ">
+    <div className="text-left">
+      <h2 className="text-4xl md:text-5xl lg:text-6xl pl-2 text-text-primary mx-5 md:mx-10 my-2 border-l-8  font-heading border-brand ">
         Add a Blog post
       </h2>
       <form className="max-w-3xl p-5 md:p-10">
@@ -122,11 +122,7 @@ export default function AddBlog() {
               accept="image/*"
             />
           </div>
-          <Button
-            onClick={create}
-            variant="primary"
-            size="md"
-          >
+          <Button onClick={create} variant="primary" size="md">
             Create Blog Post
           </Button>
         </div>

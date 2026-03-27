@@ -14,6 +14,7 @@
   --color-brand-softer: #e1ceed;
   --color-brand-soft: #b49fcc;
   --color-brand: #6d466b;
+  --color-brand-rgb: 109, 70, 107;
   --color-brand-medium: #91739c;
   --color-brand-strong: #412234;
 
@@ -26,9 +27,10 @@
   --color-input-placeholder: #9ca3af;
   --color-input-focus: #91739c;
 
-  --font-heading: 'Yeseva One', serif;
+  --font-heading: 'Instrument serif', serif;
   --font-body: 'Afacad', sans-serif;
   --font-mono: 'Geist Mono', monospace;
+  --font-cursive: 'Mrs Saint Delafield', cursive;
 }
 
 
@@ -40,6 +42,7 @@
   --color-brand-softer: #3d2a42;
   --color-brand-soft: #52345a;
   --color-brand: #91739c;
+  --color-brand-rgb: 145, 115, 156;
   --color-brand-medium: #b49fcc;
   --color-brand-strong: #6b5573;
 
@@ -89,5 +92,14 @@ body {
 .jodit_theme_editor .jodit-popup .jodit-toolbar-button:hover {
   background: var(--color-brand-softer);
   color: var(--color-brand-soft);
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 6s ease-in-out infinite;
 }
 

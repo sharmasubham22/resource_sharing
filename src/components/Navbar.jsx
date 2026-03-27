@@ -1,19 +1,21 @@
 import React, { useState } from 'react'
 import { useFirebase } from '../context/Firebase';
 import DarkMode from './DarkMode';
+import { logoVector } from '../assets/Elements';
 
 export default function Navbar() {
   const firebase = useFirebase();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   return (
-    <div className="mb-12">
-      <nav className="bg-background fixed w-full z-20 top-0 start-0 p-3 font-body">
+    <div className="mb-25">
+      <nav className="bg-background md:bg-transparent fixed md:absolute w-full z-20 top-0 start-0 px-3 pt-3 font-body">
         <div className="flex flex-wrap items-center justify-between mx-auto px-5 py-2">
           <a
             href="/"
-            className="flex items-center space-x-3 rtl:space-x-reverse"
+            className="flex items-center space-x-1 rtl:space-x-reverse text-brand"
           >
+            {logoVector}
             <span className="self-center text-xl text-text-primary font-bold whitespace-nowrap">
               ShareStack
             </span>
@@ -64,6 +66,19 @@ export default function Navbar() {
                     className="p-2 text-md text-text-secondary "
                     aria-labelledby="user-menu-button"
                   >
+                    {firebase.user?.role == "admin" ? (
+                      <li>
+                        <a
+                          href="/admin"
+                          onClick={() => setDropdownOpen(false)}
+                          className="inline-flex items-center w-full p-2 hover:bg-brand-softer hover:text-text-primary rounded cursor-pointer"
+                        >
+                          Admin Dahboard
+                        </a>
+                      </li>
+                    ) : (
+                      <li></li>
+                    )}
                     <li>
                       <a
                         href="/my-dashboard"
@@ -163,7 +178,7 @@ export default function Navbar() {
 
               <li>
                 <a
-                  href="#"
+                  href="/contact"
                   onClick={() => setNavOpen(false)}
                   className="block py-2 px-3 text-text-primary rounded hover:bg-brand-softer md:hover:bg-transparent md:border-0 md:hover:text-brand-medium md:p-0 md:dark:hover:bg-transparent"
                 >
@@ -173,6 +188,7 @@ export default function Navbar() {
             </ul>
           </div>
         </div>
+        <div className="h-px w-full bg-linear-to-r from-transparent via-border to-transparent mt-3 md:mt-5" />
       </nav>
     </div>
   );
