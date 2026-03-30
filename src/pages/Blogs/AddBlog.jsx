@@ -58,11 +58,13 @@ export default function AddBlog() {
             const result = firebase.addBlog(title, desc, coverPhoto);
             console.log("Success added blog");
             // nav('/my-dashboard');
-            // Swal.fire({
-            //   title: "Success!",
-            //   text: "Resource created successfully!",
-            //   icon: "success",
-            // });
+            Swal.fire({
+              title: "Success!",
+              text: "Blog added successfully!",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500,
+            });
           };
   return (
     <div className="text-left">

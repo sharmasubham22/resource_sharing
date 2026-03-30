@@ -87,6 +87,8 @@ export default function AddResource() {
           title: "Success!",
           text: "Resource created successfully!",
           icon: "success",
+          showConfirmButton: false,
+          timer: 1500,
         });
       };
 

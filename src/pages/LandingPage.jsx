@@ -24,7 +24,7 @@ export default function LandingPage() {
   
   return (
     <div>
-      <section className="relative overflow-hidden bg-background md:min-h-screen flex items-center justify-center">
+      <section className="relative overflow-hidden bg-background lg:min-h-screen flex justify-center items-center">
         {/* <div className="absolute right-60 top-10 text-border opacity-50 w-80 z-auto">
           {heroVector}
         </div> */}
@@ -38,6 +38,22 @@ export default function LandingPage() {
       </section>
 
       <section className="py-8 px-4 mx-auto lg:py-16 bg-linear-to-t from-brand-softer to-background">
+        <div className="max-w-7xl p-6 md:p-12 mx-auto text-xl font-body text-text-primary my-15">
+          <p>
+            ShareStack is built on a simple idea, knowledge grows when it’s
+            shared.
+          </p>
+          <p className="my-5">
+            In a world full of scattered resources, ShareStack brings everything
+            into one place. Whether it's code, tutorials, or learning materials,
+            users can contribute, explore, and collaborate effortlessly.
+          </p>
+          <p>
+            We’re not just building a platform, we’re building a community
+            where developers help developers, learners become contributors, and
+            ideas turn into real-world skills.
+          </p>
+        </div>
         <div className="max-w-7xl rounded-base mx-auto bg-background p-6 md:p-12">
           <h1 className="text-4xl md:text-5xl lg:text-6xl text-text-primary mb-20 font-heading text-center lg:text-left">
             Resources by <i>Categories</i>
