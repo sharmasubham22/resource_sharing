@@ -20,9 +20,14 @@ export default function Hero() {
     <div className="p-4 mx-auto max-w-7xl lg:py-8 relative z-10">
       <div className="inline-flex items-center justify-center">
         <div className="text-center lg:text-left p-4 md:p-10">
-          <h1 className="text-text-primary tracking-tighter text-5xl md:text-7xl lg:text-9xl font-heading my-6 text-center">
-            The community's just getting Bigger!!
-          </h1>
+          <div className="block text-text-primary tracking-tighter font-heading my-6 text-center">
+            <p className="text-5xl md:text-7xl lg:text-9xl">Build. </p>
+            <p className="font-cursive text-5xl md:text-7xl lg:text-[12rem]/20 text-brand">
+              Share.{" "}
+            </p>
+            <p className="text-5xl md:text-7xl lg:text-9xl">Grow. </p>
+          </div>
+
           <p className="font-body text-xl text-text-secondary mb-6 text-center">
             Discover, share, and organize the best learning resources - from
             code to concepts - all in one place.

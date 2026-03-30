@@ -49,12 +49,15 @@ export default function SignupPage() {
     const value = e.target.value;
     setPassword(value);
 
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     setErrors((prev) => ({
       ...prev,
       password: !value
         ? "Password is required"
-        : value.length < 6
-          ? "Minimum 6 characters"
+        : value.length < 8
+          ? "Minimum 8 characters"
+          : !regex.test(value)
+          ? "At least one uppercase letter, one lowercase letter, one number, and one special character."
           : null,
     }));
   };
