@@ -61,7 +61,7 @@ export default function ViewBlog(props) {
       const displayDate = `${month}-${day}-${year}`;
 
   return (
-    <div>
+    <div className="mt-30">
       <div className="max-w-5xl mx-auto mt-5 px-5 md:px-15">
         <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading text-text-primary">
           {blogData.title}
@@ -74,9 +74,7 @@ export default function ViewBlog(props) {
           <p className="text-text-secondary font-body text-lg capitalize">
             {blogData.user?.name} |
           </p>
-          <p className="text-text-secondary font-body text-lg">
-            {displayDate}
-          </p>
+          <p className="text-text-secondary font-body text-lg">{displayDate}</p>
         </div>
       </div>
 

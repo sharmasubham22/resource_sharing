@@ -731,14 +731,12 @@ const getAllComments = async () => {
       };
 
      const getBlogImg = (path) => {
-       if (!path) return Promise.resolve(null); // prevent root reference error
+       if (!path) return Promise.resolve(null); 
        const imageRef = ref(storage, path);
        return getDownloadURL(imageRef);
      };
 
       const deleteBlog = async (id) => {
-        // const result = await deleteDoc(doc(firestore, "allBlogs", id));
-        // return result;
         try {
           const blogRef = doc(firestore, "allBlogs", id);
           const blogSnap = await getDoc(blogRef);
@@ -1011,8 +1009,14 @@ const getAllComments = async () => {
       return data;
     };
 
+    const getFileUrl = (path) => {
+      if (!path) return Promise.resolve(null);
+      const fileRef = ref(storage, path);
+      return getDownloadURL(fileRef);
+    };
+
   return (
-    <FirebaseContext.Provider value={{signUp, signUpWithGoogle, login, loggedin, user, loading, logout, addResource, addReviews, getReviews, getAllComments, deleteCommentAndRating, addRatingAvg, getAllResources, getMyResources, viewResource, getResourceImg, categorizedResources, updateProfilePhoto, adminUpdatePhoto, deleteResource, updateResource, reportResource, getAllReports, deleteReport, addBlog, getAllBlogs, getMyBlogs, viewBlog, getBlogImg, deleteBlog, updateBlog, getAllUsers, getUserById, updateUser, sendMessage, getMessages, deleteMessage, updateMessage, getDashboardCounts, getCategoryStats, getUserActivity, getResourceGrowth, getTopRatedResources}}>
+    <FirebaseContext.Provider value={{signUp, signUpWithGoogle, login, loggedin, user, loading, logout, addResource, addReviews, getReviews, getAllComments, deleteCommentAndRating, addRatingAvg, getAllResources, getMyResources, viewResource, getResourceImg, categorizedResources, updateProfilePhoto, adminUpdatePhoto, deleteResource, updateResource, reportResource, getAllReports, deleteReport, addBlog, getAllBlogs, getMyBlogs, viewBlog, getBlogImg, deleteBlog, updateBlog, getAllUsers, getUserById, updateUser, sendMessage, getMessages, deleteMessage, updateMessage, getDashboardCounts, getCategoryStats, getUserActivity, getResourceGrowth, getTopRatedResources, getFileUrl}}>
       {props.children}
     </FirebaseContext.Provider>
   )

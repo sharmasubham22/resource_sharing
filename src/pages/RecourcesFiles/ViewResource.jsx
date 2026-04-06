@@ -7,6 +7,7 @@ import { Rat, TriangleAlert } from 'lucide-react';
 import Rating from '../../components/Rating';
 import Comment from '../../components/Comment';
 import CodeMirror from "@uiw/react-codemirror";
+import FileViewer from '../../components/FileViewer';
 
 export default function ViewResource(props) {
     const params = useParams();
@@ -21,11 +22,15 @@ export default function ViewResource(props) {
     const [showReportModal, setShowReportModal] = useState(false);
     const [selectedResource, setSelectedResource] = useState(null);
     const [selectedReason, setSelectedReason] = useState(null);
+    const [fileUrl, setFileUrl] = useState(null);
     
     useEffect(() => {
         if (resourceData) {
             const imgURL = resourceData.coverPhoto;
             firebase.getResourceImg(imgURL).then(url => setImgUrl(url));
+
+            const fileURL = resourceData.uploadFile;
+            firebase.getFileUrl(fileURL).then(url => setFileUrl(url));
         }
     }, [resourceData]);
 
@@ -118,9 +123,11 @@ export default function ViewResource(props) {
       }
     };
 
+    console.log(fileUrl)
+
     return (
-      <div className="max-w-5xl w-full mx-auto px-5 md:px-10">
-        <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading text-center text-text-primary mt-5">
+      <div className="max-w-5xl w-full mx-auto px-5 md:px-10 mt-30">
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading text-center text-text-primary mt-5 capitalize">
           {resourceData.title}
         </h1>
         <div className="flex items-center justify-center mt-5 gap-2">
@@ -162,10 +169,19 @@ export default function ViewResource(props) {
         >
           {resourceData.link}
         </a>
-        {resourceData.codeSnippet == "" ? ( <></> ) : (
-          <CodeMirror value={resourceData.codeSnippet} editable={false} theme="dark" className='mb-10' />
+        {resourceData.codeSnippet == "" ? (
+          <></>
+        ) : (
+          <CodeMirror
+            value={resourceData.codeSnippet}
+            editable={false}
+            theme="dark"
+            className="mb-10"
+          />
         )}
-        
+
+        <FileViewer fileUrl={fileUrl} fileType={resourceData.type} />
+
         <Button
           variant="secondary"
           size="sm"
@@ -173,7 +189,7 @@ export default function ViewResource(props) {
             setSelectedResource(resourceData);
             setShowReportModal(true);
           }}
-          className="flex gap-2 float-end"
+          className="flex gap-2 float-end mt-10"
         >
           <TriangleAlert />
           Report

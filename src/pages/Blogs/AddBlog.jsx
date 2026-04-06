@@ -67,7 +67,7 @@ export default function AddBlog() {
             });
           };
   return (
-    <div className="text-left">
+    <div className="text-left mt-30">
       <h2 className="text-4xl md:text-5xl lg:text-6xl pl-2 text-text-primary mx-5 md:mx-10 my-2 border-l-8  font-heading border-brand ">
         Add a Blog post
       </h2>
