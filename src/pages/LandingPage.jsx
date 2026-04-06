@@ -23,22 +23,22 @@ export default function LandingPage() {
   
   
   return (
-    <div>
-      <section className="relative overflow-hidden bg-background lg:min-h-screen flex justify-center items-center">
+    <div className="">
+      <section className="relative overflow-hidden bg-background min-h-screen flex justify-center items-center">
         {/* <div className="absolute right-60 top-10 text-border opacity-50 w-80 z-auto">
           {heroVector}
         </div> */}
-        <div className="absolute inset-x-0 bottom-0 flex items-center justify-center z-0 pointer-events-none">
+        {/* <div className="absolute inset-x-0 bottom-0 flex items-center justify-center z-0 pointer-events-none">
           <div className="absolute animate-pulse-slow w-150 h-150 md:w-225 md:h-225 rounded-full bg-[radial-gradient(circle,rgba(var(--color-brand-rgb),0.25)_0%,transparent_100%)] blur-3xl" />
           <div className="absolute w-235 h-235 md:w-325 md:h-325 rounded-full border border-border/35 " />
           <div className="absolute w-180 h-180 md:w-250 md:h-250 rounded-full border border-border/50" />
           <div className="absolute w-125 h-125 md:w-175 md:h-175 rounded-full border border-border" />
-        </div>
+        </div> */}
         <Hero />
       </section>
 
       <section className="py-8 px-4 mx-auto lg:py-16 bg-linear-to-t from-brand-softer to-background">
-        <div className="max-w-7xl p-6 md:p-12 mx-auto text-xl font-body text-text-primary my-15">
+        <div className="max-w-7xl p-6 md:p-12 mx-auto text-xl font-body text-text-primary mb-15">
           <p>
             ShareStack is built on a simple idea, knowledge grows when it’s
             shared.
@@ -49,9 +49,9 @@ export default function LandingPage() {
             users can contribute, explore, and collaborate effortlessly.
           </p>
           <p>
-            We’re not just building a platform, we’re building a community
-            where developers help developers, learners become contributors, and
-            ideas turn into real-world skills.
+            We’re not just building a platform, we’re building a community where
+            developers help developers, learners become contributors, and ideas
+            turn into real-world skills.
           </p>
         </div>
         <div className="max-w-7xl rounded-base mx-auto bg-background p-6 md:p-12">
@@ -111,16 +111,14 @@ export default function LandingPage() {
             />
           ))}
         </div>
-        <Button
-          variant="primary"
-          size="md"
-          className="mx-auto mt-10"
+        <button
+          className="flex mx-auto mt-10 text-brand hover:underline cursor-pointer"
           onClick={() => {
             nav("/resources");
           }}
         >
           See more
-        </Button>
+        </button>
       </section>
       <section className="h-full max-w-7xl mx-auto p-4 lg:p-10">
         <h1 className="text-4xl md:text-5xl lg:text-6xl text-text-primary my-20 font-heading text-center lg:text-left">
@@ -131,16 +129,14 @@ export default function LandingPage() {
             <BlogCard key={blog.id} id={blog.id} hideDelete={true} {...blog} />
           ))}
         </div>
-        <Button
-          variant="primary"
-          size="md"
-          className="flex mx-auto my-10"
+        <button
+          className="flex mx-auto mt-10 text-brand hover:underline cursor-pointer"
           onClick={() => {
             nav("/blogs");
           }}
         >
           See more
-        </Button>
+        </button>
       </section>
     </div>
   );

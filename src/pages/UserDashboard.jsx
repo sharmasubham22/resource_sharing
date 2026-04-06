@@ -33,7 +33,7 @@ export default function UserDashboard() {
 
   const nav = useNavigate();
     return (
-      <div className="mt-10">
+      <div className="mt-30">
         <UserProfile />
         <div>
           <div className="mb-4">

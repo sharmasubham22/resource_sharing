@@ -146,7 +146,7 @@ export default function EditResource() {
     }
 
   return (
-    <div className="text-left">
+    <div className="text-left mt-30">
       <h2 className="text-4xl md:text-5xl lg:text-6xl pl-2 mx-5 md:mx-10 my-2 border-l-8 text-text-primary font-heading border-brand ">
         Edit Resource
       </h2>
@@ -308,7 +308,7 @@ export default function EditResource() {
               onChange={(e) =>
                 setUpdateData({
                   ...updateData,
-                  file: e.target.files ? e.target.files[0] : null,
+                  uploadFile: e.target.files ? e.target.files[0] : null,
                 })
               }
               name="file"

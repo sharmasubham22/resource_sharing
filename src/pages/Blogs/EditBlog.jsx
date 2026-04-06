@@ -122,7 +122,7 @@ export default function EditBlog(props) {
             // navigate(0);
         }
   return (
-    <div className="text-left">
+    <div className="text-left mt-30">
       <h2 className="text-4xl md:text-5xl lg:text-6xl pl-2 mx-5 md:mx-10 my-2 border-l-8 text-text-primary font-heading border-brand ">
         Edit Blog
       </h2>

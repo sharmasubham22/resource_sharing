@@ -91,7 +91,7 @@ export default function ResourceCard(props) {
               ))}
             </div>
           )}
-          <h5 className="mb-6 text-xl md:text-2xl tracking-tight text-text-primary font-mono font-bold">
+          <h5 className="mb-6 text-xl md:text-2xl tracking-tight text-text-primary font-mono font-bold capitalize">
             {props.title}
           </h5>
           <p className="text-text-secondary mb-5">

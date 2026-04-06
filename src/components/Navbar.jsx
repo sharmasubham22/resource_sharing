@@ -8,7 +8,7 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   return (
-    <div className="mb-25">
+    <div>
       <nav className="bg-background md:bg-transparent fixed md:absolute w-full z-20 top-0 start-0 px-3 pt-3 font-body">
         <div className="flex flex-wrap items-center justify-between mx-auto px-5 py-2">
           <a
@@ -168,7 +168,7 @@ export default function Navbar() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/about"
                   onClick={() => setNavOpen(false)}
                   className="block py-2 px-3 text-text-primary rounded hover:bg-brand-softer md:hover:bg-transparent md:border-0 md:hover:text-brand-medium md:p-0 md:dark:hover:bg-transparent"
                 >

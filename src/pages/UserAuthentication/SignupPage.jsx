@@ -76,7 +76,7 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="w-full max-w-sm mx-auto mt-15  bg-background p-6 border border-border rounded-base shadow-xs">
+    <div className="w-full max-w-sm mx-auto mt-30  bg-background p-6 border border-border rounded-base shadow-xs">
       <form>
         <h1 className="text-2xl md:text-3xl pl-2 border-l-8 text-text-primary font-heading border-brand mb-10">
           Sign up

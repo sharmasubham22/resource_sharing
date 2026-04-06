@@ -19,6 +19,7 @@ import EditBlog from './pages/Blogs/EditBlog.jsx';
 import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
 import AdminRoute from './components/AdminRoute.jsx';
 import Contact from './pages/Contact.jsx';
+import About from './pages/About.jsx';
 
 export default function App() {
   const location = useLocation();
@@ -32,6 +33,7 @@ export default function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/my-dashboard" element={<UserDashboard />} />
         <Route path="/contact" element={<Contact />}/>
+        <Route path='/about' element={<About />} />
 
         {/* Resources Routes */}
         <Route path="/add-resource" element={<AddResource />} />
