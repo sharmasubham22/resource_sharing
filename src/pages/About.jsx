@@ -8,9 +8,9 @@ export default function About() {
       </h1>
       <div className='p-6 md:p-10'>
         <p className="text-text-secondary font-body text-xl">
-          ShareStack is a community-driven platform designed to make knowledge
+          StackXchange is a community-driven platform designed to make knowledge
           sharing simple, structured, and accessible. Whether you're a
-          developer, student, or tech enthusiast, ShareStack enables you to
+          developer, student, or tech enthusiast, StackXchange enables you to
           discover, share, and collaborate on valuable learning resources in one
           place.
         </p>
@@ -21,7 +21,7 @@ export default function About() {
         </p>
         <p className="text-text-secondary font-body text-xl">
           We believe that the best way to grow is by sharing what you know and
-          learning from others. ShareStack empowers users to do exactly that,
+          learning from others. StackXchange empowers users to do exactly that,
           with a seamless experience built for modern learners.
         </p>
       </div>

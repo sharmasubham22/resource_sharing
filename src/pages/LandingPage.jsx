@@ -40,11 +40,11 @@ export default function LandingPage() {
       <section className="py-8 px-4 mx-auto lg:py-16 bg-linear-to-t from-brand-softer to-background">
         <div className="max-w-7xl p-6 md:p-12 mx-auto text-xl font-body text-text-primary mb-15">
           <p>
-            ShareStack is built on a simple idea, knowledge grows when it’s
-            shared.
+            StackXchange is built on a simple idea, knowledge grows when it’s
+            exchanged.
           </p>
           <p className="my-5">
-            In a world full of scattered resources, ShareStack brings everything
+            In a world full of scattered resources, StackXchange brings everything
             into one place. Whether it's code, tutorials, or learning materials,
             users can contribute, explore, and collaborate effortlessly.
           </p>

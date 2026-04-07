@@ -8,7 +8,7 @@ export default function Footer() {
           <span className="text-text-primary sm:text-center">
             © 2026{" "}
             <a href="/" className="hover:underline">
-              ShareStack™
+              StackXchange™
             </a>
             . All Rights Reserved.
           </span>
