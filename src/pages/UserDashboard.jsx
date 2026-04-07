@@ -10,26 +10,31 @@ export default function UserDashboard() {
   const firebase = useFirebase();
   const [myResources, setMyResources] = useState([]);
   const [myBlogs, setMyBlogs] = useState([]);
-
+  const [activeTab, setActiveTab] = useState("resources");
+  
   useEffect(() => {
     if (!firebase.user?.uid) return;
 
-    firebase
-      .getMyResources(firebase.user.uid)
-      .then((res) => setMyResources(res))
-      .catch((err) => {
+    const loadData = async () => {
+      try {
+        const [resources, blogs] = await Promise.all([
+          firebase.getMyResources(firebase.user.uid),
+          firebase.getMyBlogs(firebase.user.uid),
+        ]);
+
+        setMyResources(resources);
+        setMyBlogs(blogs);
+      } catch (err) {
         console.error(err);
         setMyResources([]);
-      });
-
-    firebase
-      .getMyBlogs(firebase.user.uid)
-      .then((blogs) => setMyBlogs(blogs))
-      .catch((err) => {
-        console.error(err);
         setMyBlogs([]);
-      });
-  }, [firebase.user]);    
+      }
+    };
+
+    loadData();
+  }, [firebase.user?.uid]);   
+
+ 
 
   const nav = useNavigate();
     return (
@@ -39,43 +44,47 @@ export default function UserDashboard() {
           <div className="mb-4">
             <ul
               className="flex flex-wrap -mb-px text-lg font-body text-center items-center justify-center"
-              id="default-styled-tab"
-              data-tabs-toggle="#default-styled-tab-content"
-              data-tabs-active-classes="text-brand-medium hover:text-brand-medium border-brand-medium"
-              data-tabs-inactive-classes="dark:border-transparent text-text-secondary hover:text-brand-medium border-default hover:border-brand"
               role="tablist"
             >
               <li className="me-2" role="presentation">
                 <button
-                  className="inline-block p-4 border-b-2 rounded-t-base hover:text-brand-medium hover:border-brand-medium"
+                  onClick={() => setActiveTab("resources")}
+                  className={`inline-block p-4 border-b-2 rounded-t-base hover:text-brand-medium hover:border-brand-medium ${
+                    activeTab === "resources"
+                      ? "text-brand-medium border-brand-medium"
+                      : "text-text-secondary border-transparent"
+                  }`}
                   id="resource-styled-tab"
-                  data-tabs-target="#styled-resource"
                   type="button"
                   role="tab"
                   aria-controls="resource"
-                  aria-selected="false"
+                  aria-selected={activeTab === "resources"}
                 >
                   My Resources
                 </button>
               </li>
               <li className="me-2" role="presentation">
                 <button
-                  className="inline-block p-4 border-b-2 rounded-t-base hover:text-brand-medium hover:border-brand-medium"
+                  onClick={() => setActiveTab("blogs")}
+                  className={`inline-block p-4 border-b-2 rounded-t-base hover:text-brand-medium hover:border-brand-medium ${
+                    activeTab === "blogs"
+                      ? "text-brand-medium border-brand-medium"
+                      : "text-text-secondary border-transparent"
+                  }`}
                   id="blog-styled-tab"
-                  data-tabs-target="#styled-blog"
                   type="button"
                   role="tab"
                   aria-controls="blog"
-                  aria-selected="false"
+                  aria-selected={activeTab === "blogs"}
                 >
                   My Blogs
                 </button>
               </li>
             </ul>
           </div>
-          <div id="default-styled-tab-content">
+          <div>
             <div
-              className="hidden"
+              className={activeTab === "resources" ? "block" : "hidden"}
               id="styled-resource"
               role="tabpanel"
               aria-labelledby="resource-tab"
@@ -128,7 +137,7 @@ export default function UserDashboard() {
               </div>
             </div>
             <div
-              className="hidden"
+              className={activeTab === "blogs" ? "block" : "hidden"}
               id="styled-blog"
               role="tabpanel"
               aria-labelledby="blog-tab"

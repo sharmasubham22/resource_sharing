@@ -24,7 +24,7 @@ export default function LandingPage() {
   
   return (
     <div className="">
-      <section className="relative overflow-hidden bg-background min-h-screen flex justify-center items-center">
+      <section className="overflow-hidden bg-background min-h-screen flex justify-center items-center">
         {/* <div className="absolute right-60 top-10 text-border opacity-50 w-80 z-auto">
           {heroVector}
         </div> */}
@@ -96,7 +96,7 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-      <div className="text-brand-softer overflow-hidden mt-5">{dots}</div>
+      {/* <div className="text-brand-softer overflow-hidden mt-5">{dots}</div> */}
       <section className="h-full max-w-7xl mx-auto bg-background p-4 lg:p-10">
         <h1 className="text-4xl md:text-5xl lg:text-6xl text-center lg:text-left text-text-primary my-20 font-heading">
           Trending <i>Resources</i>
