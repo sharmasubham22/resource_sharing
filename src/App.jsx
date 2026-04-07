@@ -2,6 +2,7 @@ import './App.css'
 import {Route, Routes} from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 import { matchPath } from "react-router-dom";
+import { useEffect } from "react";
 import LoginPage from './pages/UserAuthentication/LoginPage.jsx';
 import SignupPage from './pages/UserAuthentication/SignupPage.jsx';
 import LandingPage from './pages/LandingPage.jsx';
@@ -25,6 +26,13 @@ import ErrorPage from './components/ErrorPage.jsx';
 
 export default function App() {
   const location = useLocation();
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    const theme = localStorage.getItem("theme");
+    if (theme === "dark") root.classList.add("dark");
+    else root.classList.remove("dark");
+  }, []);
 
   const appRoutesWithBars = [
     "/",
