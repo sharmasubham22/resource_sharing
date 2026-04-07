@@ -3,7 +3,7 @@ import { logoVector } from '../assets/Elements'
 
 export default function ErrorPage() {
   return (
-    <div>
+    <div className='min-h-screen bg-background'>
         <a
             href="/"
             className="flex items-center p-3 font-body"
@@ -13,7 +13,7 @@ export default function ErrorPage() {
               StackXchange
             </span>
           </a>
-        <div className='min-h-screen flex items-center justify-center'>
+        <div className='flex items-center justify-center px-6 py-16'>
       <h1 className='text-3xl text-text-primary font-heading'>404 - Page Not Found</h1>
       </div>
     </div>
