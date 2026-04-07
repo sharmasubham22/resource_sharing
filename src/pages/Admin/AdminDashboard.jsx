@@ -90,7 +90,7 @@ export default function AdminDashboard() {
           >
             {logoVector}
             <span className="self-center text-xl text-text-primary font-bold whitespace-nowrap">
-              ShareStack
+              StackXchange
             </span>
           </a>
           <div className="my-10">
