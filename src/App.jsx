@@ -1,6 +1,7 @@
 import './App.css'
 import {Route, Routes} from 'react-router-dom';
 import { useLocation } from "react-router-dom";
+import { matchPath } from "react-router-dom";
 import LoginPage from './pages/UserAuthentication/LoginPage.jsx';
 import SignupPage from './pages/UserAuthentication/SignupPage.jsx';
 import LandingPage from './pages/LandingPage.jsx';
@@ -20,13 +21,38 @@ import AdminDashboard from './pages/Admin/AdminDashboard.jsx';
 import AdminRoute from './components/AdminRoute.jsx';
 import Contact from './pages/Contact.jsx';
 import About from './pages/About.jsx';
+import ErrorPage from './components/ErrorPage.jsx';
 
 export default function App() {
   const location = useLocation();
-  const noBarPaths = ["/admin"]; 
+
+  const appRoutesWithBars = [
+    "/",
+    "/login",
+    "/signup",
+    "/my-dashboard",
+    "/contact",
+    "/about",
+    "/add-resource",
+    "/resources",
+    "/view-resource/:id",
+    "/resources/:category",
+    "/edit-resource/:id",
+    "/add-blog",
+    "/blogs",
+    "/view-blog/:id",
+    "/edit-blog/:id",
+  ];
+
+  const isAdminRoute = matchPath({ path: "/admin/*", end: false }, location.pathname);
+  const isKnownRoute = appRoutesWithBars.some((pattern) =>
+    matchPath({ path: pattern, end: true }, location.pathname),
+  );
+  const showBars = Boolean(isKnownRoute && !isAdminRoute);
+
   return (
     <div className="flex flex-col min-h-screen bg-background ">
-      {!noBarPaths.includes(location.pathname) && <Navbar />}
+      {showBars && <Navbar />}
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -34,6 +60,7 @@ export default function App() {
         <Route path="/my-dashboard" element={<UserDashboard />} />
         <Route path="/contact" element={<Contact />}/>
         <Route path='/about' element={<About />} />
+        <Route path="/*" element={<ErrorPage />} />
 
         {/* Resources Routes */}
         <Route path="/add-resource" element={<AddResource />} />
@@ -58,7 +85,7 @@ export default function App() {
           }
         />
       </Routes>
-      {!noBarPaths.includes(location.pathname) && <Footer />}
+      {showBars && <Footer />}
     </div>
   );
 }
